@@ -100,7 +100,8 @@ const Form = () => {
       method: "POST",
       body: formData,
     });
-    console.log("Response status : ", response.status);
+
+    // console.log("Response status : ", response.status);
 
 
     // IF THE EMAIL ALREADY EXISTS, SHOW AN ERROR
@@ -114,6 +115,7 @@ const Form = () => {
 
     
     const savedUser = await response.json();
+    console.log("Saved user : ", savedUser);
     onSubmitProps.resetForm();
     alert("User registered successfully")
     if (savedUser) {
@@ -137,6 +139,20 @@ const Form = () => {
     });
 
     const loggedIn = await response.json();
+    if(response.status === 409){
+        console.log("Account not found");
+        alert("Account not found")
+        return;
+    }
+    if(response.status === 400){
+        console.log("Invalid credentials");
+        alert("Invalid credentials")
+        return;
+    }
+
+    console.log("Logged in : ", loggedIn);
+    alert("Logged in successfully")
+
     onSubmitProps.resetForm();
     if (loggedIn) {
       dispatch(
@@ -362,7 +378,7 @@ const Form = () => {
             <Typography
               onClick={() => {
                 setPageType(isLogin ? "register" : "login");
-                console.log("pageType : ", pageType);
+                // console.log("pageType : ", pageType);
                 resetForm();
               }}
               sx={{

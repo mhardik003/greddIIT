@@ -43,7 +43,7 @@ export const registerUser = async (req, res) => {
     });
 
     const savedUser = await newUser.save(); //save user to database
-    console.log(savedUser)
+    // console.log(savedUser)
     res.status(201).json(savedUser); //send saved user to client
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -57,14 +57,24 @@ export const registerUser = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
+
+    let check = await User.exists({ email: email });
+    if (!check) {
+      console.log("Email does not exist");
+      return res.status(409).json({ message: "Email does not exist" });
+    }
+
+
     const user = await User.findOne({ email: email }); //find user in database
 
     if (!user) return res.status(404).json({ message: "User not found" }); //if user not found, send error message
 
     const isMatch = await bcrypt.compare(password, user.password); //compare password with hashed password
-    if (!isMatch)
+    if (!isMatch){
+      console.log("Invalid credentials");
       return res.status(400).json({ message: "Invalid credentials" }); //if password is incorrect, send error message
-
+    
+    }
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET); //create token
     delete user.password; //delete password from user object
 
@@ -83,7 +93,7 @@ export const login = async (req, res) => {
     }); //send token and user to client
   } catch (error) {
     res.status(500).json({ error: error.message });
-    console.log("hiiii");
+    // console.log("hiiii");
     console.log(error);
   }
 };
