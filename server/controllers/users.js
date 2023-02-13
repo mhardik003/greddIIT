@@ -2,6 +2,8 @@ import User from "../models/User.js";
 
 export const getUser = async (req, res) => {
   try {
+    console.log("req.params.id : ", req.params.id);
+
     const user = await User.findById(req.params.id);
     res.status(200).json(user);
   } catch (error) {
@@ -9,9 +11,34 @@ export const getUser = async (req, res) => {
   }
 };
 
+export const editUser = async (req, res) => {
+  try {
+    // console.log("req.params.id : ", req.params.id);
+    // console.log("req.body : ", req.body);
+    // EDIT THE USER DETAILS
+    const user = await User.find({ _id: req.params.id });
+    // console.log("FOUND THE USER : ", user);
+    const { firstName, lastName, userName, email, age, contactNumber } =
+      req.body;
+
+      // console.log("firstName from the request : ", firstName);
+    user[0].firstName = firstName;
+    user[0].lastName = lastName;
+    user[0].userName = userName;
+    user[0].email = email;
+    user[0].age = age;
+    user[0].contactNumber = contactNumber;
+    await user[0].save();
+    console.log("User has been updated");
+    res.status(200).json("User has been updated");
+  } catch (error) {
+    res.status(404).json({ error: error.message, "message": "BANDARRRRRRRR"});
+  }
+};
+
 export const getUserFollowers = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.find(req.params.id);
     const followers = await Promise.all(
       user.followers.map((followerId) => {
         User.findById(followerId);

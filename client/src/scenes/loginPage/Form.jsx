@@ -96,6 +96,7 @@ const Form = () => {
     }
     formData.append("profilePicture", values.profilePicture.name);
 
+    console.log("Form data : ", formData);
     const response = await fetch("http://localhost:3000/auth/register", {
       method: "POST",
       body: formData,

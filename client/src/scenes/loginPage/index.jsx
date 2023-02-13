@@ -32,33 +32,32 @@ const LoginPage = () => {
           GredIIT
         </Typography>
       </Box>
-      <Grid container spacing={2}
+      <Grid
+        container
+        spacing={2}
         direction="column"
         alignItems="center"
         justifyContent="center"
-        style={{ minHeight: '100vh' }}
-        >
-      <Box
-        width={isNonMobileScreens ? "40%" : "83%"}
-        p="2rem"
-        m="2rem auto"
-        borderRadius="1.5rem"
-        backgroundColor={theme.palette.background.alt}
+        style={{ minHeight: "100vh" }}
       >
-        
-        <Typography
-          textAlign="center"
-          fontWeight="500"
-          variant="h5"
-          sx={{ mb: "1.5rem" }}
+        <Box
+          width={isNonMobileScreens ? "40%" : "83%"}
+          p="2rem"
+          m="2rem auto"
+          borderRadius="1.5rem"
+          backgroundColor={theme.palette.background.alt}
         >
-          Welcome to GredIIT, the better Reddit
-        </Typography>
-        
-        
+          <Typography
+            textAlign="center"
+            fontWeight="500"
+            variant="h5"
+            sx={{ mb: "1.5rem" }}
+          >
+            Welcome to GredIIT, the better Reddit
+          </Typography>
+
           <Form />
-        
-      </Box>
+        </Box>
       </Grid>
     </Box>
   );

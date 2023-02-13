@@ -6,9 +6,11 @@ import dotenv from "dotenv"; // for environment variables
 import multer from "multer"; // to upload the files locally
 import path from "path";
 import { fileURLToPath } from "url";
-import { dirname } from "path";
+// import { dirname } from "path";
 import helmet from "helmet";
 import morgan from "morgan";
+// import {verifyToken} from "./middleware/auth.js";
+// import { editUser } from "./controllers/users.js";
 
 
 
@@ -49,6 +51,7 @@ const upload = multer({ storage });
 
 // ROUTE with files
 app.post("/auth/register", upload.single("picture"), registerUser);
+// app.put("/users/edit/:id", editUser)
 
 
 // ROUTES
