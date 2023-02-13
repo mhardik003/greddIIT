@@ -5,7 +5,7 @@ import HomePage from "./scenes/homePage";
 import LoginPage from "./scenes/loginPage";
 // import {RegisterPage} from './scenes/registerPage'
 import ProfilePage from "./scenes/profilePage";
-// import {NotFoundPage} from './scenes/notFoundPage'
+import NotFound from "./scenes/notFound";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { CssBaseline, ThemeProvider } from "@mui/material";
@@ -35,14 +35,17 @@ function App() {
             />
             <Route
               path="/login"
-              element={isAuth ? <Navigate to ="/"/> : <LoginPage />}
+              element={isAuth ? <Navigate to="/" /> : <LoginPage />}
             />
             {/* <Route path="/register" element={<RegisterPage />} /> */}
             <Route
               path="/profile/:userId"
               element={isAuth ? <ProfilePage /> : <Navigate to="/login" />}
             />
-            {/* <Route path="*" element={<NotFoundPage />} /> */}
+            <Route
+              path="*"
+              element={isAuth ? <NotFound /> : <Navigate to="/login" />}
+            />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>

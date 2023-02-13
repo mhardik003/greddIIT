@@ -18,7 +18,6 @@ import {
   Menu,
   Close,
 } from "@mui/icons-material";
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import QuestionAnswerOutlinedIcon from '@mui/icons-material/QuestionAnswerOutlined';
 import SmartToyOutlinedIcon from "@mui/icons-material/SmartToyOutlined";
 import { useDispatch, useSelector } from "react-redux";
