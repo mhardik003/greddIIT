@@ -103,7 +103,7 @@ const Form = ({ userId, userData }) => {
         age: values.age,
       },
     });
-    showToastMessage();
+    showToastMessage()();
     dispatch(
       setLogin({
         user: {

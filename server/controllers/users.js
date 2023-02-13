@@ -5,7 +5,19 @@ export const getUser = async (req, res) => {
     // console.log("req.params.id : ", req.params.id);
 
     const user = await User.findById(req.params.id);
+    // console.log("user : ", user);
     res.status(200).json(user);
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+};
+
+export const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    // console.log("users : ", users);
+    // only send the _id of the users
+    res.status(200).json(users);
   } catch (error) {
     res.status(404).json({ error: error.message });
   }
@@ -21,7 +33,7 @@ export const editUser = async (req, res) => {
     const { firstName, lastName, userName, email, age, contactNumber } =
       req.body;
 
-      // console.log("firstName from the request : ", firstName);
+    // console.log("firstName from the request : ", firstName);
     user[0].firstName = firstName;
     user[0].lastName = lastName;
     user[0].userName = userName;
@@ -32,18 +44,15 @@ export const editUser = async (req, res) => {
     console.log("User has been updated");
     res.status(200).json("User has been updated");
   } catch (error) {
-    res.status(404).json({ error: error.message, "message": "BANDARRRRRRRR"});
+    res.status(404).json({ error: error.message});
   }
 };
 
 export const getUserFollowers = async (req, res) => {
   try {
-    const user = await User.find(req.params.id);
-    const followers = await Promise.all(
-      user.followers.map((followerId) => {
-        User.findById(followerId);
-      })
-    );
+    const user = await User.findById(req.params.id);
+    // console.log("user from getUserFollowers : ", user);
+    const followers = await User.find({ _id: { $in: user.followers } });
     let followersList = [];
     followers.map((follower) => {
       const { _id, firstName, lastName, userName, picturePath } = follower;
@@ -58,11 +67,7 @@ export const getUserFollowers = async (req, res) => {
 export const getUserFollowing = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
-    const following = await Promise.all(
-      user.following.map((followingId) => {
-        User.findById(followingId);
-      })
-    );
+    const following = await User.find({ _id: { $in: user.following } });
     let followingList = [];
     following.map((following) => {
       const { _id, firstName, lastName, userName, picturePath } = following;
@@ -76,30 +81,30 @@ export const getUserFollowing = async (req, res) => {
 
 export const AddremoveFollower = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
-    const follower = await User.findById(req.params.followerId);
-    if (user.followers.includes(follower._id)) {
-      await user.updateOne({ $pull: { followers: follower._id } });
-      await follower.updateOne({ $pull: { following: user._id } });
+    const user = await User.find({ _id: req.params.id });
+    const follower = await User.find({ _id: req.params.followerId });
+    // console.log("userid : ", user[0].followers);
+    // console.log("followerid : ", follower[0]._id);
+
+    if (user[0].followers.includes(follower[0]._id)) {
+      const index = user[0].followers.indexOf(follower[0]._id);
+      user[0].followers.splice(index, 1);
+
+      const index2 = follower[0].following.indexOf(user[0]._id);
+      follower[0].following.splice(index2, 1);
+
+      await user[0].save();
+      await follower[0].save();
+      console.log("User has been unfollowed");
       res.status(200).json("User has been unfollowed");
     } else {
-      await user.updateOne({ $push: { followers: follower._id } });
-      await follower.updateOne({ $push: { following: user._id } });
+      user[0].followers.push(follower[0]._id);
+      follower[0].following.push(user[0]._id);
+      await user[0].save();
+      await follower[0].save();
+      console.log("User has been followed");
       res.status(200).json("User has been followed");
     }
-    await user.save();
-    await follower.save();
-
-    let followersList = [];
-
-    const followers = await Promise.all(
-      user.followers.map((followerId) => {
-        const { _id, firstName, lastName, userName, picturePath } = followerId;
-        followersList.push({ _id, firstName, lastName, userName, picturePath });
-      })
-    );
-
-    res.status(200).json(followersList);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -107,29 +112,35 @@ export const AddremoveFollower = async (req, res) => {
 
 export const AddremoveFollowing = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
-    const following = await User.findById(req.params.followingId);
-    if (user.following.includes(following._id)) {
-      await user.updateOne({ $pull: { following: following._id } });
-      await following.updateOne({ $pull: { followers: user._id } });
-      res.status(200).json("User has been unfollowed");
-    } else {
-      await user.updateOne({ $push: { following: following._id } });
-      await following.updateOne({ $push: { followers: user._id } });
-      res.status(200).json("User has been followed");
-    }
-    await user.save();
-    await following.save();
-
-    let followingList = [];
-    const following_1 = await Promise.all(
-      user.following.map((followingId) => {
-        const { _id, firstName, lastName, userName, picturePath } = followingId;
-        followingList.push({ _id, firstName, lastName, userName, picturePath });
-      })
+    console.log(
+      "> TRYING TO REMOVE FOLLOWING : ",
+      req.params.id,
+      req.params.followingId
     );
 
-    res.status(200).json(followingList);
+    const user = await User.find({ _id: req.params.id });
+    const following = await User.find({_id: req.params.followingId });
+
+    if (user[0].following.includes(following[0]._id)) {
+      const index = user[0].following.indexOf(following[0]._id);
+      user[0].following.splice(index, 1);
+
+      const index2 = following[0].followers.indexOf(user[0]._id);
+      following[0].followers.splice(index2, 1);
+
+      await user[0].save();
+      await following[0].save();
+      console.log("> User has been unfollowed");
+      res.status(200).json("User has been unfollowed");
+    } else {
+      await user[0].updateOne({ $push: { following: following[0]._id } });
+      await following[0].updateOne({ $push: { followers: user[0]._id } });
+
+      await user.save();
+      await following.save();
+      console.log("User has been followed");
+      res.status(200).json("User has been followed");
+    }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

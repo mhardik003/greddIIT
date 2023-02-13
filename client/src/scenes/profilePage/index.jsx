@@ -4,28 +4,29 @@ import {
   Typography,
   Grid,
   useTheme,
-  Divider,
-  Avatar,
+  // Divider,
+  // Avatar,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 // import { useParams } from "react-router-dom";
 import Navbar from "scenes/navbar";
 import FlexBetween from "components/FlexBetween";
 import Form from "./Form";
+import UserDetails from "./userDetails";
 
 const ProfilePage = () => {
   const theme = useTheme();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
-  const dark = theme.palette.neutral.dark;
-  const medium = theme.palette.neutral.medium;
-  const main = theme.palette.neutral.main;
+  // const dark = theme.palette.neutral.dark;
+  // const medium = theme.palette.neutral.medium;
+  // const main = theme.palette.neutral.main;
   const [user, setUser] = useState(null);
   const token = useSelector((state) => state.token);
   const { id } = useSelector((state) => state.user);
-  const primaryLight = theme.palette.primary.light;
+  // const primaryLight = theme.palette.primary.light;
 
 
   const getUser = async () => {
@@ -42,17 +43,18 @@ const ProfilePage = () => {
 
   if (!user) return null;
 
-  const {
-    firstName,
-    lastName,
-    userName,
-    email,
-    contactNumber,
-    age,
-    following,
-    followers,
-    posts,
-  } = user;
+    // console.log("user : ", user);
+  // const {
+  //   firstName,
+  //   lastName,
+  //   userName,
+  //   email,
+  //   contactNumber,
+  //   age,
+  //   following,
+  //   followers,
+  //   posts,
+  // } = user;
 
 
   // console.log("user : ", user);
@@ -64,170 +66,7 @@ const ProfilePage = () => {
         <Navbar />
       </Box>
       <Grid spacing={2} container justifyContent="center" direction="row">
-        <Grid
-          item
-          xs={12}
-          md={6}
-          lg={5}
-          container
-          spacing={2}
-          alignItems="center"
-          justifyContent="center"
-          style={{ minHeight: "100vh" }}
-        >
-          <Box
-            width={isNonMobileScreens ? "80%" : "83%"}
-            height={isNonMobileScreens ? "85%" : "83%"}
-            p="2rem"
-            m="2rem auto"
-            borderRadius="1.5rem"
-            backgroundColor={theme.palette.background.alt}
-          >
-            <Typography
-              textAlign="center"
-              fontWeight="500"
-              variant="h2"
-              sx={{ mb: "1.5rem" }}
-              color="primary"
-            >
-              Profile
-            </Typography>
-
-            {/* Profile Description */}
-            <Avatar
-              name= {firstName + " " + lastName}
-              alt={firstName + " " + lastName}
-              color={theme.palette.primary.main}
-              sx={{ width: 150, height: 150, m: "auto" }}
-              // source from local assets
-              src={"../../assets/images/user.png"}
-            />
-            <Grid
-              // container
-              // spacing={5}
-              // alignItems="center"
-              justifyContent="center"
-              style={{ minHeight: "100vh" }}
-
-              
-            >
-            <Box
-              width={isNonMobileScreens ? "100%" : "100%"}
-              height={isNonMobileScreens ? "40%" : "83%"}
-              p="2rem"
-              m="2rem auto"
-              borderRadius="1.5rem"
-              backgroundColor={theme.palette.background.alt}
-            
-            >
-              <FlexBetween>
-                <Typography fontWeight="500" variant="h5" sx={{ mb: "1.5rem" }}>
-                  Name
-                </Typography>
-                <Typography>
-                  {firstName} {lastName}
-                </Typography>
-              </FlexBetween>
-              <Divider />
-
-              <FlexBetween>
-                <Typography
-                  fontWeight="500"
-                  variant="h5"
-                  sx={{ mb: "1.5rem", mt: "1.5rem" }}
-                >
-                  Username
-                </Typography>
-
-                <Typography>{userName}</Typography>
-              </FlexBetween>
-              <Divider />
-
-              <FlexBetween>
-                <Typography
-                  fontWeight="500"
-                  variant="h5"
-                  sx={{ mb: "1.5rem", mt: "1.5rem" }}
-                >
-                  Email
-                </Typography>
-
-                <Typography>{email}</Typography>
-              </FlexBetween>
-
-              <Divider />
-
-              <FlexBetween>
-                <Typography
-                  fontWeight="500"
-                  variant="h5"
-                  sx={{ mb: "1.5rem", mt: "1.5rem" }}
-                >
-                  Contact Number
-                </Typography>
-
-                <Typography>{contactNumber}</Typography>
-              </FlexBetween>
-
-              <Divider />
-
-              <FlexBetween>
-                <Typography
-                  fontWeight="500"
-                  variant="h5"
-                  sx={{ mb: "1.5rem", mt: "1.5rem" }}
-                >
-                  Age
-                </Typography>
-
-                <Typography>{age}</Typography>
-              </FlexBetween>
-
-              <Divider />
-
-              <FlexBetween>
-                <Typography
-                  fontWeight="500"
-                  variant="h5"
-                  sx={{ mb: "1.5rem", mt: "1.5rem" }}
-                >
-                  Followers
-                </Typography>
-
-                <Typography> {followers.length}</Typography>
-              </FlexBetween>
-
-              <Divider />
-
-              <FlexBetween>
-                <Typography
-                  fontWeight="500"
-                  variant="h5"
-                  sx={{ mb: "1.5rem", mt: "1.5rem" }}
-                >
-                  Following
-                </Typography>
-
-                <Typography>{following.length}</Typography>
-              </FlexBetween>
-              <Divider />
-
-              <FlexBetween>
-                <Typography
-                  fontWeight="500"
-                  variant="h5"
-                  sx={{ mb: "1.5rem", mt: "1.5rem" }}
-                >
-                  Posts
-                </Typography>
-
-                <Typography>{posts.length}</Typography>
-              </FlexBetween>
-            </Box>
-            </Grid>
-          </Box>
-
-        </Grid>
+        <UserDetails userId={id} userData={user} />
 
         <Grid
           item

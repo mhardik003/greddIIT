@@ -98,7 +98,7 @@ const Navbar = () => {
               value={fullName}
               placeholder={fullName}
               renderValue={(selected) => {
-                if (selected.length == 0) return { fullName };
+                if (selected.length === 0) return { fullName };
                 else return selected;
               }}
               sx={{
@@ -180,7 +180,7 @@ const Navbar = () => {
               <Select
                 value={fullName}
                 renderValue={(selected) => {
-                  if (selected.length == 0) return { fullName };
+                  if (selected.length === 0) return { fullName };
                   else return selected;
                 }}
                 sx={{
