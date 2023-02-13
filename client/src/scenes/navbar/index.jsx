@@ -10,6 +10,7 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
+import InputLabel from "@mui/material/InputLabel";
 import {
   Search,
   Message,
@@ -31,7 +32,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
-
+  // console.log("user from navbar : ", user);
   const theme = useTheme();
   const neutralLight = theme.palette.neutral.light;
   const dark = theme.palette.neutral.dark;
@@ -87,8 +88,16 @@ const Navbar = () => {
           <Notifications sx={{ fontSize: "25px" }} />
           <Help sx={{ fontSize: "25px" }} />
           <FormControl variant="standard" value={fullName}>
+            <InputLabel id="select-label">{fullName}</InputLabel>
             <Select
+              id="select-label"
+              label={fullName}
               value={fullName}
+              placeholder={fullName}
+              renderValue={(selected) => {
+                if (selected.length == 0) return { fullName };
+                else return selected;
+              }}
               sx={{
                 backgroundColor: neutralLight,
                 width: "150px",
@@ -105,7 +114,9 @@ const Navbar = () => {
               input={<InputBase />}
             >
               <MenuItem value={fullName}>
-                <Typography>{fullName}</Typography>
+                <Typography onClick={() => navigate(`/profile/${user.id}`)}>
+                  Profile Page
+                </Typography>
               </MenuItem>
               <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
             </Select>
@@ -180,7 +191,9 @@ const Navbar = () => {
                 input={<InputBase />}
               >
                 <MenuItem value={fullName}>
-                  <Typography>{fullName}</Typography>
+                  <Typography onClick={() => navigate(`/profile/${user.id}`)}>
+                    {fullName}
+                  </Typography>
                 </MenuItem>
                 <MenuItem onClick={() => dispatch(setLogout())}>
                   Log Out
