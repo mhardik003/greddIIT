@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-
-import {toast, ToastContainer } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { setLogin } from "state";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import { useParams } from "react-router-dom";
 // import Navbar from "scenes/navbar";
@@ -25,6 +26,7 @@ const profileSchema = Yup.object().shape({
 });
 
 const Form = ({ userId, userData }) => {
+  const dispatch = useDispatch();
   const { palette } = useTheme();
   const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width: 600px)");
@@ -45,15 +47,7 @@ const Form = ({ userId, userData }) => {
 
   if (!user) return null;
 
-  const {
-    firstName,
-    lastName,
-    userName,
-    email,
-    contactNumber,
-    age,
-  } = user;
-
+  const { firstName, lastName, userName, email, contactNumber, age } = user;
 
   const showToastMessage = () => {
     // console.log("Toast message");
@@ -68,7 +62,6 @@ const Form = ({ userId, userData }) => {
       theme: "colored",
     });
   };
-
 
   const EditUserData = async (values, onSubmitProps) => {
     // console.log("userId : ", userId);
@@ -98,7 +91,6 @@ const Form = ({ userId, userData }) => {
 
     await response.json();
 
-
     // const savedUser = await response.json();
     // console.log("Saved user : ", savedUser);
     onSubmitProps.resetForm({
@@ -111,15 +103,31 @@ const Form = ({ userId, userData }) => {
         age: values.age,
       },
     });
-
-
     showToastMessage();
+    dispatch(
+      setLogin({
+        user: {
+          id: userId,
+          firstName: values.firstName,
+          lastName: values.lastName,
+          userName: values.userName,
+          email: values.email,
+          contactNumber: values.contactNumber,
+          age: values.age,
+        },
+        token:token,
+      })
+    );
+    setTimeout(() => {
+      window.location.reload(false);
+    }, 3000);
     // alert("User info edited successfully");
     navigate(`/profile/${userId}`);
   };
 
   const handleFormSubmit = async (values, onSubmitProps) => {
     await EditUserData(values, onSubmitProps);
+
     // console.log("onSubmitProps : ", onSubmitProps);
     // console.log("values : ", values);
     // console.log("values firstName: ", values.firstName);

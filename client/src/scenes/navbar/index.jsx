@@ -13,14 +13,14 @@ import {
 import InputLabel from "@mui/material/InputLabel";
 import {
   Search,
-  Message,
   DarkMode,
   LightMode,
-  Notifications,
-  Help,
   Menu,
   Close,
 } from "@mui/icons-material";
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import QuestionAnswerOutlinedIcon from '@mui/icons-material/QuestionAnswerOutlined';
+import SmartToyOutlinedIcon from "@mui/icons-material/SmartToyOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "state";
 import { useNavigate } from "react-router-dom";
@@ -45,6 +45,7 @@ const Navbar = () => {
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
       <FlexBetween gap="1.75rem">
+        
         <Typography
           fontWeight="bold"
           fontSize="clamp(1rem, 2rem, 2.25rem)"
@@ -57,6 +58,8 @@ const Navbar = () => {
             },
           }}
         >
+      {/* <HomeOutlinedIcon sx={{ fontSize: "25px" }} /> */}
+
           GredIIT
         </Typography>
         {isNonMobileScreens && (
@@ -77,6 +80,8 @@ const Navbar = () => {
       {/* DESKTOP NAV */}
       {isNonMobileScreens ? (
         <FlexBetween gap="2rem">
+          <SmartToyOutlinedIcon sx={{ fontSize: "25px" }} />
+          <QuestionAnswerOutlinedIcon sx={{ fontSize: "25px" }} />
           <IconButton onClick={() => dispatch(setMode())}>
             {theme.palette.mode === "dark" ? (
               <DarkMode sx={{ fontSize: "25px" }} />
@@ -84,9 +89,8 @@ const Navbar = () => {
               <LightMode sx={{ color: dark, fontSize: "25px" }} />
             )}
           </IconButton>
-          <Message sx={{ fontSize: "25px" }} />
-          <Notifications sx={{ fontSize: "25px" }} />
-          <Help sx={{ fontSize: "25px" }} />
+          {/* <Notifications sx={{ fontSize: "25px" }} /> */}
+
           <FormControl variant="standard" value={fullName}>
             <InputLabel id="select-label">{fullName}</InputLabel>
             <Select
@@ -159,6 +163,8 @@ const Navbar = () => {
             alignItems="center"
             gap="3rem"
           >
+            <SmartToyOutlinedIcon sx={{ fontSize: "25px" }} />
+            <QuestionAnswerOutlinedIcon sx={{ fontSize: "25px" }} />
             <IconButton
               onClick={() => dispatch(setMode())}
               sx={{ fontSize: "25px" }}
@@ -169,14 +175,18 @@ const Navbar = () => {
                 <LightMode sx={{ color: dark, fontSize: "25px" }} />
               )}
             </IconButton>
-            <Message sx={{ fontSize: "25px" }} />
-            <Notifications sx={{ fontSize: "25px" }} />
-            <Help sx={{ fontSize: "25px" }} />
+            {/* <Notifications sx={{ fontSize: "25px" }} /> */}
+
             <FormControl variant="standard" value={fullName}>
               <Select
                 value={fullName}
+                renderValue={(selected) => {
+                  if (selected.length == 0) return { fullName };
+                  else return selected;
+                }}
                 sx={{
                   backgroundColor: neutralLight,
+
                   width: "150px",
                   borderRadius: "0.25rem",
                   p: "0.25rem 1rem",

@@ -25,6 +25,8 @@ const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const token = useSelector((state) => state.token);
   const { id } = useSelector((state) => state.user);
+  const primaryLight = theme.palette.primary.light;
+
 
   const getUser = async () => {
     const response = await fetch(`http://localhost:3000/users/${id}`, {
@@ -51,6 +53,8 @@ const ProfilePage = () => {
     followers,
     posts,
   } = user;
+
+
   // console.log("user : ", user);
   // const { id, picturePath } = useSelector((state) => state.user);
   // console.log("userId_index : ", id);
@@ -84,6 +88,7 @@ const ProfilePage = () => {
               fontWeight="500"
               variant="h2"
               sx={{ mb: "1.5rem" }}
+              color="primary"
             >
               Profile
             </Typography>
@@ -93,7 +98,7 @@ const ProfilePage = () => {
               name= {firstName + " " + lastName}
               alt={firstName + " " + lastName}
               color={theme.palette.primary.main}
-              sx={{ width: 200, height: 200, m: "auto" }}
+              sx={{ width: 150, height: 150, m: "auto" }}
               // source from local assets
               src={"../../assets/images/user.png"}
             />
@@ -246,6 +251,8 @@ const ProfilePage = () => {
               textAlign="center"
               fontWeight="500"
               variant="h5"
+              color="primary"
+
               sx={{ mb: "1.5rem" }}
             >
               Edit Profile
