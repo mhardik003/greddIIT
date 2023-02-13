@@ -51,9 +51,9 @@ const ProfilePage = () => {
     followers,
     posts,
   } = user;
-  console.log("user : ", user);
+  // console.log("user : ", user);
   // const { id, picturePath } = useSelector((state) => state.user);
-  console.log("userId_index : ", id);
+  // console.log("userId_index : ", id);
   return (
     <Box>
       <Box>
@@ -90,7 +90,9 @@ const ProfilePage = () => {
 
             {/* Profile Description */}
             <Avatar
-              alt="Hardik Mittal"
+              name= {firstName + " " + lastName}
+              alt={firstName + " " + lastName}
+              color={theme.palette.primary.main}
               sx={{ width: 200, height: 200, m: "auto" }}
               // source from local assets
               src={"../../assets/images/user.png"}
