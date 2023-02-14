@@ -52,7 +52,8 @@ const Navbar = () => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={{
+        <Box
+          sx={{
             position: "absolute",
             top: "50%",
             left: "50%",
@@ -64,8 +65,9 @@ const Navbar = () => {
             pt: 2,
             px: 4,
             pb: 3,
-            bgcolor:alt,
-        } }>
+            bgcolor: alt,
+          }}
+        >
           <Box>
             <Typography
               id="modal-modal-title"
@@ -74,7 +76,7 @@ const Navbar = () => {
               textAlign="center"
               fontWeight="bold"
               sx={{
-              color:theme.palette.primary.main,
+                color: theme.palette.primary.main,
               }}
             >
               Create Subgrediit
@@ -139,12 +141,11 @@ const Navbar = () => {
               variant="contained"
               color="primary"
               onClick={handleOpenCreateSubgrediit}
-              >
-              
-            <AddBoxOutlinedIcon
-              sx={{ fontSize: "25px" }}
-              onClick={handleOpenCreateSubgrediit}
-            />
+            >
+              <AddBoxOutlinedIcon
+                sx={{ fontSize: "25px" }}
+                onClick={handleOpenCreateSubgrediit}
+              />
             </Button>
             <SmartToyOutlinedIcon sx={{ fontSize: "25px" }} />
             <QuestionAnswerOutlinedIcon sx={{ fontSize: "25px" }} />
@@ -238,10 +239,16 @@ const Navbar = () => {
               alignItems="center"
               gap="3rem"
             >
-              <AddBoxOutlinedIcon
-                sx={{ fontSize: "25px" }}
+              <Button
+                variant="contained"
+                color="primary"
                 onClick={handleOpenCreateSubgrediit}
-              />
+              >
+                <AddBoxOutlinedIcon
+                  sx={{ fontSize: "25px" }}
+                  onClick={handleOpenCreateSubgrediit}
+                />
+              </Button>
               <SmartToyOutlinedIcon sx={{ fontSize: "25px" }} />
               <QuestionAnswerOutlinedIcon sx={{ fontSize: "25px" }} />
               <IconButton
