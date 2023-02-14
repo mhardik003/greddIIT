@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
+import Mysubgrediits from "scenes/mySubgrediits";
 
 function App() {
   const mode = useSelector((state) => state.mode);
@@ -42,6 +43,11 @@ function App() {
               path="/profile/:userId"
               element={isAuth ? <ProfilePage /> : <Navigate to="/login" />}
             />
+            < Route
+              path="/mysubgrediits/:userId"
+              element={isAuth ? <Mysubgrediits /> : <Navigate to="/login" />}
+            />
+
             <Route
               path="*"
               element={isAuth ? <NotFound /> : <Navigate to="/login" />}

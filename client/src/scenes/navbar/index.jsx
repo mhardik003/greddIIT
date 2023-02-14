@@ -11,14 +11,8 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
-import {
-  Search,
-  DarkMode,
-  LightMode,
-  Menu,
-  Close,
-} from "@mui/icons-material";
-import QuestionAnswerOutlinedIcon from '@mui/icons-material/QuestionAnswerOutlined';
+import { Search, DarkMode, LightMode, Menu, Close } from "@mui/icons-material";
+import QuestionAnswerOutlinedIcon from "@mui/icons-material/QuestionAnswerOutlined";
 import SmartToyOutlinedIcon from "@mui/icons-material/SmartToyOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "state";
@@ -44,7 +38,6 @@ const Navbar = () => {
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
       <FlexBetween gap="1.75rem">
-        
         <Typography
           fontWeight="bold"
           fontSize="clamp(1rem, 2rem, 2.25rem)"
@@ -57,8 +50,7 @@ const Navbar = () => {
             },
           }}
         >
-      {/* <HomeOutlinedIcon sx={{ fontSize: "25px" }} /> */}
-
+          {/* <HomeOutlinedIcon sx={{ fontSize: "25px" }} /> */}
           GredIIT
         </Typography>
         {isNonMobileScreens && (
@@ -116,10 +108,17 @@ const Navbar = () => {
               }}
               input={<InputBase />}
             >
-              <MenuItem value={fullName}>
-                <Typography onClick={() => navigate(`/profile/${user.id}`)}>
-                  Profile Page
-                </Typography>
+              <MenuItem
+                value={fullName}
+                onClick={() => navigate(`/profile/${user.id}`)}
+              >
+                <Typography>Profile Page</Typography>
+              </MenuItem>
+              <MenuItem
+                value="My SubGreddits"
+                onClick={() => navigate(`/mysubgrediits/${user.id}`)}
+              >
+                <Typography>My SubGreddits</Typography>
               </MenuItem>
               <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
             </Select>
@@ -199,10 +198,17 @@ const Navbar = () => {
                 }}
                 input={<InputBase />}
               >
-                <MenuItem value={fullName}>
-                  <Typography onClick={() => navigate(`/profile/${user.id}`)}>
-                    {fullName}
-                  </Typography>
+                <MenuItem
+                  value={fullName}
+                  onClick={() => navigate(`/profile/${user.id}`)}
+                >
+                  <Typography>Profile Page</Typography>
+                </MenuItem>
+                <MenuItem
+                  value="My SubGreddits"
+                  onClick={() => navigate(`/mysubgrediits/${user.id}`)}
+                >
+                  <Typography>My SubGreddits</Typography>
                 </MenuItem>
                 <MenuItem onClick={() => dispatch(setLogout())}>
                   Log Out

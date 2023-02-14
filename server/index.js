@@ -17,6 +17,7 @@ import morgan from "morgan";
 import authRoutes from "./routes/auth.js";
 import { registerUser } from "./controllers/auth.js";
 import userRoutes from "./routes/users.js";
+import subgredditRoutes from "./routes/subgrediits.js";
 
 
 
@@ -57,6 +58,7 @@ app.post("/auth/register", upload.single("picture"), registerUser);
 // ROUTES
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
+app.use("/subgrediits", subgredditRoutes);
 
 
 // MONGOOSE CONNECTION

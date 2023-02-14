@@ -48,7 +48,8 @@ const SubgredditSchema = new mongoose.Schema({
     },
     posts: {
         type: Array,
-        default: []
+        default: [mongoose.Schema.Types.ObjectId],
+        ref: "Post"
     },
     reportedPosts: {
         type: Array,
