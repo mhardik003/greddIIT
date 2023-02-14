@@ -146,7 +146,8 @@ const UserDetails = ({ userId, userData }) => {
       }
     );
 
-    const data = await response.json();
+    await response.json();
+    // const data = await response.json();
     // console.log("data : ", data);
     getFollowers();
   };
@@ -164,7 +165,8 @@ const UserDetails = ({ userId, userData }) => {
       }
     );
 
-    const data = await response.json();
+    await response.json();
+    // const data = await response.json();
     // console.log("data : ", data);
     getFollowing();
   };
@@ -173,15 +175,15 @@ const UserDetails = ({ userId, userData }) => {
     getAllUsers();
     getFollowers();
     getFollowing();
-  }, []);
+  },[]); // eslint-disable-line react-hooks/exhaustive-deps
 
   React.useEffect(() => {
     getNonFollowers(allUsers, followersArray);
-  }, [allUsers, followersArray]);
+  }, [allUsers, followersArray]); // eslint-disable-line react-hooks/exhaustive-deps
 
   React.useEffect(() => {
     getNonFollowing(allUsers, followingArray);
-  }, [allUsers, followingArray]);
+  }, [allUsers, followingArray]); //  eslint-disable-line react-hooks/exhaustive-deps
 
   //   console.log("allUsers : ", allUsers);
   //   console.log("followingArray : ", followingArray);

@@ -65,6 +65,8 @@ app.use("/subgrediits", subgredditRoutes);
 const PORT = process.env.PORT || 6001; // to use the port from .env file (if not, use 6001 as backup)
 mongoose.set('strictQuery', true); // to use strict query
 
+// console.log(process.env.MONGO_URI);
+
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,

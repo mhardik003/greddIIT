@@ -10,7 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "./navBar";
-import CreateSubgrediit from "./CreateSubgrediit";
+// import CreateSubgrediit from "./CreateSubgrediit";
 import FlexBetween from "components/FlexBetween";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
@@ -53,7 +53,8 @@ const Mysubgrediits = () => {
             headers: { Authorization: `Bearer ${token}` },
         }
     );
-    const data = await response.json();
+    await response.json();
+    // const data = await response.json();
     // console.log("data : ", data);
     getMySubgrediits();
     };

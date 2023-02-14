@@ -24,20 +24,6 @@ import { useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
 import CreateSubgrediit from "./CreateSubgrediit";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  color: "#F6F6F6",
-  boxShadow: 24,
-  p: 4,
-  borderRadius: 2,
-  pt: 2,
-  px: 4,
-  pb: 3,
-};
-
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
@@ -149,10 +135,17 @@ const Navbar = () => {
         {/* DESKTOP NAV */}
         {isNonMobileScreens ? (
           <FlexBetween gap="2rem">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleOpenCreateSubgrediit}
+              >
+              
             <AddBoxOutlinedIcon
               sx={{ fontSize: "25px" }}
               onClick={handleOpenCreateSubgrediit}
             />
+            </Button>
             <SmartToyOutlinedIcon sx={{ fontSize: "25px" }} />
             <QuestionAnswerOutlinedIcon sx={{ fontSize: "25px" }} />
             <IconButton onClick={() => dispatch(setMode())}>

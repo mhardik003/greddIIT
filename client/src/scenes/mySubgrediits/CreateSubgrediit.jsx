@@ -11,10 +11,9 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { toast, ToastContainer } from "react-toastify";
-import { ref } from "yup";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setLogin } from "state";
+// import { useNavigate } from "react-router-dom";
+// import { useDispatch } from "react-redux";
+// import { setLogin } from "state";
 import Dropzone from "react-dropzone";
 import FlexBetween from "components/FlexBetween";
 import { useSelector } from "react-redux";
@@ -42,7 +41,7 @@ const initialValuesSubgrediit = {
 
 const CreateSubgrediit = () => {
   const { palette } = useTheme();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width: 600px)");
   const { id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);

@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 // import { useParams } from "react-router-dom";
 import Navbar from "scenes/navbar";
-import FlexBetween from "components/FlexBetween";
+// import FlexBetween from "components/FlexBetween";
 import Form from "./Form";
 import UserDetails from "./userDetails";
 
