@@ -142,21 +142,19 @@ const Navbar = () => {
               color="primary"
               onClick={handleOpenCreateSubgrediit}
             >
-              <AddBoxOutlinedIcon
-                sx={{ fontSize: "25px" }}
+              <SmartToyOutlinedIcon
+                sx={{ fontSize: "25px",
+              "&:hover": {
+                color: primaryLight,
+                cursor: "pointer",
+              }
+              }}
+                
                 onClick={handleOpenCreateSubgrediit}
               />
             </Button>
-            <SmartToyOutlinedIcon
-              sx={{
-                fontSize: "25px",
-                "&:hover": {
-                  color: primaryLight,
-                  cursor: "pointer",
-                },
-              }}
-              onClick={() => navigate("/")}
-            />
+
+            {/* <SmartToyOutlinedIcon sx={{ fontSize: "25px" }} /> */}
             <QuestionAnswerOutlinedIcon sx={{ fontSize: "25px" }} />
             <IconButton onClick={() => dispatch(setMode())}>
               {theme.palette.mode === "dark" ? (
@@ -249,24 +247,22 @@ const Navbar = () => {
               gap="3rem"
             >
               <Button
-                variant="contained"
-                color="primary"
-                onClick={handleOpenCreateSubgrediit}
-              >
-                <AddBoxOutlinedIcon
-                  sx={{ fontSize: "25px" }}
-                  onClick={handleOpenCreateSubgrediit}
-                />
-              </Button>
+              variant="contained"
+              color="primary"
+              onClick={handleOpenCreateSubgrediit}
+            >
               <SmartToyOutlinedIcon
-                sx={{
-                  fontSize: "25px",
-                  "&:hover": {
-                    color: primaryLight,
-                    cursor: "pointer",
-                  },
-                }}
+                sx={{ fontSize: "25px",
+              "&:hover": {
+                color: primaryLight,
+                cursor: "pointer",
+              }
+              }}
+                
+                onClick={handleOpenCreateSubgrediit}
               />
+            </Button>
+              {/* <SmartToyOutlinedIcon sx={{ fontSize: "25px" }} /> */}
               <QuestionAnswerOutlinedIcon sx={{ fontSize: "25px" }} />
               <IconButton
                 onClick={() => dispatch(setMode())}

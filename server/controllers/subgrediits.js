@@ -38,12 +38,16 @@ export const getMySubgrediits = async (req, res) => {
 
 export const getAllSubgrediits = async (req, res) => {
   try {
+    console.log("getAllSubgrediits");
     const subgreddits = await Subgreddit.find();
     // console.log("subgreddits : ", subgreddits);
     // only send the _id of the subgreddits
+    console.log("subgreddits sent : ", subgreddits.length );
+
     res.status(200).json(subgreddits);
   } catch (error) {
-    res.status(404).json({ error: error.message });
+    console.log("BANDARR")
+    res.status(404).json({ error: error.message, message: "BANDAR" });
   }
 };
 

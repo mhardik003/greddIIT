@@ -71,7 +71,15 @@ const Navbar = () => {
       {/* DESKTOP NAV */}
       {isNonMobileScreens ? (
         <FlexBetween gap="2rem">
-          <SmartToyOutlinedIcon sx={{ fontSize: "25px" }} />
+          <SmartToyOutlinedIcon
+            sx={{
+              fontSize: "25px",
+              "&:hover": {
+                color: primaryLight,
+                cursor: "pointer",
+              },
+            }}
+          />
           <QuestionAnswerOutlinedIcon sx={{ fontSize: "25px" }} />
           <IconButton onClick={() => dispatch(setMode())}>
             {theme.palette.mode === "dark" ? (
@@ -161,7 +169,15 @@ const Navbar = () => {
             alignItems="center"
             gap="3rem"
           >
-            <SmartToyOutlinedIcon sx={{ fontSize: "25px" }} />
+            <SmartToyOutlinedIcon
+              sx={{
+                fontSize: "25px",
+                "&:hover": {
+                  color: primaryLight,
+                  cursor: "pointer",
+                },
+              }}
+            />
             <QuestionAnswerOutlinedIcon sx={{ fontSize: "25px" }} />
             <IconButton
               onClick={() => dispatch(setMode())}

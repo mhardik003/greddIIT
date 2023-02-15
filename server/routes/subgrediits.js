@@ -21,7 +21,7 @@ const router = express.Router();
 
 router.get("/:id", getSubgrediit);
 router.get("/getMySubgrediits/:id", getMySubgrediits);
-router.get("/getAllSubgrediits", getAllSubgrediits);
+router.get("/getAllSubgrediits/:id", getAllSubgrediits);
 
 router.post("/createSubgrediit", verifyToken, createSubgrediit);
 router.patch("/editSubgrediit", editSubgrediit);
