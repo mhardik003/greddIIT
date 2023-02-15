@@ -48,7 +48,7 @@ const Form = ({ userId, userData }) => {
     // console.log("Toast message");
     toast.success("User Profile Updated", {
       position: "top-right",
-      autoClose: 5000,
+      autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -98,7 +98,8 @@ const Form = ({ userId, userData }) => {
         age: values.age,
       },
     });
-    showToastMessage()();
+
+    showToastMessage();
     dispatch(
       setLogin({
         user: {
