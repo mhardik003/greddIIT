@@ -11,10 +11,12 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "./navBar";
 // import CreateSubgrediit from "./CreateSubgrediit";
+import { useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 const Mysubgrediits = () => {
+  const navigate = useNavigate();
   const theme = useTheme();
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const [user, setUser] = useState(null);
@@ -127,7 +129,16 @@ const Mysubgrediits = () => {
                       fontWeight="500"
                       variant="h5"
                       color="primary"
-                      sx={{ mb: "0.2rem", pl: "1rem" }}
+                      sx={{ mb: "0.2rem", pl: "1rem" ,
+                      "&:hover": {
+                        cursor: "pointer",
+                        color: theme.palette.neutral.dark,
+                      }
+                    }}
+                      onClick={() => {
+                        console.log("clicked on subgrediit");
+                        navigate(`/subgrediit/${subgrediit._id}`)
+                      }}
                     >
                       {subgrediit.name}
                     </Typography>

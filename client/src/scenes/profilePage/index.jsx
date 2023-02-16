@@ -4,15 +4,10 @@ import {
   Typography,
   Grid,
   useTheme,
-  // Divider,
-  // Avatar,
 } from "@mui/material";
-// import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-// import { useParams } from "react-router-dom";
 import Navbar from "scenes/navbar";
-// import FlexBetween from "components/FlexBetween";
 import Form from "./Form";
 import UserDetails from "./userDetails";
 

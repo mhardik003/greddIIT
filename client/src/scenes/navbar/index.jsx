@@ -79,6 +79,7 @@ const Navbar = () => {
                 cursor: "pointer",
               },
             }}
+            onClick={() => navigate("/")}
           />
           <QuestionAnswerOutlinedIcon sx={{ fontSize: "25px" }} />
           <IconButton onClick={() => dispatch(setMode())}>
@@ -177,6 +178,8 @@ const Navbar = () => {
                   cursor: "pointer",
                 },
               }}
+            onClick={() => navigate("/")}
+
             />
             <QuestionAnswerOutlinedIcon sx={{ fontSize: "25px" }} />
             <IconButton

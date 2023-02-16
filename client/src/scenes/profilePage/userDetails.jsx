@@ -262,7 +262,7 @@ const UserDetails = ({ userId, userData }) => {
                 </FlexBetween>
               ))}
 
-              {NotFollowersArray.map((notFollower) => (
+              {/* {NotFollowersArray.map((notFollower) => (
                 <FlexBetween
                   sx={{
                     flexWrap: "wrap",
@@ -288,7 +288,7 @@ const UserDetails = ({ userId, userData }) => {
                     </Typography>
                   </Button>
                 </FlexBetween>
-              ))}
+              ))} */}
             </Box>
           </Box>
         </Fade>

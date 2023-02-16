@@ -3,6 +3,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import HomePage from "./scenes/homePage";
 import LoginPage from "./scenes/loginPage";
+import Posts from "./scenes/posts";
 // import {RegisterPage} from './scenes/registerPage'
 import ProfilePage from "./scenes/profilePage";
 import NotFound from "./scenes/notFound";
@@ -46,6 +47,10 @@ function App() {
             < Route
               path="/mysubgrediits/:userId"
               element={isAuth ? <Mysubgrediits /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/subgrediit/:subgrediitId"
+              element={isAuth ? <Posts /> : <Navigate to="/login" />}
             />
 
             <Route
