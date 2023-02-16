@@ -30,7 +30,7 @@ const modalStyle = {
   bgcolor: "#1A1A1A",
   color: "#F6F6F6",
   borderRadius: "10px",
-  border: "2px solid #000",
+  // border: "2px solid #000",
   //   boxShadow: 24,
   pt: 4,
   pb: 4,

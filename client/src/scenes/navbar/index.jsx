@@ -125,7 +125,7 @@ const Navbar = () => {
               </MenuItem>
               <MenuItem
                 value="My SubGreddits"
-                onClick={() => navigate(`/mysubgrediits/${user.id}`)}
+                onClick={() => navigate(`/mysubgrediits/`)}
               >
                 <Typography>My SubGreddits</Typography>
               </MenuItem>
@@ -225,7 +225,7 @@ const Navbar = () => {
                 </MenuItem>
                 <MenuItem
                   value="My SubGreddits"
-                  onClick={() => navigate(`/mysubgrediits/${user.id}`)}
+                  onClick={() => navigate(`/mysubgrediits/`)}
                 >
                   <Typography>My SubGreddits</Typography>
                 </MenuItem>

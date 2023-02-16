@@ -45,12 +45,12 @@ function App() {
               element={isAuth ? <ProfilePage /> : <Navigate to="/login" />}
             />
             < Route
-              path="/mysubgrediits/:userId"
+              path="/mysubgrediits"
               element={isAuth ? <Mysubgrediits /> : <Navigate to="/login" />}
             />
             <Route
               path="/subgrediit/:subgrediitId"
-              element={isAuth ? <Posts /> : <Navigate to="/login" />}
+              element={isAuth ? <Posts/> : <Navigate to="/login" />}
             />
 
             <Route

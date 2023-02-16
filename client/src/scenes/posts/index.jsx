@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import FlexBetween from "components/FlexBetween";
 
-const Posts = () => {
+const Posts = (subgrediitId) => {
     const navigate = useNavigate();
     const theme = useTheme();
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
@@ -32,7 +32,7 @@ const Posts = () => {
         setUser(data);
     };
 
-    
+    console.log("subgrediitId : ", subgrediitId);
   return (
     <div>
       <Navbar />

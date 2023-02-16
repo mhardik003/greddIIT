@@ -41,7 +41,7 @@ const Mysubgrediits = () => {
     );
     const data = await response.json();
     setAllSubgrediits(data);
-    console.log("data : ", data);
+    // console.log("data : ", data);
   };
 
     // const deleteSubgrediit = async (subgrediitId) => {
@@ -134,7 +134,7 @@ const Mysubgrediits = () => {
                       }
                     }}
                       onClick={() => {
-                        console.log("clicked on subgrediit");
+                        // console.log("clicked on subgrediit");
                         navigate(`/subgrediit/${subgrediit._id}`)
                       }}
                     >
