@@ -116,11 +116,7 @@ const CreateSubgrediit = () => {
 
     setTimeout(() => {
       window.location.reload(false);
-    
     }, 3000);
-
-
-
   };
 
   const handleFormSubmit = async (values, onSubmitProps) => {
@@ -190,7 +186,6 @@ const CreateSubgrediit = () => {
                 />
                 <TextField
                   label="Comma seperated banned keywords"
-                  
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.bannedKeywords}

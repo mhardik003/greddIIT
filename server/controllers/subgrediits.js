@@ -3,37 +3,34 @@ import Subgreddit from "../models/Subgreddit.js";
 
 export const getSubgrediit = async (req, res) => {
   try {
-    // console.log("req.params.id : ", req.params.id);
-
-    const subgreddit = await Subgreddit.findById(req.params.id);
-    // console.log("subgreddit : ", subgreddit);
-    res.status(200).json(subgreddit);
+    console.log("> req.params.id : ", req.params.id);
+    const subgreddit = await Subgreddit.find({ _id: req.params.id });
+    // console.log("> subgreddit : ", subgreddit);
+    res.status(200).json(subgreddit[0]);
   } catch (error) {
     res.status(404).json({ error: error.message });
   }
 };
 
 export const getMySubgrediits = async (req, res) => {
-    try {
-        console.log("req.params.id : ", req.params.id);
-        let subgreddits = [];
-        const subgrediits= await Subgreddit.find();
-        subgrediits.forEach((subgreddit)=>{
-                // console.log("subgreddit.moderators : ", subgreddit.moderators);
-            if(subgreddit.moderators[0]._id===req.params.id){
-                subgreddits.push(subgreddit);
-                console.log("> subgreddit : ", subgreddit.name);
-            }
-        })
+  try {
+    console.log("req.params.id : ", req.params.id);
+    let subgreddits = [];
+    const subgrediits = await Subgreddit.find();
+    subgrediits.forEach((subgreddit) => {
+      // console.log("subgreddit.moderators : ", subgreddit.moderators);
+      if (subgreddit.moderators[0]._id === req.params.id) {
+        subgreddits.push(subgreddit);
+        console.log("> subgreddit : ", subgreddit.name);
+      }
+    });
 
-
-
-        // const subgreddits = await Subgreddit.find({moderators: req.params.id});
-        // console.log("subgreddit : ", subgreddit);
-        res.status(200).json(subgreddits);
-    } catch (error) {
-        res.status(404).json({ error: error.message });
-    }
+    // const subgreddits = await Subgreddit.find({moderators: req.params.id});
+    // console.log("subgreddit : ", subgreddit);
+    res.status(200).json(subgreddits);
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
 };
 
 export const getAllSubgrediits = async (req, res) => {
@@ -42,11 +39,11 @@ export const getAllSubgrediits = async (req, res) => {
     const subgreddits = await Subgreddit.find();
     // console.log("subgreddits : ", subgreddits);
     // only send the _id of the subgreddits
-    console.log("subgreddits sent : ", subgreddits.length );
+    console.log("subgreddits sent : ", subgreddits.length);
 
     res.status(200).json(subgreddits);
   } catch (error) {
-    console.log("BANDARR")
+    console.log("BANDARR");
     res.status(404).json({ error: error.message, message: "BANDAR" });
   }
 };

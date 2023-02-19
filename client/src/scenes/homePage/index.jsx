@@ -29,6 +29,7 @@ const Mysubgrediits = () => {
     });
     const data = await response.json();
     setUser(data);
+    // console.log("user : ", user);
   };
 
   const getAllSubgrediits = async () => {
@@ -41,23 +42,8 @@ const Mysubgrediits = () => {
     );
     const data = await response.json();
     setAllSubgrediits(data);
-    // console.log("data : ", data);
+    // console.log("All subgrediits : ", data);
   };
-
-    // const deleteSubgrediit = async (subgrediitId) => {
-    //     console.log("subgrediitId : ", subgrediitId);
-    // const response = await fetch(
-    //     `http://localhost:3000/subgrediits/deleteSubgrediit/${subgrediitId}`,
-    //     {
-    //         method: "DELETE",
-    //         headers: { Authorization: `Bearer ${token}` },
-    //     }
-    // );
-    // await response.json();
-    // // const data = await response.json();
-    // // console.log("data : ", data);
-    // getMySubgrediits();
-    // };
 
   useEffect(() => {
     getUser();
@@ -65,8 +51,7 @@ const Mysubgrediits = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!user) return null;
-//   console.log("user : ", user);
-  // console.log("mysubgrediits : ", mysubgrediits);
+
 
   return (
     <>
@@ -99,6 +84,7 @@ const Mysubgrediits = () => {
               width={isNonMobileScreens ? "80%" : "83%"}
               p="2rem 0.5rem 1rem 0.5rem"
               m="2rem auto"
+              mb="1rem"
               borderRadius="1.5rem"
               backgroundColor={theme.palette.background.alt}
             >
@@ -111,6 +97,14 @@ const Mysubgrediits = () => {
               >
                 All SubGrediits
               </Typography>
+            </Box>
+            <Box
+              width={isNonMobileScreens ? "80%" : "83%"}
+              p="2rem 0.5rem 1rem 0.5rem"
+              m="1rem auto"
+              borderRadius="1.5rem"
+              backgroundColor={theme.palette.background.alt}
+            >
               {/* SHOW MY SUBGREDIITS */}
               {subgrediits.map((subgrediit) => (
                 <Box
@@ -127,15 +121,17 @@ const Mysubgrediits = () => {
                       fontWeight="500"
                       variant="h5"
                       color="primary"
-                      sx={{ mb: "0.2rem", pl: "1rem" ,
-                      "&:hover": {
-                        cursor: "pointer",
-                        color: theme.palette.neutral.dark,
-                      }
-                    }}
+                      sx={{
+                        mb: "0.2rem",
+                        pl: "1rem",
+                        "&:hover": {
+                          cursor: "pointer",
+                          color: theme.palette.neutral.dark,
+                        },
+                      }}
                       onClick={() => {
                         // console.log("clicked on subgrediit");
-                        navigate(`/subgrediit/${subgrediit._id}`)
+                        navigate(`/subgrediit/${subgrediit._id}`);
                       }}
                     >
                       {subgrediit.name}

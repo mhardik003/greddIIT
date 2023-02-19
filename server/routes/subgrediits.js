@@ -19,7 +19,7 @@ import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.get("/:id", getSubgrediit);
+router.get("/find/:id", getSubgrediit);
 router.get("/getMySubgrediits/:id", getMySubgrediits);
 router.get("/getAllSubgrediits/:id", getAllSubgrediits);
 

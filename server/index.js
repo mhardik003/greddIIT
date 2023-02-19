@@ -18,6 +18,7 @@ import authRoutes from "./routes/auth.js";
 import { registerUser } from "./controllers/auth.js";
 import userRoutes from "./routes/users.js";
 import subgredditRoutes from "./routes/subgrediits.js";
+import postRoutes from "./routes/post.js";
 
 
 
@@ -59,6 +60,7 @@ app.post("/auth/register", upload.single("picture"), registerUser);
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/subgrediits", subgredditRoutes);
+app.use("/posts", postRoutes);
 
 
 // MONGOOSE CONNECTION
