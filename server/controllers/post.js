@@ -4,19 +4,19 @@ import Subgreddit from "../models/Subgreddit.js";
 
 export const createPost = async (req, res) => {
   try {
-    console.log("req.body : ", req.body);
+    // console.log("req.body : ", req.body);
     const title = req.body.values.title;
     const description = req.body.values.description;
     const subgredditId = req.body.subgrediitId;
     const userId = req.body.userId;
     const subgreddit = await Subgreddit.find({ _id: subgredditId });
-    console.log("> subgreddit : ", subgreddit[0].name);
+    // console.log("> subgreddit : ", subgreddit[0].name);
     const user = await User.find({ _id: userId });
-    console.log("> user : ", user[0].firstName);
+    // console.log("> user : ", user[0].firstName);
 
     const newPost = new Post({
       title: title,
-      description:description,
+      description: description,
       postedBy: user[0],
       postedIn: subgreddit[0],
       upvotes: [],
@@ -25,18 +25,17 @@ export const createPost = async (req, res) => {
     });
 
     const savedPost = await newPost.save();
-    console.log("savedPost : ", savedPost);
+    // console.log("savedPost : ", savedPost);
 
     // save the post in the subgrediit too
     subgreddit[0].posts.push(savedPost);
     await subgreddit[0].save();
-    console.log("Subgreddit has been updated");
+    // console.log("Subgreddit has been updated");
 
     // save the post in the user too
     user[0].posts.push(savedPost);
     await user[0].save();
-    console.log("User has been updated");
-
+    // console.log("User has been updated");
 
     const allPosts = await Post.find();
     res.status(201).json(allPosts);
