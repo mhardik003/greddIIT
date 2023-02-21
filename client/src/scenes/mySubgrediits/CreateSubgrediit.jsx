@@ -39,7 +39,7 @@ const initialValuesSubgrediit = {
   subgrediitPicture: "",
 };
 
-const CreateSubgrediit = () => {
+const CreateSubgrediit = ({getMySubgrediits,handleCloseCreateSubgrediit}) => {
   const { palette } = useTheme();
   // const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width: 600px)");
@@ -114,10 +114,8 @@ const CreateSubgrediit = () => {
       progress: undefined,
     });
 
-    setTimeout(() => {
-      window.location.reload(false);
-    
-    }, 3000);
+    getMySubgrediits();
+    handleCloseCreateSubgrediit();
 
 
 

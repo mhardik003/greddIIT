@@ -39,7 +39,7 @@ const initialValuesSubgrediit = {
   subgrediitPicture: "",
 };
 
-const CreateSubgrediit = () => {
+const CreateSubgrediit = ({getAllSubgrediits,handleCloseCreateSubgrediit}) => {
   const { palette } = useTheme();
   // const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width: 600px)");
@@ -64,7 +64,7 @@ const CreateSubgrediit = () => {
   //
   // ON SUBMITTING THE FORM, SEND THE DATA TO THE SERVER
   const create = async (values, onSubmitProps) => {
-    console.log("Values from the form : ", values);
+    // console.log("Values from the form : ", values);
     const formData = new FormData();
     for (let value in values) {
       if (value !== "profilePicture") formData.append(value, values[value]);
@@ -76,7 +76,7 @@ const CreateSubgrediit = () => {
 
     // values.push({"moderator": user, "followers": user, "posts": []})
 
-    console.log("Form data : ", JSON.stringify(values));
+    // console.log("Form data : ", JSON.stringify(values));
 
     const response = await fetch(
       "http://localhost:3000/subgrediits/createSubgrediit",
@@ -98,7 +98,7 @@ const CreateSubgrediit = () => {
     console.log("Response status : ", response.status);
 
     const savedSubgrediit = await response.json();
-    console.log("Saved Subgrediit : ", savedSubgrediit);
+    // console.log("Saved Subgrediit : ", savedSubgrediit);
 
     onSubmitProps.resetForm(initialValuesSubgrediit);
 
@@ -114,9 +114,9 @@ const CreateSubgrediit = () => {
       progress: undefined,
     });
 
-    setTimeout(() => {
-      window.location.reload(false);
-    }, 3000);
+    getAllSubgrediits();
+    handleCloseCreateSubgrediit();
+
   };
 
   const handleFormSubmit = async (values, onSubmitProps) => {

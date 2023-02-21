@@ -62,6 +62,57 @@ export const getSubgredditPosts = async (req, res) => {
   }
 };
 
+export const deletePost = async (req, res) => {
+  try {
+    const postId = req.params.postId;
+    const post = await Post.findById(postId);
+    console.log("post : ", post);
+    const subgredditId = post.postedIn;
+    const subgreddit = await Subgreddit.findById(subgredditId);
+    // console.log("subgreddit : ", subgreddit);
+    const userId = post.postedBy;
+    const user = await User.findById(userId);
+    console.log("user : ", user);
+
+    // check if the post is part of the saved posts, upvoted posts, downvotes posts of all users and remove it
+    const allUsers = await User.find();
+    allUsers.forEach(async (user) => {
+      if (user.savedPosts.includes(postId)) {
+          let index=user.savedPosts.indexOf(postId);
+          user.savedPosts.splice(index,1);
+          await user.save();
+      }
+      if (user.upvotedPosts.includes(postId)) {
+          let index=user.upvotedPosts.indexOf(postId);
+          user.upvotedPosts.splice(index,1);
+          await user.save();
+      }
+      if (user.downvotedPosts.includes(postId)) {
+          let index=user.downvotedPosts.indexOf(postId);
+          user.downvotedPosts.splice(index,1);
+          await user.save();   
+      }
+    });
+
+    // remove the post from the subgreddit
+    let index = subgreddit.posts.indexOf(postId);
+    subgreddit.posts.splice(index, 1);
+    await subgreddit.save();
+
+    // remove the post from the user
+    index = user.posts.indexOf(postId);
+    user.posts.splice(index, 1);
+    await user.save();
+
+    // remove the post
+    await post.remove();
+    res.status(200).json("The post has been deleted");
+
+  } catch (error) {
+    res.status(500).json({ message: error.message, error: error });
+  }
+};
+
 export const upvotePost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);

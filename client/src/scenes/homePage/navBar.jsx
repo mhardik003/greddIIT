@@ -24,7 +24,7 @@ import { useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
 import CreateSubgrediit from "./CreateSubgrediit";
 
-const Navbar = () => {
+const Navbar = ({getAllSubgrediits}) => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -97,7 +97,7 @@ const Navbar = () => {
               m: 2,
             }}
           >
-            <CreateSubgrediit />
+            <CreateSubgrediit getAllSubgrediits={getAllSubgrediits} handleCloseCreateSubgrediit={handleCloseCreateSubgrediit}/>
           </Box>
         </Box>
       </Modal>

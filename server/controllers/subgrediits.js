@@ -62,13 +62,13 @@ export const createSubgrediit = async (req, res) => {
     if (bannedKeywords) {
       bannedKeywordsArray = bannedKeywords.split(",");
     }
-    console.log("> name from the request : ", name);
-    console.log("> description from the request : ", description);
-    console.log("> picturePath from the request : ", subgrediitPicture);
-    console.log("> tags from the request : ", tagsArray);
-    console.log("> banndedKeywords from the request : ", bannedKeywordsArray);
-    console.log("> moderator from the request : ", moderator);
-    console.log("> followers from the request : ", followers);
+    // console.log("> name from the request : ", name);
+    // console.log("> description from the request : ", description);
+    // console.log("> picturePath from the request : ", subgrediitPicture);
+    // console.log("> tags from the request : ", tagsArray);
+    // console.log("> banndedKeywords from the request : ", bannedKeywordsArray);
+    // console.log("> moderator from the request : ", moderator);
+    // console.log("> followers from the request : ", followers);
 
     const newSubgreddit = new Subgreddit({
       name,

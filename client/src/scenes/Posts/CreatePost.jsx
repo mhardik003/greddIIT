@@ -30,7 +30,7 @@ const initialValuesPost = {
   description: "",
 };
 
-const CreatePost = () => {
+const CreatePost = ({getPosts}) => {
   const { palette } = useTheme();
   // const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width: 600px)");
@@ -109,9 +109,8 @@ const CreatePost = () => {
       });
       onSubmitProps.resetForm();
     }
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
+    getPosts();
+   
   };
 
   const handleFormSubmit = async (values, onSubmitProps) => {

@@ -72,7 +72,7 @@ const Mysubgrediits = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar getMySubgrediits={getMySubgrediits}/>
       <Box>
         <Grid spacing={1} container justifyContent="center" direction="row">
           <Grid

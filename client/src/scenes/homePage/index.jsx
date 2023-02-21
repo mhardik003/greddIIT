@@ -55,7 +55,7 @@ const Mysubgrediits = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar getAllSubgrediits={getAllSubgrediits} />
       <Box>
         <Grid spacing={1} container justifyContent="center" direction="row">
           <Grid

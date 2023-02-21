@@ -53,15 +53,21 @@ const UserSchema = new mongoose.Schema({
     },
     savedPosts:{
         type: Array,
-        default:[]
+        default:[],
+        ref: "Post"
     },
     upvotedPosts:{
         type: Array,
         default:[],
         ref: "Post"
     },
+    downvotedPosts:{
+        type: Array,
+        default:[],
+        ref: "Post"
+    },
 }, 
-{timeStamps: true}
+    {timeStamps: true}
 );
 
 const User = mongoose.model('User', UserSchema);
