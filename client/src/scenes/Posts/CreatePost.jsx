@@ -30,7 +30,7 @@ const initialValuesPost = {
   description: "",
 };
 
-const CreatePost = ({getPosts}) => {
+const CreatePost = ({getSubgrediitPosts}) => {
   const { palette } = useTheme();
   // const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width: 600px)");
@@ -109,7 +109,7 @@ const CreatePost = ({getPosts}) => {
       });
       onSubmitProps.resetForm();
     }
-    getPosts();
+    getSubgrediitPosts();
    
   };
 

@@ -13,13 +13,16 @@ import { useSelector } from "react-redux";
 import Navbar from "../navbar";
 import CreatePost from "./CreatePost";
 import FlexBetween from "components/FlexBetween";
-import ArrowCircleUpOutlinedIcon from "@mui/icons-material/ArrowCircleUpOutlined";
-import ArrowCircleDownOutlinedIcon from "@mui/icons-material/ArrowCircleDownOutlined";
+
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined";
-import BookmarkOutlinedIcon from "@mui/icons-material/BookmarkOutlined";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+
+import UploadIcon from "@mui/icons-material/Upload";
+import UploadOutlinedIcon from "@mui/icons-material/UploadOutlined";
+import DownloadIcon from "@mui/icons-material/Download";
+import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
+
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
-import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
-import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CommentIcon from "@mui/icons-material/Comment";
 import { toast, ToastContainer } from "react-toastify";
@@ -30,6 +33,7 @@ const Posts = () => {
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const [user, setUser] = useState(null);
   const [allUsers, setAllUsers] = useState([]);
+  const [posts, setPosts] = useState([]);
   const [subgrediit, setSubgrediit] = useState(null);
   const { subgrediitId } = useParams();
   const token = useSelector((state) => state.token);
@@ -42,7 +46,6 @@ const Posts = () => {
     });
     const data = await response.json();
     setUser(data);
-    // console.log("user : ", user);
   };
 
   const getAllUsers = async () => {
@@ -53,8 +56,7 @@ const Posts = () => {
     setAllUsers(data);
   };
 
-  const getPosts = async () => {
-    console.log("Hii")
+  const getSubgrediit = async () => {
     const response = await fetch(
       `http://localhost:3000/subgrediits/find/${subgrediitId}`,
       {
@@ -64,7 +66,20 @@ const Posts = () => {
     );
     const data = await response.json();
     setSubgrediit(data);
-    console.log("Subgrediit Posts : ", data.posts);
+    // console.log("Subgrediit : ", data);
+  };
+
+  const getSubgrediitPosts = async () => {
+    const response = await fetch(
+      `http://localhost:3000/posts/get/${subgrediitId}`,
+      {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    const data = await response.json();
+    setPosts(data);
+    // console.log("Subgrediit Posts : ", data);
   };
 
   const deletePost = async (postId) => {
@@ -99,19 +114,107 @@ const Posts = () => {
       draggable: true,
       progress: undefined,
     });
-    getPosts();
+    getSubgrediitPosts();
+  };
+
+  const upvotePost = async (postId) => {
+    const response = await fetch(
+      `http://localhost:3000/posts/${postId}/${id}/upvote`,
+      {
+        body: JSON.stringify({ userId: id }),
+        method: "PUT",
+        headers: { Authorization: `Bearer ${token}` },
+        "Content-Type": "application/json",
+      }
+    );
+    const data = await response.json();
+    if (data.error) {
+      toast.error(data.error, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      return console.log(data.error);
+    }
+    getUser();
+    getSubgrediitPosts();
+  };
+
+  const downvotePost = async (postId) => {
+    console.log("downvotePost : ", postId);
+    const response = await fetch(
+      `http://localhost:3000/posts/${postId}/${id}/downvote`,
+      {
+        body: JSON.stringify({ userId: id }),
+        method: "PUT",
+        headers: { Authorization: `Bearer ${token}` },
+        "Content-Type": "application/json",
+      }
+    );
+    const data = await response.json();
+    if (data.error) {
+      toast.error(data.error, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      return console.log(data.error);
+    }
+
+    getSubgrediitPosts();
+  };
+
+  const savePost = async (postId) => {
+    // console.log("savePost : ", postId);
+    const response = await fetch(
+      `http://localhost:3000/posts/${postId}/${id}/save`,
+      {
+        body: JSON.stringify({ userId: id }),
+        method: "PUT",
+        headers: { Authorization: `Bearer ${token}` },
+        "Content-Type": "application/json",
+      }
+    );
+
+    const data = await response.json();
+    if (data.error) {
+      toast.error(data.error, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      return console.log(data.error);
+    }
+
+    getSubgrediitPosts();
   };
 
   useEffect(() => {
     getUser();
     getAllUsers();
-    getPosts();
+    getSubgrediit();
+    getSubgrediitPosts();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!user) return null;
   if (!subgrediit) return null;
-  // console.log("Subgrediit Postees : ", subgrediit);
-  console.log("All Users : ", allUsers);
+  if (!posts) return null;
+
 
   return (
     <>
@@ -177,12 +280,12 @@ const Posts = () => {
               >
                 Create Post
               </Typography>
-              <CreatePost getPosts={getPosts} />
+              <CreatePost getSubgrediitPosts={getSubgrediitPosts} />
             </Box>
             {/* check if there are any posts */}
-            {subgrediit.posts.length > 0 ? (
+            {posts.length > 0 ? (
               <Box
-                key={subgrediit._id}
+                key={subgrediitId}
                 width={isNonMobileScreens ? "80%" : "83%"}
                 p="2rem 0.5rem 1rem 0.5rem"
                 m="1rem auto"
@@ -199,7 +302,7 @@ const Posts = () => {
                   All Posts
                 </Typography>
 
-                {subgrediit.posts.map((post) => (
+                {posts.map((post) => (
                   <Box
                     key={post._id}
                     width={isNonMobileScreens ? "80%" : "83%"}
@@ -242,11 +345,11 @@ const Posts = () => {
                       color="#666666"
                       sx={{ mb: "0.5rem", pl: "0.5rem" }}
                     >
-                      Created By :{" "}
+                      {/* Created By :{" "}
                       {
                         allUsers.find((user) => user._id === post.postedBy)
                           .userName
-                      }
+                      } */}
                     </Typography>
                     <Divider />
                     <Typography
@@ -288,35 +391,47 @@ const Posts = () => {
                           // sx={{ mr: "1rem" }}
                           onClick={() => {
                             console.log("Upvote");
+                            upvotePost(post._id);
                           }}
                         >
-                          <ArrowCircleUpOutlinedIcon />
+                          {/* check if the user has already upvoted the post */}
+                          {post.upvotes.includes(user._id) ? (
+                            <UploadIcon />
+                          ) : (
+                            <UploadOutlinedIcon />
+                          )}
+                          ( {post.upvotes.length} )
                         </Button>
                         <Button
-                          // variant="contained"
-                          // color="warning"
-                          // sx={{ mr: "1rem" }}
                           onClick={() => {
                             console.log("Downvote");
+                            downvotePost(post._id);
                           }}
                         >
-                          <ArrowCircleDownOutlinedIcon color="white" />
+                          {/* check if the user has already downvoted the post */}
+                          {post.downvotes.includes(user._id) ? (
+                            <DownloadIcon />
+                          ) : (
+                            <DownloadOutlinedIcon />
+                          )}
+                          {post.downvotes.length}
                         </Button>
 
                         {/* Save for later */}
                         <Button
-                          // align the button to the right
-
-                          // variant="contained"
-                          // color="info"
                           sx={{ mr: "1rem", ml: "auto" }}
                           onClick={() => {
-                            console.log("post.postedBy._id : ", post.postedBy);
-                            console.log("user._id : ", user._id);
                             console.log("Save for later");
+                            savePost(post._id);
                           }}
                         >
-                          <BookmarkBorderOutlinedIcon color="white" />
+                          {/* check if the user has already saved the post */}
+
+                          {post.savedBy.includes(user._id) ? (
+                            <BookmarkIcon />
+                          ) : (
+                            <BookmarkBorderOutlinedIcon />
+                          )}
                         </Button>
                       </FlexBetween>
                     </Box>

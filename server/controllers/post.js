@@ -2,6 +2,20 @@ import Post from "../models/Post.js";
 import User from "../models/User.js";
 import Subgreddit from "../models/Subgreddit.js";
 
+export const getSubgrediitPosts = async (req, res) => {
+  try {
+    const subgreddit = await Subgreddit.find({ _id: req.params.subgrediitId });
+    const post_ids = subgreddit[0].posts;
+
+    // find the posts with the ids in post_ids
+    const all_posts = await Post.find({ _id: { $in: post_ids } });
+    // console.log("> all_posts : ", all_posts);
+    res.status(200).json(all_posts);
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+};
+
 export const createPost = async (req, res) => {
   try {
     // console.log("req.body : ", req.body);
@@ -28,12 +42,12 @@ export const createPost = async (req, res) => {
     // console.log("savedPost : ", savedPost);
 
     // save the post in the subgrediit too
-    subgreddit[0].posts.push(savedPost);
+    subgreddit[0].posts.push(savedPost._id);
     await subgreddit[0].save();
     // console.log("Subgreddit has been updated");
 
     // save the post in the user too
-    user[0].posts.push(savedPost);
+    user[0].posts.push(savedPost._id);
     await user[0].save();
     // console.log("User has been updated");
 
@@ -66,31 +80,31 @@ export const deletePost = async (req, res) => {
   try {
     const postId = req.params.postId;
     const post = await Post.findById(postId);
-    console.log("post : ", post);
+    // console.log("post : ", post);
     const subgredditId = post.postedIn;
     const subgreddit = await Subgreddit.findById(subgredditId);
     // console.log("subgreddit : ", subgreddit);
     const userId = post.postedBy;
     const user = await User.findById(userId);
-    console.log("user : ", user);
+    // console.log("user : ", user);
 
     // check if the post is part of the saved posts, upvoted posts, downvotes posts of all users and remove it
     const allUsers = await User.find();
     allUsers.forEach(async (user) => {
       if (user.savedPosts.includes(postId)) {
-          let index=user.savedPosts.indexOf(postId);
-          user.savedPosts.splice(index,1);
-          await user.save();
+        let index = user.savedPosts.indexOf(postId);
+        user.savedPosts.splice(index, 1);
+        await user.save();
       }
       if (user.upvotedPosts.includes(postId)) {
-          let index=user.upvotedPosts.indexOf(postId);
-          user.upvotedPosts.splice(index,1);
-          await user.save();
+        let index = user.upvotedPosts.indexOf(postId);
+        user.upvotedPosts.splice(index, 1);
+        await user.save();
       }
       if (user.downvotedPosts.includes(postId)) {
-          let index=user.downvotedPosts.indexOf(postId);
-          user.downvotedPosts.splice(index,1);
-          await user.save();   
+        let index = user.downvotedPosts.indexOf(postId);
+        user.downvotedPosts.splice(index, 1);
+        await user.save();
       }
     });
 
@@ -107,7 +121,6 @@ export const deletePost = async (req, res) => {
     // remove the post
     await post.remove();
     res.status(200).json("The post has been deleted");
-
   } catch (error) {
     res.status(500).json({ message: error.message, error: error });
   }
@@ -115,14 +128,32 @@ export const deletePost = async (req, res) => {
 
 export const upvotePost = async (req, res) => {
   try {
-    const post = await Post.findById(req.params.id);
-    if (post.upvotes.includes(req.body.userId)) {
-      await post.updateOne({ $pull: { upvotes: req.body.userId } });
+    const post = await Post.findById(req.params.postId);
+    const userId = req.params.id;
+    const user = await User.findById(userId);
+    console.log("post : ", post);
+
+    // check if the user has already upvoted the post
+    if (post.upvotes.includes(userId)) {
+      // if yes, remove the upvote
+      let index = post.upvotes.indexOf(userId);
+      post.upvotes.splice(index, 1);
       await post.save();
+
+      // remove the post from the user's upvoted posts
+      index = user.upvotedPosts.indexOf(req.params.postId);
+      user.upvotedPosts.splice(index, 1);
+      await user.save();
+
       res.status(200).json("The post has been un-upvoted");
     } else {
-      await post.updateOne({ $push: { upvotes: req.body.userId } });
+      // if no, add the upvote
+      post.upvotes.push(userId);
       await post.save();
+
+      // add the post to the user's upvoted posts
+      user.upvotedPosts.push(req.params.postId);
+      await user.save();
 
       res.status(200).json("The post has been upvoted");
     }
@@ -133,14 +164,31 @@ export const upvotePost = async (req, res) => {
 
 export const downvotePost = async (req, res) => {
   try {
-    const post = await Post.findById(req.params.id);
-    if (post.downvotes.includes(req.body.userId)) {
-      await post.updateOne({ $pull: { downvotes: req.body.userId } });
+    const post = await Post.findById(req.params.postId);
+    const userId = req.params.id;
+    const user = await User.findById(userId);
+
+    console.log("post : ", post);
+
+    // check if the user has already downvoted the post
+    if (post.downvotes.includes(userId)) {
+      // if yes, remove the downvote
+      let index = post.downvotes.indexOf(userId);
+      post.downvotes.splice(index, 1);
       await post.save();
+
+      index = user.downvotedPosts.indexOf(req.params.postId);
+      user.downvotedPosts.splice(index, 1);
+      await user.save();
+
       res.status(200).json("The post has been un-downvoted");
     } else {
-      await post.updateOne({ $push: { downvotes: req.body.userId } });
+      // if no, add the downvote
+      post.downvotes.push(userId);
       await post.save();
+
+      user.downvotedPosts.push(req.params.postId);
+      await user.save();
       res.status(200).json("The post has been downvoted");
     }
   } catch (error) {
@@ -159,8 +207,35 @@ export const getUserPosts = async (req, res) => {
 
 export const savePost = async (req, res) => {
   try {
-    const post = await Post.findById(req.params.PostId);
-    const user = await User.findById(req.body.userId);
+    // console.log("req.params : ", req.params);
+    const users = await User.find({ _id: req.params.id });
+    const user = users[0];
+    const post = await Post.findById(req.params.postId);
+    // console.log("user : ", user);
+    // check if the user has already saved the post
+    if (user.savedPosts.includes(req.params.postId)) {
+    
+
+      let index = user.savedPosts.indexOf(req.params.postId);
+      user.savedPosts.splice(index, 1);
+      await user.save();
+
+      index= post.savedBy.indexOf(req.params.id);
+      post.savedBy.splice(index, 1);
+      await post.save();
+      console.log("> The post has been unsaved")
+      res.status(200).json("The post has been unsaved");
+    } else {
+      
+
+      user.savedPosts.push(req.params.postId);
+      await user.save();
+
+      post.savedBy.push(req.params.id);
+      await post.save();
+      console.log("> The post has been saved")
+      res.status(200).json("The post has been saved");
+    }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
