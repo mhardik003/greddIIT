@@ -470,7 +470,7 @@ const Posts = () => {
                           ) : (
                             <DownloadOutlinedIcon />
                           )}
-                          {post.downvotes.length}
+                          ( {post.downvotes.length} )
                         </Button>
 
                         {/* Save for later */}

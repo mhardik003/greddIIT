@@ -35,6 +35,7 @@ const SavedPosts = () => {
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const [user, setUser] = useState(null);
   const [allUsers, setAllUsers] = useState([]);
+  const [allSubgrediits, setAllSubgrediits] = useState([]);
   const [savedPosts, setSavedPosts] = useState([]);
   const token = useSelector((state) => state.token);
   const { id } = useSelector((state) => state.user);
@@ -90,6 +91,17 @@ const SavedPosts = () => {
     const data = await response.json();
     setAllUsers(data);
   };
+
+    const getAllSubgrediits = async () => {
+    const response = await fetch(
+        `http://localhost:3000/subgrediits/getAllSubgrediits/${id}`,
+        {
+            method: "GET",
+        }
+    );
+    const data = await response.json();
+    setAllSubgrediits(data);
+    };
 
   const upvotePost = async (postId) => {
     const response = await fetch(
@@ -206,6 +218,7 @@ const SavedPosts = () => {
     getUser();
     getAllUsers();
     getSavedPosts();
+    getAllSubgrediits();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!user) return null;
@@ -293,7 +306,7 @@ const SavedPosts = () => {
                         <Button
                           variant="contained"
                           color="error"
-                          sx={{ mr: "1rem" }}
+                          sx={{ mr: "1rem", mb: "0.5rem" }}
                           onClick={() => {
                             console.log("Delete Post");
                             deletePost(post._id);
@@ -303,12 +316,29 @@ const SavedPosts = () => {
                         </Button>
                       )}
                     </FlexBetween>
+                    {/* the subgrediit to which the post belongs to */}
+                    <Typography
+                        textAlign="left"
+                        fontWeight="500"
+                        variant="body1"
+                        color="#666666"
+                        sx={{ mb: "0.2rem", pl: "0.5rem", mt: "-0.5rem" }}
+                        >
+                        ({" "}
+                        {
+                        allSubgrediits.find(
+                            (subgrediit) => subgrediit._id === post.postedIn
+                        ).name
+                        }
+                        )
+                    </Typography>
+                    {/* the user who created the post */}
                     <Typography
                       textAlign="left"
                       fontWeight="500"
                       variant="body2"
                       color="#666666"
-                      sx={{ mb: "0.5rem", pl: "0.5rem" }}
+                      sx={{ mb: "0rem", pl: "0.5rem" }}
                     >
                       Created By :{" "}
                       {
@@ -401,7 +431,7 @@ const SavedPosts = () => {
                           ) : (
                             <DownloadOutlinedIcon />
                           )}
-                          {post.downvotes.length}
+                          ( {post.downvotes.length} )
                         </Button>
 
                         {/* Save for later */}
