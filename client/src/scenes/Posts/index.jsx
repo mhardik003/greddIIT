@@ -1,3 +1,10 @@
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Navbar from "../navbar";
+import CreatePost from "./CreatePost";
+import FlexBetween from "components/FlexBetween";
+
 import {
   Box,
   useMediaQuery,
@@ -6,29 +13,25 @@ import {
   useTheme,
   Divider,
   Button,
+  IconButton
 } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import Navbar from "../navbar";
-import CreatePost from "./CreatePost";
-import FlexBetween from "components/FlexBetween";
 
-import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
+import{
+  BookmarkBorderOutlined as BookmarkBorderOutlinedIcon,
+  Bookmark as BookmarkIcon,
+  Upload as UploadIcon,
+  UploadOutlined as UploadOutlinedIcon,
+  Download as DownloadIcon,
+  DownloadOutlined as DownloadOutlinedIcon,
+  PersonRemove as PersonRemoveIcon,
+  Delete as DeleteIcon,
+  Comment as CommentIcon,
+  PersonAddAlt as PersonAddAltIcon
+} from "@mui/icons-material";
 
-import UploadIcon from "@mui/icons-material/Upload";
-import UploadOutlinedIcon from "@mui/icons-material/UploadOutlined";
-import DownloadIcon from "@mui/icons-material/Download";
-import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
-import { IconButton } from "@mui/material";
-import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
-import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
-import DeleteIcon from "@mui/icons-material/Delete";
-import CommentIcon from "@mui/icons-material/Comment";
-import { toast, ToastContainer } from "react-toastify";
-import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
-import { PersonRemove } from "@mui/icons-material";
+
+import { toast } from "react-toastify";
+
 
 const Posts = () => {
   const navigate = useNavigate();
