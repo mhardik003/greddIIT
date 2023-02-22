@@ -12,6 +12,8 @@ import {
   Modal,
   Button,
   Divider,
+  Fade,
+  Backdrop,
 } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import { Search, DarkMode, LightMode, Menu, Close } from "@mui/icons-material";
@@ -49,60 +51,70 @@ const Navbar = ({ getAllSubgrediits }) => {
       <Modal
         open={openCreateSubgrediit}
         onClose={handleCloseCreateSubgrediit}
+        closeAfterTransition
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        slots={{ backdrop: Backdrop }}
+        slotProps={{
+          backdrop: {
+            timeout: 500,
+          },
+        }}
+        
       >
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            color: "#F6F6F6",
-            boxShadow: 24,
-            p: 4,
-            borderRadius: 2,
-            pt: 2,
-            px: 4,
-            pb: 3,
-            bgcolor: alt,
-          }}
-        >
-          <Box>
-            <Typography
-              id="modal-modal-title"
-              variant="h3"
-              component="h2"
-              textAlign="center"
-              fontWeight="bold"
-              sx={{
-                color: theme.palette.primary.main,
-              }}
-            >
-              Create Subgrediit
-            </Typography>
-          </Box>
-          <Divider sx={{ mt: 2 }} />
+        <Fade in={openCreateSubgrediit}>
           <Box
-            id="modal-modal-description"
             sx={{
-              alignItems: "center",
-              mt: 2,
-              justifyContent: "center",
-              p: 2,
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              color: "#F6F6F6",
+              boxShadow: 24,
+              p: 4,
               borderRadius: 2,
               pt: 2,
               px: 4,
               pb: 3,
-              m: 2,
+              bgcolor: alt,
             }}
           >
-            <CreateSubgrediit
-              getAllSubgrediits={getAllSubgrediits}
-              handleCloseCreateSubgrediit={handleCloseCreateSubgrediit}
-            />
+            <Box>
+              <Typography
+                id="modal-modal-title"
+                variant="h3"
+                component="h2"
+                textAlign="center"
+                fontWeight="bold"
+                sx={{
+                  color: theme.palette.primary.main,
+                }}
+              >
+                Create Subgrediit
+              </Typography>
+            </Box>
+            <Divider sx={{ mt: 2 }} />
+            <Box
+              id="modal-modal-description"
+              sx={{
+                alignItems: "center",
+                mt: 2,
+                justifyContent: "center",
+                p: 2,
+                borderRadius: 2,
+                pt: 2,
+                px: 4,
+                pb: 3,
+                m: 2,
+              }}
+            >
+              <CreateSubgrediit
+                getAllSubgrediits={getAllSubgrediits}
+                handleCloseCreateSubgrediit={handleCloseCreateSubgrediit}
+              />
+            </Box>
           </Box>
-        </Box>
+        </Fade>
       </Modal>
 
       <FlexBetween
@@ -110,7 +122,6 @@ const Navbar = ({ getAllSubgrediits }) => {
         backgroundColor={alt}
         borderBottom="1px solid #e6e6e6"
       >
-        
         <FlexBetween gap="1.75rem">
           <Typography
             fontWeight="bold"

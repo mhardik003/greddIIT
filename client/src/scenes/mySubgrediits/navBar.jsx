@@ -12,6 +12,8 @@ import {
   Modal,
   Button,
   Divider,
+  Backdrop,
+  Fade,
 } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import { Search, DarkMode, LightMode, Menu, Close } from "@mui/icons-material";
@@ -51,7 +53,15 @@ const Navbar = ({getMySubgrediits}) => {
         onClose={handleCloseCreateSubgrediit}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        closeAfterTransition
+        slots={{ backdrop: Backdrop }}
+        slotProps={{
+          backdrop: {
+            timeout: 500,
+          },
+        }}
       >
+        <Fade in={openCreateSubgrediit}>
         <Box
           sx={{
             position: "absolute",
@@ -100,6 +110,7 @@ const Navbar = ({getMySubgrediits}) => {
             <CreateSubgrediit getMySubgrediits={getMySubgrediits} handleCloseCreateSubgrediit={handleCloseCreateSubgrediit}/>
           </Box>
         </Box>
+        </Fade>
       </Modal>
 
       <FlexBetween padding="1rem 6%" backgroundColor={alt}
