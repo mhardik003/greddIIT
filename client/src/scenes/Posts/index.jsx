@@ -21,11 +21,14 @@ import UploadIcon from "@mui/icons-material/Upload";
 import UploadOutlinedIcon from "@mui/icons-material/UploadOutlined";
 import DownloadIcon from "@mui/icons-material/Download";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
-
+import { IconButton } from "@mui/material";
+import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CommentIcon from "@mui/icons-material/Comment";
 import { toast, ToastContainer } from "react-toastify";
+import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
+import { PersonRemove } from "@mui/icons-material";
 
 const Posts = () => {
   const navigate = useNavigate();
@@ -204,6 +207,35 @@ const Posts = () => {
     getSubgrediitPosts();
   };
 
+  const followUser = async (userId) => {
+    const response = await fetch(
+      `http://localhost:3000/users/AddRemoveFollowing/${id}/${userId}`,
+      {
+        method: "PATCH",
+        headers: { Authorization: `Bearer ${token}` },
+        "Content-Type": "application/json",
+      }
+    );
+    const data = await response.json();
+    // if (data.error) {
+    //   toast.error(data.error, {
+    //     position: "top-center",
+    //     autoClose: 2000,
+
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //   });
+    //   return console.log(data.error);
+    // }
+    getUser();
+    getAllUsers();
+    getSubgrediit();
+    getSubgrediitPosts();
+  };
+
   useEffect(() => {
     getUser();
     getAllUsers();
@@ -214,7 +246,6 @@ const Posts = () => {
   if (!user) return null;
   if (!subgrediit) return null;
   if (!posts) return null;
-
 
   return (
     <>
@@ -345,11 +376,33 @@ const Posts = () => {
                       color="#666666"
                       sx={{ mb: "0.5rem", pl: "0.5rem" }}
                     >
-                      {/* Created By :{" "}
+                      Created By :{" "}
                       {
                         allUsers.find((user) => user._id === post.postedBy)
                           .userName
-                      } */}
+                      }
+                      {/* button to follow the user */}
+                      {user._id !== post.postedBy && (
+                        <IconButton
+                          variant="contained"
+                          color={theme.palette.background.alt}
+                          size="small"
+                          sx={{
+                            ml: "0.2rem",
+                          }}
+                          onClick={() => {
+                            console.log("Follow User");
+                            followUser(post.postedBy);
+                          }}
+                        >
+                          {/* check if the user is already followed */}
+                          {user.following.includes(post.postedBy) ? (
+                            <PersonRemoveIcon />
+                          ) : (
+                            <PersonAddAltIcon />
+                          )}
+                        </IconButton>
+                      )}
                     </Typography>
                     <Divider />
                     <Typography

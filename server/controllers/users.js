@@ -44,7 +44,7 @@ export const editUser = async (req, res) => {
     console.log("User has been updated");
     res.status(200).json("User has been updated");
   } catch (error) {
-    res.status(404).json({ error: error.message});
+    res.status(404).json({ error: error.message });
   }
 };
 
@@ -119,25 +119,30 @@ export const AddremoveFollowing = async (req, res) => {
     );
 
     const user = await User.find({ _id: req.params.id });
-    const following = await User.find({_id: req.params.followingId });
+    const following = await User.find({ _id: req.params.followingId });
+
+    console.log("> user : ", user);
+    console.log("> following : ", following);
 
     if (user[0].following.includes(following[0]._id)) {
-      const index = user[0].following.indexOf(following[0]._id);
+      console.log("> User is already following");
+      let index = user[0].following.indexOf(following[0]._id);
       user[0].following.splice(index, 1);
 
-      const index2 = following[0].followers.indexOf(user[0]._id);
-      following[0].followers.splice(index2, 1);
+      index = following[0].followers.indexOf(user[0]._id);
+      following[0].followers.splice(index, 1);
 
       await user[0].save();
       await following[0].save();
       console.log("> User has been unfollowed");
       res.status(200).json("User has been unfollowed");
     } else {
-      await user[0].updateOne({ $push: { following: following[0]._id } });
-      await following[0].updateOne({ $push: { followers: user[0]._id } });
+      console.log("> User is not following");
+      user[0].following.push(following[0]._id);
+      following[0].followers.push(user[0]._id);
 
-      await user.save();
-      await following.save();
+      await user[0].save();
+      await following[0].save();
       console.log("User has been followed");
       res.status(200).json("User has been followed");
     }
