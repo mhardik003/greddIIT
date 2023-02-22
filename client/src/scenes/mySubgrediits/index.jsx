@@ -197,7 +197,7 @@ const Mysubgrediits = () => {
                     color={theme.palette.neutral.dark}
                     sx={{ mt: "0.2rem", pl: "1rem" }}
                   >
-                    Banned Keywords : {subgrediit.bannedKeywords.join(", ")}
+                    BANNED KEYWORDS : {subgrediit.bannedKeywords.join(", ")}
                   </Typography>
 
                   <Typography

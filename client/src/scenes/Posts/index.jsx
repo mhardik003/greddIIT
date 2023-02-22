@@ -13,10 +13,10 @@ import {
   useTheme,
   Divider,
   Button,
-  IconButton
+  IconButton,
 } from "@mui/material";
 
-import{
+import {
   BookmarkBorderOutlined as BookmarkBorderOutlinedIcon,
   Bookmark as BookmarkIcon,
   Upload as UploadIcon,
@@ -26,12 +26,10 @@ import{
   PersonRemove as PersonRemoveIcon,
   Delete as DeleteIcon,
   Comment as CommentIcon,
-  PersonAddAlt as PersonAddAltIcon
+  PersonAddAlt as PersonAddAltIcon,
 } from "@mui/icons-material";
 
-
 import { toast } from "react-toastify";
-
 
 const Posts = () => {
   const navigate = useNavigate();
@@ -250,6 +248,7 @@ const Posts = () => {
   if (!subgrediit) return null;
   if (!posts) return null;
 
+  // console.log("Subgrediit BannnedKeywords : ", subgrediit.bannedKeywords);
   return (
     <>
       <Navbar />
@@ -415,7 +414,7 @@ const Posts = () => {
                       color="paper"
                       p="0.5rem"
                     >
-                      {post.description}
+                      {post.description} 
                     </Typography>
                     <Typography
                       textAlign="center"

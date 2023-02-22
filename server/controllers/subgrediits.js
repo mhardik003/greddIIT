@@ -6,7 +6,6 @@ export const getSubgrediit = async (req, res) => {
   try {
     console.log("> req.params.id : ", req.params.id);
     const subgreddit = await Subgreddit.find({ _id: req.params.id });
-    // console.log("> subgreddit : ", subgreddit);
     res.status(200).json(subgreddit[0]);
   } catch (error) {
     res.status(404).json({ error: error.message });
@@ -16,19 +15,15 @@ export const getSubgrediit = async (req, res) => {
 export const getMySubgrediits = async (req, res) => {
   try {
     console.log("req.params.id : ", req.params.id);
-    let subgreddits = [];
-    const subgrediits = await Subgreddit.find();
-    subgrediits.forEach((subgreddit) => {
-      // console.log("subgreddit.moderators : ", subgreddit.moderators);
+    let mySubgrediits = [];
+    const allSubgrediits = await Subgreddit.find();
+    allSubgrediits.forEach((subgreddit) => {
       if (subgreddit.moderators[0]._id === req.params.id) {
-        subgreddits.push(subgreddit);
+        mySubgrediits.push(subgreddit);
         console.log("> subgreddit : ", subgreddit.name);
       }
     });
-
-    // const subgreddits = await Subgreddit.find({moderators: req.params.id});
-    // console.log("subgreddit : ", subgreddit);
-    res.status(200).json(subgreddits);
+    res.status(200).json(mySubgrediits);
   } catch (error) {
     res.status(404).json({ error: error.message });
   }

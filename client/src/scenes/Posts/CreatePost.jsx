@@ -30,12 +30,13 @@ const initialValuesPost = {
   description: "",
 };
 
-const CreatePost = ({getSubgrediitPosts}) => {
+const CreatePost = ({ getSubgrediitPosts }) => {
   const { palette } = useTheme();
   // const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width: 600px)");
   const { id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
+  const [subgrediit, setSubgrediit] = useState(null);
   const [user, setUser] = useState(null);
   const { subgrediitId } = useParams();
 
@@ -48,17 +49,79 @@ const CreatePost = ({getSubgrediitPosts}) => {
     setUser(data);
   };
 
-  useEffect(() => {
-    getUser();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  const getSubgrediit = async () => {
+    const response = await fetch(
+      `http://localhost:3000/subgrediits/find/${subgrediitId}`,
+      {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    const data = await response.json();
+    setSubgrediit(data);
+
+    // console.log(data.bannedKeywords);
+  };
 
   const create = async (values, onSubmitProps) => {
-    console.log(values);
-    // const formData = new FormData();
-    // formData.append("title", values.title);
-    // formData.append("description", values.description);
-    // formData.append("subgrediitId", subgrediitId);
-    // formData.append("userId",user._id);
+    // check if banned keywords are in the title or description
+
+    let bannedKeywords = subgrediit.bannedKeywords;
+    // strip the extra spaces
+    bannedKeywords = bannedKeywords.map((keyword) => keyword.trim());
+
+    let title = values.title;
+    title = title.toLowerCase();
+
+    for (let i = 0; i < bannedKeywords.length; i++) {
+      let regEx = new RegExp(bannedKeywords[i], "ig");
+      if (title.match(regEx)) {
+        // console.log("title contains banned keyword : " + bannedKeywords[i]);
+        toast.error("Title contains banned keyword", {
+          display: "absolute",
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored",
+          progress: undefined,
+        });
+        return;
+      }
+      if (values.description.match(regEx)) {
+        // console.log("description contains banned keyword : " + bannedKeywords[i]);
+        toast.error("Description contains banned keywords", {
+          display: "absolute",
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored",
+          progress: undefined,
+        });
+        toast.error("The banned keywords will be replaced by asterisks", {
+          display: "absolute",
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored",
+          progress: undefined,
+        });
+
+        // replace the banned keywords with asterisks
+        let description = values.description;
+        description = description.replace(regEx, "*****");
+        values.description = description;
+      }
+    }
+
     const toBeSent = {
       title: values.title,
       description: values.description,
@@ -66,7 +129,7 @@ const CreatePost = ({getSubgrediitPosts}) => {
       userId: user._id,
     };
 
-    console.log(toBeSent);
+    // console.log(toBeSent);
 
     const response = await fetch("http://localhost:3000/posts/createPost", {
       method: "POST",
@@ -81,7 +144,7 @@ const CreatePost = ({getSubgrediitPosts}) => {
       }),
     });
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     if (data.error) {
       toast.error(data.error);
       toast.error("Post not created", {
@@ -110,12 +173,16 @@ const CreatePost = ({getSubgrediitPosts}) => {
       onSubmitProps.resetForm();
     }
     getSubgrediitPosts();
-   
   };
 
   const handleFormSubmit = async (values, onSubmitProps) => {
     await create(values, onSubmitProps);
   };
+
+  useEffect(() => {
+    getUser();
+    getSubgrediit();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!user) return null;
 
