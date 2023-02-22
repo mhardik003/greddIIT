@@ -10,8 +10,6 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
 
-
-
 import ProfilePage from "./scenes/profilePage";
 import NotFound from "./scenes/notFound";
 import Mysubgrediits from "./scenes/mySubgrediits";
@@ -22,7 +20,7 @@ function App() {
   const mode = useSelector((state) => state.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
   const isAuth = Boolean(useSelector((state) => state.token));
-  const isMod= isAuth && true;
+  const isMod = isAuth && true;
 
   return (
     <div className="App">
@@ -49,39 +47,39 @@ function App() {
               path="/profile/:userId"
               element={isAuth ? <ProfilePage /> : <Navigate to="/login" />}
             />
-            < Route
+            <Route
               path="/mysubgrediits"
               element={isAuth ? <Mysubgrediits /> : <Navigate to="/login" />}
             />
             <Route
-              path="/subgrediit/:subgrediitId/"
-              element={isAuth ? <Posts/> : <Navigate to="/login" />}
-            />
-            <Route
-              path="/subgrediit/:subgrediitId/users"
-              element={isAuth ? <Posts/> : <Navigate to="/login" />}
-            />
-            <Route
-              path="/subgrediit/:subgrediitId/joinrequests"
-              element={isAuth ? <Posts/> : <Navigate to="/login" />}
-            />
-            <Route
-              path="/subgrediit/:subgrediitId/stats"
-              element={isAuth ? <Posts/> : <Navigate to="/login" />}
-            />
-            <Route
-              path="/subgrediit/:subgrediitId/reports"
-              element={isAuth ? <Posts/> : <Navigate to="/login" />}
-            />``
-            <Route
               path="/mysubgrediit/:subgrediitId"
-              element={isMod ? <Subgrediit/> : <Navigate to="/" />}
+              element={isMod ? <Subgrediit /> : <Navigate to="/" />}
             />
-            < Route
-            path="/savedposts"
-            element={isAuth ? <SavedPosts/> : <Navigate to="/login" />}
+            <Route
+              path="/mysubgrediit/:subgrediitId/users"
+              element={isMod ? <Posts /> : <Navigate to="/login" />}
             />
-
+            <Route
+              path="/mysubgrediit/:subgrediitId/joinrequests"
+              element={isMod ? <Posts /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/mysubgrediit/:subgrediitId/stats"
+              element={isMod ? <Posts /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/mysubgrediit/:subgrediitId/reports"
+              element={isMod ? <Posts /> : <Navigate to="/login" />}
+            />
+            ``
+            <Route
+              path="/subgrediit/:subgrediitId/"
+              element={isAuth ? <Posts /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/savedposts"
+              element={isAuth ? <SavedPosts /> : <Navigate to="/login" />}
+            />
             <Route
               path="*"
               element={isAuth ? <NotFound /> : <Navigate to="/login" />}
