@@ -45,7 +45,7 @@ const Index = () => {
     );
     const data = await response.json();
     setSubgrediit(data);
-    console.log("subgrediit : ", subgrediit);
+    // console.log("subgrediit : ", subgrediit);
   };
 
   useEffect(() => {

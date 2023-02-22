@@ -16,6 +16,11 @@ import Mysubgrediits from "./scenes/mySubgrediits";
 import SavedPosts from "./scenes/savedPosts";
 import Subgrediit from "./scenes/subgrediit";
 
+import SubgrediitUsers from "scenes/subgrediitUsers";
+import SubgrediitJoinRequests from "scenes/subgrediitJoinRequests";
+import SubgrediitReports from "scenes/subgrediitReports";
+import SubgrediitStats from "scenes/subgrediitStats";
+
 function App() {
   const mode = useSelector((state) => state.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
@@ -57,23 +62,23 @@ function App() {
             />
             <Route
               path="/mysubgrediit/:subgrediitId/users"
-              element={isMod ? <Posts /> : <Navigate to="/login" />}
+              element={isMod ? <SubgrediitUsers /> : <Navigate to="/login" />}
             />
             <Route
               path="/mysubgrediit/:subgrediitId/joinrequests"
-              element={isMod ? <Posts /> : <Navigate to="/login" />}
+              element={isMod ? <SubgrediitJoinRequests /> : <Navigate to="/login" />}
             />
             <Route
               path="/mysubgrediit/:subgrediitId/stats"
-              element={isMod ? <Posts /> : <Navigate to="/login" />}
+              element={isMod ? <SubgrediitStats /> : <Navigate to="/login" />}
             />
             <Route
               path="/mysubgrediit/:subgrediitId/reports"
-              element={isMod ? <Posts /> : <Navigate to="/login" />}
+              element={isMod ? <SubgrediitReports /> : <Navigate to="/login" />}
             />
             ``
             <Route
-              path="/subgrediit/:subgrediitId/"
+              path="/subgrediit/:subgrediitId"
               element={isAuth ? <Posts /> : <Navigate to="/login" />}
             />
             <Route

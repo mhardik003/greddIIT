@@ -6,7 +6,6 @@ import CreatePost from "./CreatePost";
 import FlexBetween from "components/FlexBetween";
 import notFound from "scenes/notFound";
 
-
 import {
   Box,
   useMediaQuery,
@@ -63,10 +62,13 @@ const Posts = () => {
     setAllUsers(data);
   };
 
-const getAllSubgrediits = async () => {
-    const response = await fetch(`http://localhost:3000/subgrediits/getAllSubgrediits/${id}`, {
-      method: "GET",
-    });
+  const getAllSubgrediits = async () => {
+    const response = await fetch(
+      `http://localhost:3000/subgrediits/getAllSubgrediits/${id}`,
+      {
+        method: "GET",
+      }
+    );
     const data = await response.json();
     setAllSubgrediits(data);
   };
@@ -161,7 +163,7 @@ const getAllSubgrediits = async () => {
   };
 
   const downvotePost = async (postId) => {
-    console.log("downvotePost : ", postId);
+    // console.log("downvotePost : ", postId);
     const response = await fetch(
       `http://localhost:3000/posts/${postId}/${id}/downvote`,
       {
@@ -259,12 +261,16 @@ const getAllSubgrediits = async () => {
   if (!user) return null;
   if (!subgrediit) return null;
   if (!posts) return null;
+  if (!allSubgrediits) return null;
 
   // check if the subgrediitId is in the list of subgrediits
-  if(!allSubgrediits.some(subgrediit => subgrediit._id === subgrediitId)) {
+if(allSubgrediits.length > 0){
+  if (!allSubgrediits.some((subgrediit) => subgrediit._id === subgrediitId)) {
+    console.log("Subgrediit not found");
+    console.log(allSubgrediits);
     navigate("/404");
   }
-  
+}
 
   // console.log("Subgrediit BannnedKeywords : ", subgrediit.bannedKeywords);
   return (
@@ -433,7 +439,7 @@ const getAllSubgrediits = async () => {
                       color="paper"
                       p="0.5rem"
                     >
-                      {post.description} 
+                      {post.description}
                     </Typography>
                     <Typography
                       textAlign="center"

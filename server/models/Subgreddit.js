@@ -23,27 +23,27 @@ const SubgredditSchema = new mongoose.Schema({
     },
     moderators: {
         type: Array,
-        default: [mongoose.Schema.Types.ObjectId],
+        default: [],
         ref: "User"
     },
     followers: {
         type: Array,
-        default: [mongoose.Schema.Types.ObjectId],
+        default: [],
         ref: "User"
     },
     blockedFollowers: {
         type: Array,
-        default: [mongoose.Schema.Types.ObjectId],
+        default: [],
         ref: "User"
     },
     joinRequests: {
         type: Array,
-        default: [mongoose.Schema.Types.ObjectId],
+        default: [],
         ref: "User"
     },
     visitors: {
         type: Array,
-        default: [mongoose.Schema.Types.ObjectId],
+        default: [],
         ref: "User"
     },
     posts: {

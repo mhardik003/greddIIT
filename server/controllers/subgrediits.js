@@ -1,6 +1,6 @@
 import Subgreddit from "../models/Subgreddit.js";
 import Post from "../models/Post.js";
-// import User from "../models/User";
+import User from "../models/User.js";
 
 export const getSubgrediit = async (req, res) => {
   try {
@@ -18,7 +18,7 @@ export const getMySubgrediits = async (req, res) => {
     let mySubgrediits = [];
     const allSubgrediits = await Subgreddit.find();
     allSubgrediits.forEach((subgreddit) => {
-      if (subgreddit.moderators[0]._id === req.params.id) {
+      if (subgreddit.moderators[0] === req.params.id) {
         mySubgrediits.push(subgreddit);
         console.log("> subgreddit : ", subgreddit.name);
       }
@@ -103,6 +103,57 @@ export const editSubgrediit = async (req, res) => {
   }
 };
 
+
+export const deletePost = async (postId) => {
+    try {
+      const postId = req.params.postId;
+      const post = await Post.findById(postId);
+      // console.log("post : ", post);
+      const subgredditId = post.postedIn;
+      const subgreddit = await Subgreddit.findById(subgredditId);
+      // console.log("subgreddit : ", subgreddit);
+      const userId = post.postedBy;
+      const user = await User.findById(userId);
+      // console.log("user : ", user);
+  
+      // check if the post is part of the saved posts, upvoted posts, downvotes posts of all users and remove it
+      const allUsers = await User.find();
+      allUsers.forEach(async (user) => {
+        if (user.savedPosts.includes(postId)) {
+          let index = user.savedPosts.indexOf(postId);
+          user.savedPosts.splice(index, 1);
+          await user.save();
+        }
+        if (user.upvotedPosts.includes(postId)) {
+          let index = user.upvotedPosts.indexOf(postId);
+          user.upvotedPosts.splice(index, 1);
+          await user.save();
+        }
+        if (user.downvotedPosts.includes(postId)) {
+          let index = user.downvotedPosts.indexOf(postId);
+          user.downvotedPosts.splice(index, 1);
+          await user.save();
+        }
+      });
+  
+      // remove the post from the subgreddit
+      let index = subgreddit.posts.indexOf(postId);
+      subgreddit.posts.splice(index, 1);
+      await subgreddit.save();
+  
+      // remove the post from the user
+      index = user.posts.indexOf(postId);
+      user.posts.splice(index, 1);
+      await user.save();
+  
+      // remove the post
+      await post.remove();
+      console.log("Post has been deleted");
+    } catch (error) {
+      console.log(">>> error : ", error);
+    }
+  };
+
 export const deleteSubgrediit = async (req, res) => {
   try {
     const subgreddit = await Subgreddit.findById(req.params.id);
@@ -111,7 +162,7 @@ export const deleteSubgrediit = async (req, res) => {
     // remove all the posts in the subgreddit also
     const posts = await Post.find({ postedIn: req.params.id });
     posts.forEach(async (post) => {
-      await post.remove();
+      await deletePost(post._id);
     });
 
     res.status(200).json("Subgreddit has been deleted");
@@ -192,14 +243,19 @@ export const getSubgrediitPosts = async (req, res) => {
 
 export const joinSubgrediit = async (req, res) => {
   try {
-    // console.log("req.params.id : ", req.params.id);
-    // console.log("req.body : ", req.body);
-    // EDIT THE SUBGREDDIT DETAILS
+    console.log(">>> req.params.id : ", req.params.id);
     const subgreddit = await Subgreddit.find({ _id: req.params.id });
-    // console.log("FOUND THE SUBGREDDIT : ", subgreddit);
-    const { user } = req.body;
-    // console.log("user from the request : ", user);
-    subgreddit[0].followers.push(user);
+    console.log("FOUND THE SUBGREDDIT : ", subgreddit);
+    const userId = req.params.userId;
+    console.log("userId : ", userId);
+
+    if(subgreddit[0].joinRequests.includes(userId)){
+      res.status(200).json("You have already requested to join this subgreddit");
+      subgreddit[0].joinRequests.pull(userId);
+      await subgreddit[0].save();
+      return;
+    }
+    subgreddit[0].joinRequests.push(userId);
     await subgreddit[0].save();
     console.log("Subgreddit has been updated");
     res.status(200).json("Subgreddit has been updated");
@@ -261,3 +317,34 @@ export const removePostFromSubgreddit = async (req, res) => {
     res.status(404).json({ error: error.message });
   }
 };
+
+
+export const acceptJoinRequest = async (req, res) => {
+  try {
+
+    const subgreddit = await Subgreddit.find({ _id: req.params.id });
+    const  userId = req.params.userId;
+    subgreddit[0].followers.push(userId);
+    subgreddit[0].joinRequests.pull(userId);
+    await subgreddit[0].save();
+    console.log("Subgreddit has been updated");
+    res.status(200).json("Subgreddit has been updated");
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+}
+
+export const rejectJoinRequest = async (req, res) => {
+  try {
+
+    const subgreddit = await Subgreddit.find({ _id: req.params.id });
+    const  userId = req.params.userId;
+    subgreddit[0].joinRequests.pull(userId);
+    await subgreddit[0].save();
+    console.log("Subgreddit has been updated");
+    res.status(200).json("Subgreddit has been updated");
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+}
+

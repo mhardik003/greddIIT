@@ -4,7 +4,6 @@ import {
   createSubgrediit,
   getSubgrediit,
   getAllSubgrediits,
-  editSubgrediit,
   deleteSubgrediit,
   getSubgrediitFollowers,
   getSubgrediitBlocked,
@@ -13,6 +12,8 @@ import {
   getMySubgrediits,
   joinSubgrediit,
   leaveSubgrediit,
+  acceptJoinRequest,
+  rejectJoinRequest,
 } from "../controllers/subgrediits.js";
 
 import { verifyToken } from "../middleware/auth.js";
@@ -24,10 +25,13 @@ router.get("/getMySubgrediits/:id", getMySubgrediits);
 router.get("/getAllSubgrediits/:id", getAllSubgrediits);
 
 router.post("/createSubgrediit", verifyToken, createSubgrediit);
-router.patch("/editSubgrediit", editSubgrediit);
+
 router.delete("/deleteSubgrediit/:id", deleteSubgrediit);
-router.patch("/joinSubgrediit/:userid/:id", verifyToken, joinSubgrediit);
-router.patch("/leaveSubgrediit/:userid/:id", verifyToken, leaveSubgrediit);
+router.put("/joinSubgrediit/:userId/:id", verifyToken, joinSubgrediit);
+router.patch("/leaveSubgrediit/:userId/:id", verifyToken, leaveSubgrediit);
+router.patch("/acceptJoinRequest/:userId/:id", verifyToken, acceptJoinRequest);
+router.patch("/rejectJoinRequest/:userId/:id", verifyToken, rejectJoinRequest);
+
 
 router.get("/:id/followers", verifyToken, getSubgrediitFollowers);
 router.get("/:id/blocked", verifyToken, getSubgrediitBlocked);

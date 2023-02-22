@@ -39,7 +39,10 @@ const initialValuesSubgrediit = {
   subgrediitPicture: "",
 };
 
-const CreateSubgrediit = ({getAllSubgrediits,handleCloseCreateSubgrediit}) => {
+const CreateSubgrediit = ({
+  getAllSubgrediits,
+  handleCloseCreateSubgrediit,
+}) => {
   const { palette } = useTheme();
   // const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width: 600px)");
@@ -84,8 +87,8 @@ const CreateSubgrediit = ({getAllSubgrediits,handleCloseCreateSubgrediit}) => {
         method: "POST",
         body: JSON.stringify({
           values,
-          moderator: user,
-          followers: user,
+          moderator: user._id,
+          followers: user._id,
           posts: [],
         }),
         headers: {
@@ -116,7 +119,6 @@ const CreateSubgrediit = ({getAllSubgrediits,handleCloseCreateSubgrediit}) => {
 
     getAllSubgrediits();
     handleCloseCreateSubgrediit();
-
   };
 
   const handleFormSubmit = async (values, onSubmitProps) => {

@@ -19,6 +19,7 @@ const Mysubgrediits = () => {
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const [user, setUser] = useState(null);
   const [subgrediits, setAllSubgrediits] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
   const token = useSelector((state) => state.token);
   const { id } = useSelector((state) => state.user);
 
@@ -45,21 +46,54 @@ const Mysubgrediits = () => {
     // console.log("All subgrediits : ", data);
   };
 
+  const getAllUsers = async () => {
+    const response = await fetch(`http://localhost:3000/users/getAllUsers`, {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = await response.json();
+    setAllUsers(data);
+    // console.log("All users : ", data);
+  };
+
+  const joinSubgrediit = async (subgrediitId) => {
+    // console.log("Join subgrediit : ", subgrediitId);
+    const response = await fetch(
+      `http://localhost:3000/subgrediits/joinSubgrediit/${id}/${subgrediitId}`,
+      {
+        method: "PUT",
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    const data = await response.json();
+    // console.log("Join subgrediit : ", data);
+    getAllSubgrediits();
+  };
+
   useEffect(() => {
     getUser();
+    getAllUsers();
     getAllSubgrediits();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!user) return null;
+  if (!allUsers) return null;
+  if (!subgrediits) return null;
+
+  // console.log("All Users : ", allUsers);
 
   return (
     <>
       <Navbar getAllSubgrediits={getAllSubgrediits} />
       <Box>
-        <Grid spacing={1} container justifyContent="center" direction="row"
-        sx={{
-          mt: "1rem",
-        }}
+        <Grid
+          spacing={1}
+          container
+          justifyContent="center"
+          direction="row"
+          sx={{
+            mt: "1rem",
+          }}
         >
           <Grid
             item
@@ -82,7 +116,7 @@ const Mysubgrediits = () => {
             spacing={2}
             alignItems="top"
             justifyContent="left"
-            style={{ minHeight: "100vh" }}
+            // style={{ minHeight: "100vh" }}
           >
             <Box
               width={isNonMobileScreens ? "80%" : "83%"}
@@ -109,125 +143,195 @@ const Mysubgrediits = () => {
               borderRadius="1.5rem"
               backgroundColor={theme.palette.background.alt}
             >
-              {/* SHOW MY SUBGREDIITS */}
-              {subgrediits.map((subgrediit) => (
-                <Box
-                  key={subgrediit._id}
-                  width={isNonMobileScreens ? "80%" : "83%"}
-                  p="1rem"
-                  m="2rem auto"
-                  borderRadius="1.5rem"
-                  backgroundColor={theme.palette.background.default}
+              {/* check if the number of subgrediits is 0 */}
+              {subgrediits.length === 0 ? (
+                <Typography
+                  textAlign="center"
+                  fontWeight="500"
+                  variant="h5"
+                  color="primary"
+                  sx={{ mb: "1.5rem" }}
                 >
-                  <FlexBetween justifyContent="space-between">
+                  You have not created any subgrediits yet
+                </Typography>
+              ) : (
+                subgrediits.map((subgrediit) => (
+                  <Box
+                    key={subgrediit._id}
+                    width={isNonMobileScreens ? "80%" : "83%"}
+                    p="1rem"
+                    m="2rem auto"
+                    borderRadius="1.5rem"
+                    backgroundColor={theme.palette.background.default}
+                  >
+                    <FlexBetween justifyContent="space-between">
+                      <Typography
+                        textAlign="left"
+                        fontWeight="500"
+                        variant="h5"
+                        color="primary"
+                        sx={{
+                          mb: "0.2rem",
+                          pl: "1rem",
+                          "&:hover": {
+                            cursor: "pointer",
+                            color: theme.palette.neutral.dark,
+                          },
+                        }}
+                        onClick={() => {
+                          // allow only followers to view the subgrediit
+                          if (subgrediit.followers.includes(id)) {
+                            navigate(`/subgrediit/${subgrediit._id}`);
+                          }
+                        }}
+                      >
+                        {subgrediit.name}
+                      </Typography>
+
+                      {subgrediit.moderators[0] === id ? (
+                        <Button
+                          variant="contained"
+                          color="error"
+                          sx={{
+                            mr: "1rem",
+                            color: theme.palette.background.default,
+                          }}
+                          onClick={() => {
+                            console.log("clicked on join");
+
+                            // joinSubgrediit(subgrediit._id);
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      ) : subgrediit.followers.includes(id) ? (
+                        <Button
+                          variant="contained"
+                          color="warning"
+                          sx={{ mr: "1rem" }}
+                          onClick={() => {
+                            console.log("clicked on leave");
+                            // leaveSubgrediit(subgrediit._id);
+                          }}
+                        >
+                          Leave
+                        </Button>
+                      ) : subgrediit.joinRequests.includes(id) ? (
+                        <Button
+                          variant="contained"
+                          color="error"
+                          sx={{
+                            mr: "1rem",
+                            color: theme.palette.background.default,
+                          }}
+                          onClick={() => {
+                            console.log("clicked on remove join request");
+                            joinSubgrediit(subgrediit._id);
+                          }}
+                        >
+                          Remove Request
+                        </Button>
+                      ) : subgrediit.blockedFollowers.includes(id) ? (
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          sx={{ mr: "1rem" }}
+                          onClick={() => {
+                            console.log("clicked on join");
+                            // joinSubgrediit(subgrediit._id);
+                          }}
+                          disabled
+                        >
+                          Blocked
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          sx={{ mr: "1rem" }}
+                          onClick={() => {
+                            console.log("clicked on join");
+                            joinSubgrediit(subgrediit._id);
+                          }}
+                        >
+                          Join
+                        </Button>
+                      )}
+                    </FlexBetween>
                     <Typography
                       textAlign="left"
                       fontWeight="500"
-                      variant="h5"
-                      color="primary"
-                      sx={{
-                        mb: "0.2rem",
-                        pl: "1rem",
-                        "&:hover": {
-                          cursor: "pointer",
-                          color: theme.palette.neutral.dark,
-                        },
-                      }}
-                      onClick={() => {
-                        // console.log("clicked on subgrediit");
-                        navigate(`/subgrediit/${subgrediit._id}`);
-                      }}
+                      variant="body2"
+                      color="#666666"
+                      sx={{ mt: "0.2rem", mb: "0.5rem", pl: "1rem" }}
                     >
-                      {subgrediit.name}
+                      Created On : {subgrediit.creationDate.substring(0, 10)}
                     </Typography>
-                    {/* <Button
-                      variant="contained"
-                      onClick={() => {
-                        console.log("delete the subgrediit", subgrediit.name);
-                        deleteSubgrediit(subgrediit._id);
-                      }}
-                      color="error"
+                    <Typography
+                      textAlign="left"
+                      fontWeight="500"
+                      variant="body2"
+                      color="#666666"
+                      sx={{ mt: "0.2rem", mb: "0.5rem", pl: "1rem" }}
                     >
-                      <DeleteForeverIcon
-                        style={{
-                          color: theme.palette.neutral.dark,
-                          // marginLeft: "1rem",
-                          cursor: "pointer",
-                        }}
-                      />
-                    </Button> */}
-                  </FlexBetween>
-                  <Typography
-                    textAlign="left"
-                    fontWeight="500"
-                    variant="body2"
-                    color="#666666"
-                    sx={{ mt: "0.2rem", mb: "0.5rem", pl: "1rem" }}
-                  >
-                    Created On : {subgrediit.creationDate.substring(0, 10)}
-                  </Typography>
-                  <Typography
-                    textAlign="left"
-                    fontWeight="500"
-                    variant="body2"
-                    color="#666666"
-                    sx={{ mt: "0.2rem", mb: "0.5rem", pl: "1rem" }}
-                  >
-                    Created By : {subgrediit.moderators[0].userName}
-                  </Typography>
-                  <Divider />
-                  <Typography
-                    textAlign="left"
-                    fontWeight="500"
-                    variant="body1"
-                    color={theme.palette.neutral.dark}
-                    sx={{ mt: "1rem", mb: "0.2rem", pl: "1rem" }}
-                  >
-                    DESCRIPTION : {subgrediit.description}
-                  </Typography>
+                      Created By :{" "}
+                      {allUsers
+                        .filter((user) => user._id === subgrediit.moderators[0])
+                        .map((user) => user.userName)}
+                    </Typography>
+                    <Divider />
+                    <Typography
+                      textAlign="left"
+                      fontWeight="500"
+                      variant="body1"
+                      color={theme.palette.neutral.dark}
+                      sx={{ mt: "1rem", mb: "0.2rem", pl: "1rem" }}
+                    >
+                      DESCRIPTION : {subgrediit.description}
+                    </Typography>
 
-                  <Typography
-                    textAlign="left"
-                    fontWeight="500"
-                    variant="body1"
-                    color={theme.palette.neutral.dark}
-                    display="inline"
-                    sx={{ mb: "0", pl: "1rem" }}
-                  >
-                    TAGS : {subgrediit.tags.join(", ")}
-                  </Typography>
+                    <Typography
+                      textAlign="left"
+                      fontWeight="500"
+                      variant="body1"
+                      color={theme.palette.neutral.dark}
+                      display="inline"
+                      sx={{ mb: "0", pl: "1rem" }}
+                    >
+                      TAGS : {subgrediit.tags.join(", ")}
+                    </Typography>
 
-                  <Typography
-                    textAlign="left"
-                    fontWeight="500"
-                    variant="body1"
-                    color={theme.palette.neutral.dark}
-                    sx={{ mt: "0.2rem", pl: "1rem" }}
-                  >
-                    BANNED KEYWORDS : {subgrediit.bannedKeywords.join(", ")}
-                  </Typography>
+                    <Typography
+                      textAlign="left"
+                      fontWeight="500"
+                      variant="body1"
+                      color={theme.palette.neutral.dark}
+                      sx={{ mt: "0.2rem", pl: "1rem" }}
+                    >
+                      BANNED KEYWORDS : {subgrediit.bannedKeywords.join(", ")}
+                    </Typography>
 
-                  <Typography
-                    textAlign="left"
-                    fontWeight="500"
-                    variant="body1"
-                    color={theme.palette.neutral.dark}
-                    sx={{ mt: "0.2rem", pl: "1rem" }}
-                  >
-                    Posts : {subgrediit.posts.length}
-                  </Typography>
+                    <Typography
+                      textAlign="left"
+                      fontWeight="500"
+                      variant="body1"
+                      color={theme.palette.neutral.dark}
+                      sx={{ mt: "0.2rem", pl: "1rem" }}
+                    >
+                      Posts : {subgrediit.posts.length}
+                    </Typography>
 
-                  <Typography
-                    textAlign="left"
-                    fontWeight="500"
-                    variant="body1"
-                    color={theme.palette.neutral.dark}
-                    sx={{ mt: "0.2rem", pl: "1rem" }}
-                  >
-                    Followers : {subgrediit.followers.length}
-                  </Typography>
+                    <Typography
+                      textAlign="left"
+                      fontWeight="500"
+                      variant="body1"
+                      color={theme.palette.neutral.dark}
+                      sx={{ mt: "0.2rem", pl: "1rem" }}
+                    >
+                      Followers : {subgrediit.followers.length}
+                    </Typography>
 
-                  {/* <Typography
+                    {/* <Typography
                     textAlign="left"
                     fontWeight="500"
                     variant="body1"
@@ -237,7 +341,7 @@ const Mysubgrediits = () => {
                     Join Requests : {subgrediit.joinRequests.length}
                   </Typography> */}
 
-                  {/* <Typography
+                    {/* <Typography
                     textAlign="left"
                     fontWeight="500"
                     variant="body1"
@@ -246,8 +350,9 @@ const Mysubgrediits = () => {
                   >
                     Reported Posts : {subgrediit.reportedPosts.length}
                   </Typography> */}
-                </Box>
-              ))}
+                  </Box>
+                ))
+              )}
             </Box>
           </Grid>
           <Grid

@@ -48,6 +48,7 @@ const MainContent = () => {
         style={{
           backgroundColor: theme.palette.background.alt,
           padding: "1rem",
+          marginTop: "-3rem",
         }}
         borderRadius="1.5rem"
       >
