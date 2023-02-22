@@ -129,6 +129,12 @@ const Navbar = () => {
               >
                 <Typography>My SubGreddits</Typography>
               </MenuItem>
+              <MenuItem
+                value="Saved Posts"
+                onClick={() => navigate(`/savedposts`)}
+              >
+                <Typography>Saved Posts</Typography>
+              </MenuItem>
               <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
             </Select>
           </FormControl>
@@ -178,8 +184,7 @@ const Navbar = () => {
                   cursor: "pointer",
                 },
               }}
-            onClick={() => navigate("/")}
-
+              onClick={() => navigate("/")}
             />
             <QuestionAnswerOutlinedIcon sx={{ fontSize: "25px" }} />
             <IconButton
@@ -228,6 +233,12 @@ const Navbar = () => {
                   onClick={() => navigate(`/mysubgrediits/`)}
                 >
                   <Typography>My SubGreddits</Typography>
+                </MenuItem>
+                <MenuItem
+                  value="Saved Posts"
+                  onClick={() => navigate(`/savedposts`)}
+                >
+                  <Typography>Saved Posts</Typography>
                 </MenuItem>
                 <MenuItem onClick={() => dispatch(setLogout())}>
                   Log Out

@@ -240,3 +240,23 @@ export const savePost = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const getSavedPosts = async (req, res) => {
+  try {
+
+    console.log("> req.params : ", req.params);
+
+    const user = await User.findById(req.params.userId);
+
+    console.log("> user : ", user);
+
+    const savedPosts = user.savedPosts;
+    const posts = await Post.find({ _id: savedPosts });
+
+    console.log("> posts : ", posts);
+
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}

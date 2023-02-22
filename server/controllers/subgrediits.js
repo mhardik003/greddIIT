@@ -1,4 +1,5 @@
 import Subgreddit from "../models/Subgreddit.js";
+import Post from "../models/Post.js";
 // import User from "../models/User";
 
 export const getSubgrediit = async (req, res) => {
@@ -111,6 +112,13 @@ export const deleteSubgrediit = async (req, res) => {
   try {
     const subgreddit = await Subgreddit.findById(req.params.id);
     await subgreddit.remove();
+
+    // remove all the posts in the subgreddit also
+    const posts = await Post.find({ postedIn: req.params.id });
+    posts.forEach(async (post) => {
+      await post.remove();
+    });
+
     res.status(200).json("Subgreddit has been deleted");
   } catch (error) {
     res.status(404).json({ error: error.message });

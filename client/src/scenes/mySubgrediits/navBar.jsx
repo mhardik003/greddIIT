@@ -205,6 +205,12 @@ const Navbar = ({getMySubgrediits}) => {
                 >
                   <Typography>My SubGreddits</Typography>
                 </MenuItem>
+                <MenuItem
+                  value="Saved Posts"
+                  onClick={() => navigate(`/savedposts`)}
+                >
+                  <Typography>Saved Posts</Typography>
+                </MenuItem>
                 <MenuItem onClick={() => dispatch(setLogout())}>
                   Log Out
                 </MenuItem>
@@ -315,6 +321,12 @@ const Navbar = ({getMySubgrediits}) => {
                   >
                     <Typography>My SubGreddits</Typography>
                   </MenuItem>
+                  <MenuItem
+                  value="Saved Posts"
+                  onClick={() => navigate(`/savedposts`)}
+                >
+                  <Typography>Saved Posts</Typography>
+                </MenuItem>
                   <MenuItem onClick={() => dispatch(setLogout())}>
                     Log Out
                   </MenuItem>

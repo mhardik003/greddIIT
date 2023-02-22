@@ -4,15 +4,18 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import HomePage from "./scenes/homePage";
 import LoginPage from "./scenes/loginPage";
 import Posts from "./scenes/Posts";
-// import {RegisterPage} from './scenes/registerPage'
-import ProfilePage from "./scenes/profilePage";
-import NotFound from "./scenes/notFound";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
-import Mysubgrediits from "scenes/mySubgrediits";
+
+
+
+import ProfilePage from "./scenes/profilePage";
+import NotFound from "./scenes/notFound";
+import Mysubgrediits from "./scenes/mySubgrediits";
+import SavedPosts from "./scenes/savedPosts";
 
 function App() {
   const mode = useSelector((state) => state.mode);
@@ -51,6 +54,10 @@ function App() {
             <Route
               path="/subgrediit/:subgrediitId"
               element={isAuth ? <Posts/> : <Navigate to="/login" />}
+            />
+            < Route
+            path="/savedposts"
+            element={isAuth ? <SavedPosts/> : <Navigate to="/login" />}
             />
 
             <Route

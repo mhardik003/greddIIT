@@ -9,6 +9,7 @@ import {
   savePost,
   deletePost,
   getUserPosts,
+  getSavedPosts,
 } from "../controllers/post.js";
 import { verifyToken } from "../middleware/auth.js";
 
@@ -20,7 +21,7 @@ router.get("/get/:subgrediitId/", verifyToken, getSubgrediitPosts);
 router.put("/:postId/:id/upvote", verifyToken, upvotePost);
 router.put("/:postId/:id/downvote", verifyToken, downvotePost);
 router.put("/:postId/:id/save", verifyToken, savePost);
-// router.get("/:userId/saved", verifyToken, getSavedPosts);
+router.get("/:userId/saved", verifyToken, getSavedPosts);
 router.get("/:userId/posts", verifyToken, getUserPosts);
 
 router.post("/createPost", verifyToken, createPost);
