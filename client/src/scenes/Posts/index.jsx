@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import Navbar from "../navbar";
 import CreatePost from "./CreatePost";
 import FlexBetween from "components/FlexBetween";
+import notFound from "scenes/notFound";
+
 
 import {
   Box,
@@ -37,6 +39,7 @@ const Posts = () => {
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const [user, setUser] = useState(null);
   const [allUsers, setAllUsers] = useState([]);
+  const [allSubgrediits, setAllSubgrediits] = useState([]);
   const [posts, setPosts] = useState([]);
   const [subgrediit, setSubgrediit] = useState(null);
   const { subgrediitId } = useParams();
@@ -58,6 +61,14 @@ const Posts = () => {
     });
     const data = await response.json();
     setAllUsers(data);
+  };
+
+const getAllSubgrediits = async () => {
+    const response = await fetch(`http://localhost:3000/subgrediits/getAllSubgrediits/${id}`, {
+      method: "GET",
+    });
+    const data = await response.json();
+    setAllSubgrediits(data);
   };
 
   const getSubgrediit = async () => {
@@ -242,11 +253,18 @@ const Posts = () => {
     getAllUsers();
     getSubgrediit();
     getSubgrediitPosts();
+    getAllSubgrediits();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!user) return null;
   if (!subgrediit) return null;
   if (!posts) return null;
+
+  // check if the subgrediitId is in the list of subgrediits
+  if(!allSubgrediits.some(subgrediit => subgrediit._id === subgrediitId)) {
+    navigate("/404");
+  }
+  
 
   // console.log("Subgrediit BannnedKeywords : ", subgrediit.bannedKeywords);
   return (
