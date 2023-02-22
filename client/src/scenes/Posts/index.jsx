@@ -257,18 +257,19 @@ const Posts = () => {
           <Grid
             item
             xs={0}
-            md={3}
+            sm={0}
+            md={1}
             lg={2}
             container
             spacing={2}
             alignItems="center"
             justifyContent="left"
-            style={{ minHeight: "100vh" }}
           ></Grid>
           <Grid
             item
             xs={12}
-            md={6}
+            sm={12}
+            md={10}
             lg={8}
             container
             spacing={2}
@@ -296,7 +297,7 @@ const Posts = () => {
               </Typography>
             </Box>
             <Box
-              width={isNonMobileScreens ? "50%" : "83%"}
+              width="50%"
               p="2rem 0.5rem 1rem 0.5rem"
               m="2rem auto"
               mt="0rem"
@@ -525,13 +526,13 @@ const Posts = () => {
           <Grid
             item
             xs={0}
-            md={3}
+            sm={0}
+            md={1}
             lg={2}
             container
             spacing={2}
             alignItems="center"
             justifyContent="left"
-            style={{ minHeight: "100vh" }}
           ></Grid>
         </Grid>
       </Box>

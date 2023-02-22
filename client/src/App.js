@@ -16,6 +16,7 @@ import ProfilePage from "./scenes/profilePage";
 import NotFound from "./scenes/notFound";
 import Mysubgrediits from "./scenes/mySubgrediits";
 import SavedPosts from "./scenes/savedPosts";
+import Subgrediit from "./scenes/subgrediit";
 
 function App() {
   const mode = useSelector((state) => state.mode);
@@ -52,8 +53,12 @@ function App() {
               element={isAuth ? <Mysubgrediits /> : <Navigate to="/login" />}
             />
             <Route
-              path="/subgrediit/:subgrediitId"
+              path="/subgrediit/:subgrediitId/"
               element={isAuth ? <Posts/> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/mysubgrediit/:subgrediitId"
+              element={isAuth ? <Subgrediit/> : <Navigate to="/login" />}
             />
             < Route
             path="/savedposts"

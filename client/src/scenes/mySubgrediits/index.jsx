@@ -46,20 +46,20 @@ const Mysubgrediits = () => {
     // console.log("data : ", data);
   };
 
-    const deleteSubgrediit = async (subgrediitId) => {
-        console.log("subgrediitId : ", subgrediitId);
+  const deleteSubgrediit = async (subgrediitId) => {
+    console.log("subgrediitId : ", subgrediitId);
     const response = await fetch(
-        `http://localhost:3000/subgrediits/deleteSubgrediit/${subgrediitId}`,
-        {
-            method: "DELETE",
-            headers: { Authorization: `Bearer ${token}` },
-        }
+      `http://localhost:3000/subgrediits/deleteSubgrediit/${subgrediitId}`,
+      {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      }
     );
     await response.json();
     // const data = await response.json();
     // console.log("data : ", data);
     getMySubgrediits();
-    };
+  };
 
   useEffect(() => {
     getUser();
@@ -67,29 +67,30 @@ const Mysubgrediits = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!user) return null;
-//   console.log("user : ", user);
-//   console.log("mysubgrediits : ", mysubgrediits);
+  //   console.log("user : ", user);
+  //   console.log("mysubgrediits : ", mysubgrediits);
 
   return (
     <>
-      <Navbar getMySubgrediits={getMySubgrediits}/>
+      <Navbar getMySubgrediits={getMySubgrediits} />
       <Box>
         <Grid spacing={1} container justifyContent="center" direction="row">
-          <Grid
+        <Grid
             item
             xs={0}
-            md={3}
+            sm={0}
+            md={1}
             lg={2}
             container
             spacing={2}
             alignItems="center"
             justifyContent="left"
-            style={{ minHeight: "100vh" }}
           ></Grid>
           <Grid
             item
             xs={12}
-            md={6}
+            sm={12}
+            md={10}
             lg={8}
             container
             spacing={2}
@@ -129,19 +130,23 @@ const Mysubgrediits = () => {
                       fontWeight="500"
                       variant="h5"
                       color="primary"
-                      sx={{ mb: "0.2rem", pl: "1rem" ,
-                      "&:hover": {
-                        cursor: "pointer",
-                        color: theme.palette.neutral.dark,
-                      }
-                    }}
+                      sx={{
+                        mb: "0.2rem",
+                        pl: "1rem",
+                        "&:hover": {
+                          cursor: "pointer",
+                          color: theme.palette.neutral.dark,
+                        },
+                      }}
                       onClick={() => {
                         console.log("clicked on subgrediit");
-                        navigate(`/subgrediit/${subgrediit._id}`)
+                        navigate(`/mysubgrediit/${subgrediit._id}`);
                       }}
                     >
                       {subgrediit.name}
                     </Typography>
+
+                    {/* button to delete the subgrediit */}
                     <Button
                       variant="contained"
                       onClick={() => {
@@ -246,13 +251,13 @@ const Mysubgrediits = () => {
           <Grid
             item
             xs={0}
-            md={3}
+            sm={0}
+            md={1}
             lg={2}
             container
             spacing={2}
             alignItems="center"
             justifyContent="left"
-            style={{ minHeight: "100vh" }}
           ></Grid>
         </Grid>
       </Box>
