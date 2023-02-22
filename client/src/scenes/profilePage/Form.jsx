@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setLogin } from "state";
 import { toast, ToastContainer } from "react-toastify";
+// import {Prompt} from 'react-router-dom';
 import "react-toastify/dist/ReactToastify.css";
 // import { useParams } from "react-router-dom";
 // import Navbar from "scenes/navbar";
@@ -11,10 +12,11 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 
-import { Formik } from "formik";
+import { Formik, FormikConsumer } from "formik";
 import * as Yup from "yup";
 import { TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import ReactRouterPrompt from "react-router-prompt";
 
 const profileSchema = Yup.object().shape({
   firstName: Yup.string().required("First name is required"),
@@ -32,6 +34,7 @@ const Form = ({ userId, userData }) => {
   const isNonMobile = useMediaQuery("(min-width: 600px)");
   const token = useSelector((state) => state.token);
   const [user, setUser] = useState(null);
+  const [isDirty, setIsDirty] = useState(false);
 
   const getUser = async () => {
     setUser(userData);
@@ -56,6 +59,21 @@ const Form = ({ userId, userData }) => {
       progress: undefined,
       theme: "colored",
     });
+  };
+
+  const checkDirty = (values) => {
+    if (
+      values.firstName === user.firstName &&
+      values.lastName === user.lastName &&
+      values.userName === user.userName &&
+      values.email === user.email &&
+      values.contactNumber === user.contactNumber &&
+      values.age === user.age
+    ) {
+      setIsDirty(false);
+    } else {
+      setIsDirty(true);
+    }
   };
 
   const EditUserData = async (values, onSubmitProps) => {
@@ -111,14 +129,14 @@ const Form = ({ userId, userData }) => {
           contactNumber: values.contactNumber,
           age: values.age,
         },
-        token:token,
+        token: token,
       })
     );
     setTimeout(() => {
       window.location.reload(false);
     }, 3000);
     // alert("User info edited successfully");
-    console.log("VS code git is awesome")
+    console.log("VS code git is awesome");
     navigate(`/profile/${userId}`);
   };
 
@@ -135,6 +153,15 @@ const Form = ({ userId, userData }) => {
   return (
     <div>
       <ToastContainer />
+      {/* warn the user if they are about to leave the page with unsaved changes */}
+      {/* <FormikConsumer>
+        {(formik) => (
+          <Prompt
+            when={formik.dirty}
+            message="Are you sure you want to leave?"
+          />
+        )}
+      </FormikConsumer> */}
       <Formik
         initialValues={{
           firstName: firstName,

@@ -102,7 +102,10 @@ const Navbar = ({getMySubgrediits}) => {
         </Box>
       </Modal>
 
-      <FlexBetween padding="1rem 6%" backgroundColor={alt}>
+      <FlexBetween padding="1rem 6%" backgroundColor={alt}
+        borderBottom="1px solid #e6e6e6">
+      
+      
         <FlexBetween gap="1.75rem">
           <Typography
             fontWeight="bold"

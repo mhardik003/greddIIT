@@ -56,7 +56,11 @@ const Mysubgrediits = () => {
     <>
       <Navbar getAllSubgrediits={getAllSubgrediits} />
       <Box>
-        <Grid spacing={1} container justifyContent="center" direction="row">
+        <Grid spacing={1} container justifyContent="center" direction="row"
+        sx={{
+          mt: "1rem",
+        }}
+        >
           <Grid
             item
             xs={0}

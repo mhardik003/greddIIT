@@ -24,7 +24,7 @@ import { useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
 import CreateSubgrediit from "./CreateSubgrediit";
 
-const Navbar = ({getAllSubgrediits}) => {
+const Navbar = ({ getAllSubgrediits }) => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -97,12 +97,20 @@ const Navbar = ({getAllSubgrediits}) => {
               m: 2,
             }}
           >
-            <CreateSubgrediit getAllSubgrediits={getAllSubgrediits} handleCloseCreateSubgrediit={handleCloseCreateSubgrediit}/>
+            <CreateSubgrediit
+              getAllSubgrediits={getAllSubgrediits}
+              handleCloseCreateSubgrediit={handleCloseCreateSubgrediit}
+            />
           </Box>
         </Box>
       </Modal>
 
-      <FlexBetween padding="1rem 6%" backgroundColor={alt}>
+      <FlexBetween
+        padding="1rem 6%"
+        backgroundColor={alt}
+        borderBottom="1px solid #e6e6e6"
+      >
+        
         <FlexBetween gap="1.75rem">
           <Typography
             fontWeight="bold"
@@ -133,7 +141,6 @@ const Navbar = ({getAllSubgrediits}) => {
             </FlexBetween>
           )}
         </FlexBetween>
-
         {/* DESKTOP NAV */}
         {isNonMobileScreens ? (
           <FlexBetween gap="2rem">
@@ -143,13 +150,13 @@ const Navbar = ({getAllSubgrediits}) => {
               onClick={handleOpenCreateSubgrediit}
             >
               <SmartToyOutlinedIcon
-                sx={{ fontSize: "25px",
-              "&:hover": {
-                color: primaryLight,
-                cursor: "pointer",
-              }
-              }}
-                
+                sx={{
+                  fontSize: "25px",
+                  "&:hover": {
+                    color: primaryLight,
+                    cursor: "pointer",
+                  },
+                }}
                 onClick={handleOpenCreateSubgrediit}
               />
             </Button>
@@ -222,7 +229,6 @@ const Navbar = ({getAllSubgrediits}) => {
             <Menu />
           </IconButton>
         )}
-
         {/* MOBILE NAV */}
         {!isNonMobileScreens && isMobileMenuToggled && (
           <Box
@@ -253,21 +259,21 @@ const Navbar = ({getAllSubgrediits}) => {
               gap="3rem"
             >
               <Button
-              variant="contained"
-              color="primary"
-              onClick={handleOpenCreateSubgrediit}
-            >
-              <SmartToyOutlinedIcon
-                sx={{ fontSize: "25px",
-              "&:hover": {
-                color: primaryLight,
-                cursor: "pointer",
-              }
-              }}
-                
+                variant="contained"
+                color="primary"
                 onClick={handleOpenCreateSubgrediit}
-              />
-            </Button>
+              >
+                <SmartToyOutlinedIcon
+                  sx={{
+                    fontSize: "25px",
+                    "&:hover": {
+                      color: primaryLight,
+                      cursor: "pointer",
+                    },
+                  }}
+                  onClick={handleOpenCreateSubgrediit}
+                />
+              </Button>
               {/* <SmartToyOutlinedIcon sx={{ fontSize: "25px" }} /> */}
               <QuestionAnswerOutlinedIcon sx={{ fontSize: "25px" }} />
               <IconButton
@@ -318,11 +324,11 @@ const Navbar = ({getAllSubgrediits}) => {
                     <Typography>My SubGreddits</Typography>
                   </MenuItem>
                   <MenuItem
-                  value="Saved Posts"
-                  onClick={() => navigate(`/savedposts`)}
-                >
-                  <Typography>Saved Posts</Typography>
-                </MenuItem>
+                    value="Saved Posts"
+                    onClick={() => navigate(`/savedposts`)}
+                  >
+                    <Typography>Saved Posts</Typography>
+                  </MenuItem>
                   <MenuItem onClick={() => dispatch(setLogout())}>
                     Log Out
                   </MenuItem>

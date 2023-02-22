@@ -22,6 +22,7 @@ function App() {
   const mode = useSelector((state) => state.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
   const isAuth = Boolean(useSelector((state) => state.token));
+  const isMod= isAuth && true;
 
   return (
     <div className="App">
@@ -57,8 +58,24 @@ function App() {
               element={isAuth ? <Posts/> : <Navigate to="/login" />}
             />
             <Route
+              path="/subgrediit/:subgrediitId/users"
+              element={isAuth ? <Posts/> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/subgrediit/:subgrediitId/joinrequests"
+              element={isAuth ? <Posts/> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/subgrediit/:subgrediitId/stats"
+              element={isAuth ? <Posts/> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/subgrediit/:subgrediitId/reports"
+              element={isAuth ? <Posts/> : <Navigate to="/login" />}
+            />``
+            <Route
               path="/mysubgrediit/:subgrediitId"
-              element={isAuth ? <Subgrediit/> : <Navigate to="/login" />}
+              element={isMod ? <Subgrediit/> : <Navigate to="/" />}
             />
             < Route
             path="/savedposts"

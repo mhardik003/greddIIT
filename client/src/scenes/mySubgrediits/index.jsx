@@ -33,6 +33,8 @@ const Mysubgrediits = () => {
     setUser(data);
   };
 
+
+
   const getMySubgrediits = async () => {
     const response = await fetch(
       `http://localhost:3000/subgrediits/getMySubgrediits/${id}`,
@@ -101,7 +103,7 @@ const Mysubgrediits = () => {
             <Box
               width={isNonMobileScreens ? "80%" : "83%"}
               p="2rem 0.5rem 1rem 0.5rem"
-              m="2rem auto"
+              m="3.2rem auto"
               borderRadius="1.5rem"
               backgroundColor={theme.palette.background.alt}
             >
