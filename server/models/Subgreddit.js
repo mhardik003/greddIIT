@@ -41,6 +41,11 @@ const SubgredditSchema = new mongoose.Schema({
         default: [],
         ref: "User"
     },
+    leftors: {
+        type: Array,
+        default: [],
+        ref: "User"
+    },
     visitors: {
         type: Array,
         default: [],

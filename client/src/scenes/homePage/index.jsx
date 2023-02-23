@@ -247,11 +247,12 @@ const Mysubgrediits = () => {
                           onClick={() => {
                             console.log("Deleting subgrediit");
                             deleteSubgrediit(subgrediit._id);
-                            
                           }}
                         >
                           Delete
                         </Button>
+                      ) : subgrediit.leftors.includes(id) ? (
+                        <></>
                       ) : subgrediit.followers.includes(id) ? (
                         <Button
                           variant="contained"

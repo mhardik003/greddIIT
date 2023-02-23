@@ -109,12 +109,11 @@ export const editSubgrediit = async (req, res) => {
   }
 };
 
-
 export const deleteSubgrediit = async (req, res) => {
   try {
     const subgreddit = await Subgreddit.findById(req.params.id);
     await subgreddit.remove();
-    
+
     // remove the subgreddit from all the users' mysubgrediits
     const allUsers = await User.find();
     allUsers.forEach(async (user) => {
@@ -237,6 +236,10 @@ export const leaveSubgrediit = async (req, res) => {
     if (subgreddit[0].followers.includes(userId)) {
       subgreddit[0].followers.pull(userId);
     }
+    if (!subgreddit[0].leftors.includes(userId)) {
+      subgreddit[0].leftors.push(userId);
+    }
+
     await subgreddit[0].save();
     console.log("Subgreddit has been updated");
     console.log(">>  A user has left the subgrediit ");
