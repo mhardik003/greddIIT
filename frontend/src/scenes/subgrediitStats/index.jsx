@@ -4,15 +4,11 @@ import {
   Typography,
   Grid,
   useTheme,
-  Divider,
-  Button,
-  Chip,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "../navbar";
 import { useNavigate, useParams } from "react-router-dom";
-import FlexBetween from "components/FlexBetween";
 
 const SubgrediitStats = () => {
   const navigate = useNavigate();
@@ -20,9 +16,9 @@ const SubgrediitStats = () => {
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const [subgrediit, setSubgrediit] = useState(null);
   const token = useSelector((state) => state.token);
-  const [currdate, setCurrDate] = useState(new Date());
+  // const [currdate, setCurrDate] = useState(new Date());
   const [user, setUser] = useState(null);
-  const [creationDate, setCreationDate] = useState(new Date());
+  // const [creationDate, setCreationDate] = useState(new Date());
   const { subgrediitId } = useParams();
   const { id } = useSelector((state) => state.user);
 
@@ -39,11 +35,11 @@ const SubgrediitStats = () => {
     // console.log("subgrediit : ", subgrediit);
   };
 
-  const setCurrentDate = () => {
-    setCurrDate(new Date());
-    if (subgrediit)
-      setCreationDate(new Date(subgrediit.creationDate.slice(0, 10) + " GMT"));
-  };
+  // const setCurrentDate = () => {
+  //   setCurrDate(new Date());
+  //   if (subgrediit)
+  //     setCreationDate(new Date(subgrediit.creationDate.slice(0, 10) + " GMT"));
+  // };
 
   const getUser = async () => {
     const response = await fetch(`http://localhost:3000/users/${id}`, {
@@ -58,9 +54,9 @@ const SubgrediitStats = () => {
   useEffect(() => {
     getSubgrediit();
     getUser();
-    const interval = setInterval(() => {
-      setCurrentDate();
-    }, 40000);
+    // const interval = setInterval(() => {
+    //   setCurrentDate();
+    // }, 40000);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!subgrediit) return null;
