@@ -46,6 +46,24 @@ const Index = () => {
       repeatOnHold: false 
     }
   );
+  useKeyboardShortcut(
+    ["S"],
+    shortcutKeys => navigate(`/mysubgrediit/${subgrediitId}/stats`),
+    { 
+      overrideSystem: false,
+      ignoreInputFields: false, 
+      repeatOnHold: false 
+    }
+  );
+  useKeyboardShortcut(
+    ["R"],
+    shortcutKeys => navigate(`/mysubgrediit/${subgrediitId}/reports`),
+    { 
+      overrideSystem: false,
+      ignoreInputFields: false, 
+      repeatOnHold: false 
+    }
+  );
 
   const getUser = async () => {
     const response = await fetch(`http://localhost:3000/users/${id}`, {
