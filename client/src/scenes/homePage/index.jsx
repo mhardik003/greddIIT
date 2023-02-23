@@ -70,6 +70,19 @@ const Mysubgrediits = () => {
     getAllSubgrediits();
   };
 
+  const leaveSubgrediit = async (subgrediitId) => {
+    // console.log("Leave subgrediit : ", subgrediitId);
+    const response = await fetch(
+      `http://localhost:3000/subgrediits/leaveSubgrediit/${id}/${subgrediitId}`,
+      {
+        method: "PUT",
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    const data = await response.json();
+    getAllSubgrediits();
+  };
+
   useEffect(() => {
     getUser();
     getAllUsers();
@@ -203,7 +216,7 @@ const Mysubgrediits = () => {
                         }}
                         onClick={() => {
                           // allow only followers to view the subgrediit
-                          if (subgrediit.followers.includes(id)) {
+                          if (subgrediit.followers.includes(id) || subgrediit.moderators[0] === id) {
                             navigate(`/subgrediit/${subgrediit._id}`);
                           }
                         }}
@@ -234,7 +247,7 @@ const Mysubgrediits = () => {
                           sx={{ mr: "1rem" }}
                           onClick={() => {
                             console.log("clicked on leave");
-                            // leaveSubgrediit(subgrediit._id);
+                            leaveSubgrediit(subgrediit._id);
                           }}
                         >
                           Leave
