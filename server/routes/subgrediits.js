@@ -14,6 +14,7 @@ import {
   leaveSubgrediit,
   acceptJoinRequest,
   rejectJoinRequest,
+  blockUser,
 } from "../controllers/subgrediits.js";
 
 import { verifyToken } from "../middleware/auth.js";
@@ -28,10 +29,10 @@ router.post("/createSubgrediit", verifyToken, createSubgrediit);
 
 router.delete("/deleteSubgrediit/:id", deleteSubgrediit);
 router.put("/joinSubgrediit/:userId/:id", verifyToken, joinSubgrediit);
-router.patch("/leaveSubgrediit/:userId/:id", verifyToken, leaveSubgrediit);
+router.put("/leaveSubgrediit/:userId/:id", verifyToken, leaveSubgrediit);
 router.patch("/acceptJoinRequest/:userId/:id", verifyToken, acceptJoinRequest);
 router.patch("/rejectJoinRequest/:userId/:id", verifyToken, rejectJoinRequest);
-
+router.patch("/blockUser/:userId/:id", verifyToken, blockUser);
 
 router.get("/:id/followers", verifyToken, getSubgrediitFollowers);
 router.get("/:id/blocked", verifyToken, getSubgrediitBlocked);

@@ -1,6 +1,7 @@
 import Post from "../models/Post.js";
 import User from "../models/User.js";
 import Subgreddit from "../models/Subgreddit.js";
+import Report from "../models/Report.js";
 
 export const getSubgrediitPosts = async (req, res) => {
   try {
@@ -114,6 +115,20 @@ export const deletePost = async (req, res) => {
         let index = user.downvotedPosts.indexOf(postId);
         user.downvotedPosts.splice(index, 1);
         await user.save();
+      }
+    });
+
+    console.log(">>> Removing the reports related to that post");
+    console.log("postId : ", postId); 
+    const allReports = await Report.find();
+    allReports.forEach(async (report) => {
+      console.log("report.reportedPost : ", report.reportedPost);
+      if (report.reportedPost.equals(postId)) {
+        console.log(
+          ">>> Removing the report associated with the post : ",
+          report
+        );
+        await report.remove();
       }
     });
 

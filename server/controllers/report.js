@@ -27,3 +27,35 @@ export const createReport = async (req, res) => {
     res.status(500).json(err);
   }
 };
+
+// find those reports with the subgrediit id
+export const getSubgrediitReports = async (req, res) => {
+  try {
+    const subgrediitReports = await Report.find({
+      reportedSubgrediit: req.params.subgrediitId,
+    });
+    res.status(200).json(subgrediitReports);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+export const ignoreReport = async (req, res) => {
+  try {
+    const report = await Report.findById(req.params.id);
+    report.ignored = true;
+    const ignoredReport = await report.save();
+    res.status(200).json(ignoredReport);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+export const deleteReport = async (req, res) => {
+  try {
+    await Report.findByIdAndDelete(req.params.id);
+    res.status(200).json("Report has been deleted");
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};

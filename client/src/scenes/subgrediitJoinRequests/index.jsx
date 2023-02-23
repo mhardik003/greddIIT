@@ -47,7 +47,6 @@ const SubgrediitJoinRequests = () => {
     // console.log("All users : ", data);
   };
 
-
   const acceptJoinRequest = async (userId) => {
     const response = await fetch(
       `http://localhost:3000/subgrediits/acceptJoinRequest/${userId}/${subgrediitId}`,
@@ -187,7 +186,6 @@ const SubgrediitJoinRequests = () => {
                 sx={{
                   mt: "1rem",
                 }}
-                
                 justifyContent="center"
                 alignItems="center"
                 alignContent="center"
@@ -217,7 +215,7 @@ const SubgrediitJoinRequests = () => {
                   ) : (
                     subgrediit.joinRequests.map((userIds) => (
                       <Box
-                      key={userIds}
+                        key={userIds}
                         sx={{
                           width: "80%",
                           display: "flex",

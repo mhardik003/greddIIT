@@ -22,10 +22,15 @@ const ReportSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Subgreddit"
     },
+    ignored: {
+        type: Boolean,
+        default: false
+    },
     creationDate: {
         type: Date,
         default: Date.now
     }
+    
 });
 
 const Report = mongoose.model("Report", ReportSchema);
