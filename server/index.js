@@ -9,6 +9,7 @@ import { fileURLToPath } from "url";
 // import { dirname } from "path";
 import helmet from "helmet";
 import morgan from "morgan";
+
 // import {verifyToken} from "./middleware/auth.js";
 // import { editUser } from "./controllers/users.js";
 
@@ -19,6 +20,7 @@ import { registerUser } from "./controllers/auth.js";
 import userRoutes from "./routes/users.js";
 import subgredditRoutes from "./routes/subgrediits.js";
 import postRoutes from "./routes/post.js";
+import reportRoutes from "./routes/report.js";
 
 
 
@@ -61,6 +63,7 @@ app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/subgrediits", subgredditRoutes);
 app.use("/posts", postRoutes);
+app.use("/reports", reportRoutes);
 
 
 // MONGOOSE CONNECTION

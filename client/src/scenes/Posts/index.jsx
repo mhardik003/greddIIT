@@ -5,6 +5,7 @@ import Navbar from "../navbar";
 import CreatePost from "./CreatePost";
 import FlexBetween from "components/FlexBetween";
 import notFound from "scenes/notFound";
+import ReportPost from "./ReportPost";
 
 import {
   Box,
@@ -28,17 +29,37 @@ import {
   Delete as DeleteIcon,
   Comment as CommentIcon,
   PersonAddAlt as PersonAddAltIcon,
+  Report,
 } from "@mui/icons-material";
-
+import ReportGmailerrorredIcon from "@mui/icons-material/ReportGmailerrorred";
+import Modal from "@mui/material/Modal";
 import { toast } from "react-toastify";
 
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  boxShadow: 24,
+  p: 4,
+  borderRadius: "1rem ",
+};
+
 const Posts = () => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const navigate = useNavigate();
   const theme = useTheme();
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const [user, setUser] = useState(null);
   const [allUsers, setAllUsers] = useState([]);
   const [allSubgrediits, setAllSubgrediits] = useState([]);
+  const [reportedPost, setReportedPost] = useState(null);
+  const [reportedSubgrediit, setReportedSubgrediit] = useState(null);
+  const [reportedUser, setReportedUser] = useState(null);
   const [posts, setPosts] = useState([]);
   const [subgrediit, setSubgrediit] = useState(null);
   const { subgrediitId } = useParams();
@@ -264,18 +285,35 @@ const Posts = () => {
   if (!allSubgrediits) return null;
 
   // check if the subgrediitId is in the list of subgrediits
-if(allSubgrediits.length > 0){
-  if (!allSubgrediits.some((subgrediit) => subgrediit._id === subgrediitId)) {
-    console.log("Subgrediit not found");
-    console.log(allSubgrediits);
-    navigate("/404");
+  if (allSubgrediits.length > 0) {
+    if (!allSubgrediits.some((subgrediit) => subgrediit._id === subgrediitId)) {
+      console.log("Subgrediit not found");
+      console.log(allSubgrediits);
+      navigate("/404");
+    }
   }
-}
 
   // console.log("Subgrediit BannnedKeywords : ", subgrediit.bannedKeywords);
   return (
     <>
       <Navbar />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <ReportPost
+            getSubgrediit={getSubgrediit}
+            handleClose={handleClose}
+            getSubgrediitPosts={getSubgrediitPosts}
+            reportedPost={reportedPost}
+            reportedSubgrediit={reportedSubgrediit}
+            reportedUser={reportedUser}
+          />
+        </Box>
+      </Modal>
       <Box>
         <Grid spacing={1} container justifyContent="center" direction="row">
           <Grid
@@ -498,7 +536,7 @@ if(allSubgrediits.length > 0){
                         </Button>
 
                         {/* Save for later */}
-                        <Button
+                        <IconButton
                           sx={{ mr: "1rem", ml: "auto" }}
                           onClick={() => {
                             console.log("Save for later");
@@ -512,7 +550,24 @@ if(allSubgrediits.length > 0){
                           ) : (
                             <BookmarkBorderOutlinedIcon />
                           )}
-                        </Button>
+                        </IconButton>
+                        <IconButton
+                          variant="contained"
+                          color={theme.palette.background.alt}
+                          size="small"
+                          sx={{
+                            ml: "0.2rem",
+                          }}
+                          onClick={() => {
+                            console.log("Report Post");
+                            setReportedPost(post._id);
+                            setReportedSubgrediit(post.postedIn);
+                            setReportedUser(post.postedBy);
+                            handleOpen();
+                          }}
+                        >
+                          <ReportGmailerrorredIcon />
+                        </IconButton>
                       </FlexBetween>
                     </Box>
                   </Box>

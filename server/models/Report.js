@@ -18,7 +18,7 @@ const ReportSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Post"
     },
-    reportedSubgreddit: {
+    reportedSubgrediit: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Subgreddit"
     },

@@ -67,6 +67,15 @@ export const getPosts = async (req, res) => {
   }
 };
 
+export const getPost = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.postId);
+    res.status(200).json(post);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const getSubgredditPosts = async (req, res) => {
   try {
     const posts = await Post.find({ postedIn: req.params.id });
@@ -214,26 +223,22 @@ export const savePost = async (req, res) => {
     // console.log("user : ", user);
     // check if the user has already saved the post
     if (user.savedPosts.includes(req.params.postId)) {
-    
-
       let index = user.savedPosts.indexOf(req.params.postId);
       user.savedPosts.splice(index, 1);
       await user.save();
 
-      index= post.savedBy.indexOf(req.params.id);
+      index = post.savedBy.indexOf(req.params.id);
       post.savedBy.splice(index, 1);
       await post.save();
-      console.log("> The post has been unsaved")
+      console.log("> The post has been unsaved");
       res.status(200).json("The post has been unsaved");
     } else {
-      
-
       user.savedPosts.push(req.params.postId);
       await user.save();
 
       post.savedBy.push(req.params.id);
       await post.save();
-      console.log("> The post has been saved")
+      console.log("> The post has been saved");
       res.status(200).json("The post has been saved");
     }
   } catch (error) {
@@ -243,7 +248,6 @@ export const savePost = async (req, res) => {
 
 export const getSavedPosts = async (req, res) => {
   try {
-
     console.log("> req.params : ", req.params);
 
     const user = await User.findById(req.params.userId);
@@ -259,4 +263,4 @@ export const getSavedPosts = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-}
+};

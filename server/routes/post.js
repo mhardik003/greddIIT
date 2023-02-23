@@ -10,11 +10,13 @@ import {
   deletePost,
   getUserPosts,
   getSavedPosts,
+  getPost
 } from "../controllers/post.js";
 import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
+router.get("/find/:postId", verifyToken, getPost);
 router.get("/allposts", verifyToken, getPosts);
 router.delete("/:postId/delete", verifyToken, deletePost);
 router.get("/get/:subgrediitId/", verifyToken, getSubgrediitPosts);

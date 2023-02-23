@@ -143,6 +143,29 @@ const Mysubgrediits = () => {
               borderRadius="1.5rem"
               backgroundColor={theme.palette.background.alt}
             >
+              {/* dropdown menu for sorting subgrediits */}
+              <Box
+              sx={{
+                
+                pl: "5rem",
+                mb: "3rem",
+              }}
+              >
+                <Typography
+                  textAlign="left"
+                  fontWeight="500"
+                  variant="h5"
+                  color="primary"
+                  sx={{ mb: "1.5rem" }}
+                >
+                  Sort by
+                </Typography>
+
+                {/* dropdown menu*/}
+                
+
+
+              </Box>
               {/* check if the number of subgrediits is 0 */}
               {subgrediits.length === 0 ? (
                 <Typography
