@@ -6,12 +6,15 @@ import {
   useTheme,
   Divider,
   Button,
+  IconButton,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Navbar from "./navBar";
 import FlexBetween from "components/FlexBetween";
+import { ReportProblem } from "@mui/icons-material";
+import { toast, ToastContainer } from "react-toastify";
 
 const Mysubgrediits = () => {
   const navigate = useNavigate();
@@ -110,6 +113,7 @@ const Mysubgrediits = () => {
 
   return (
     <>
+      <ToastContainer/>
       <Navbar getAllSubgrediits={getAllSubgrediits} />
       <Box>
         <Grid
@@ -252,7 +256,33 @@ const Mysubgrediits = () => {
                           Delete
                         </Button>
                       ) : subgrediit.leftors.includes(id) ? (
-                        <></>
+                        <>
+                          <Typography
+                            variant="body2"
+                            sx={{
+                              pr: "1rem",
+                              pt: "- 0.5rem",
+                            }}
+                          >
+                            <IconButton>
+                              <ReportProblem
+                                color="warning"
+                                onClick={() => {
+                                  toast.error('Cannot join a Subgrediit once you have left it', {
+                                    position: "top-right",
+                                    autoClose: 2000,
+                                    hideProgressBar: false,
+                                    closeOnClick: true,
+                                    pauseOnHover: true,
+                                    draggable: true,
+                                    progress: undefined,
+                                    theme: "colored",
+                                    });
+                                }}
+                              />
+                            </IconButton>
+                          </Typography>
+                        </>
                       ) : subgrediit.followers.includes(id) ? (
                         <Button
                           variant="contained"

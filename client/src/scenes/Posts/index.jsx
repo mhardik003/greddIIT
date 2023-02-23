@@ -16,6 +16,7 @@ import {
   Divider,
   Button,
   IconButton,
+  Avatar,
 } from "@mui/material";
 
 import {
@@ -321,12 +322,51 @@ const Posts = () => {
             xs={0}
             sm={0}
             md={1}
-            lg={2}
+            lg={3}
             container
-            spacing={2}
+            // spacing={2}
             alignItems="center"
             justifyContent="left"
-          ></Grid>
+          >
+            <Box
+              width={isNonMobileScreens ? "80%" : "83%"}
+              p="2rem"
+              m="2rem auto"
+              mt="-20rem"
+              // mb="1rem"
+              borderRadius="1.5rem"
+              backgroundColor={theme.palette.background.alt}
+            >
+              <Avatar
+                alt="Remy Sharp"
+                sx={{
+                  width: 200,
+                  height: 200,
+                  m: "auto",
+                }}
+                alignItems="center"
+                src="https://images.unsplash.com/photo-1493612276216-ee3925520721?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cmFuZG9tfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+              />
+              <Typography
+                textAlign="center"
+                fontWeight="500"
+                variant="h2"
+                color={theme.palette.text.primary }
+                sx={{ mt: "1.5rem" }}
+              >
+                {subgrediit.name}
+              </Typography>
+              <Typography
+                textAlign="center"
+                fontWeight="500"
+                variant="body2"
+                color={theme.palette.text.primary }
+                sx={{ mt:"0.5rem",mb: "1.5rem" }}
+              >
+                {subgrediit.description}
+              </Typography>
+            </Box>
+          </Grid>
           <Grid
             item
             xs={12}
@@ -340,29 +380,10 @@ const Posts = () => {
             style={{ minHeight: "100vh" }}
           >
             <Box
-              width={isNonMobileScreens ? "80%" : "83%"}
-              p="2rem 0.5rem 0rem 0.5rem"
-              m="2rem auto"
-              mt="0.5rem"
-              // mb="1rem"
-              borderRadius="1.5rem"
-              // backgroundColor={theme.palette.background.alt}
-            >
-              <Typography
-                textAlign="center"
-                fontWeight="500"
-                variant="h2"
-                color="primary"
-                // sx={{ mb: "1.5rem" }}
-              >
-                Posts from {subgrediit.name}
-              </Typography>
-            </Box>
-            <Box
               width="50%"
               p="2rem 0.5rem 1rem 0.5rem"
               m="2rem auto"
-              mt="0rem"
+              mt="5rem"
               mb="1rem"
               borderRadius="1.5rem"
               backgroundColor={theme.palette.background.alt}
@@ -442,10 +463,10 @@ const Posts = () => {
                       sx={{ mb: "0.5rem", pl: "0.5rem" }}
                     >
                       Created By : @{""}
-                      {
-                        allUsers.find((user) => user._id === post.postedBy)
-                          .userName
-                      }
+                      {subgrediit.blockedFollowers.includes(post.postedBy)
+                        ? "Blocked User"
+                        : allUsers.find((user) => user._id === post.postedBy)
+                            .userName}
                       {/* button to follow the user */}
                       {user._id !== post.postedBy && (
                         <IconButton
@@ -551,27 +572,26 @@ const Posts = () => {
                             <BookmarkBorderOutlinedIcon />
                           )}
                         </IconButton>
-                        
+
                         {post.postedBy !== user._id && (
-                        <IconButton
-                          variant="contained"
-                          color={theme.palette.background.alt}
-                          size="small"
-                          sx={{
-                            ml: "0.2rem",
-                          }}
-                          onClick={() => {
-                            console.log("Report Post");
-                            setReportedPost(post._id);
-                            setReportedSubgrediit(post.postedIn);
-                            setReportedUser(post.postedBy);
-                            handleOpen();
-                          }}
-                        >
-                          <ReportGmailerrorredIcon />
-                        </IconButton>
+                          <IconButton
+                            variant="contained"
+                            color={theme.palette.background.alt}
+                            size="small"
+                            sx={{
+                              ml: "0.2rem",
+                            }}
+                            onClick={() => {
+                              console.log("Report Post");
+                              setReportedPost(post._id);
+                              setReportedSubgrediit(post.postedIn);
+                              setReportedUser(post.postedBy);
+                              handleOpen();
+                            }}
+                          >
+                            <ReportGmailerrorredIcon />
+                          </IconButton>
                         )}
-                      
                       </FlexBetween>
                     </Box>
                   </Box>
@@ -596,15 +616,6 @@ const Posts = () => {
                 </Typography>
               </Box>
             )}
-
-            <Box
-              width={isNonMobileScreens ? "80%" : "83%"}
-              p="2rem 0.5rem 1rem 0.5rem"
-              m="1rem auto"
-              style={{ marginBottom: "100rem" }}
-              borderRadius="1.5rem"
-              // backgroundColor={theme.palette.background.alt}
-            ></Box>
           </Grid>
           <Grid
             item

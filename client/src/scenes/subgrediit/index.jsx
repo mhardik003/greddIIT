@@ -15,6 +15,7 @@ import Navbar2 from "./Navbar2";
 import { useNavigate, useParams } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
 import MainContent from "./MainContent";
+import useKeyboardShortcut from 'use-keyboard-shortcut'
 
 const Index = () => {
   const navigate = useNavigate();
@@ -25,6 +26,26 @@ const Index = () => {
   const token = useSelector((state) => state.token);
   const { id } = useSelector((state) => state.user);
   const { subgrediitId } = useParams();
+
+  // go to users page on pressing U on the keyboard
+   useKeyboardShortcut(
+    ["U"],
+    shortcutKeys => navigate(`/mysubgrediit/${subgrediitId}/users`),
+    { 
+      overrideSystem: false,
+      ignoreInputFields: false, 
+      repeatOnHold: false 
+    }
+  );
+   useKeyboardShortcut(
+    ["J"],
+    shortcutKeys => navigate(`/mysubgrediit/${subgrediitId}/joinrequests`),
+    { 
+      overrideSystem: false,
+      ignoreInputFields: false, 
+      repeatOnHold: false 
+    }
+  );
 
   const getUser = async () => {
     const response = await fetch(`http://localhost:3000/users/${id}`, {
