@@ -18,12 +18,15 @@ import { TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ReactRouterPrompt from "react-router-prompt";
 
+
+const phoneRegExp = /^(\+\d{1,3}[- ]?)?\d{10}$/;
+
 const profileSchema = Yup.object().shape({
   firstName: Yup.string().required("First name is required"),
   lastName: Yup.string().required("Last name is required"),
   userName: Yup.string().required("Username is required"),
   email: Yup.string().email("Invalid email").required("Email is required"),
-  contactNumber: Yup.string().required("Contact number is required"),
+  contactNumber: Yup.string().matches(phoneRegExp,"Phone number is not valid").required("Contact number is required"),
   age: Yup.number().required("Age is required"),
 });
 
