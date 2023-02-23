@@ -68,9 +68,9 @@ const SubgrediitStats = () => {
 
   if (!user.mySubgrediits.includes(subgrediitId)) navigate("/");
 
-  console.log("Subgrediit : ", subgrediit.creationDate.slice(0, 15));
-  console.log("Creation Date : ", creationDate);
-  console.log("Date : ", currdate);
+  // console.log("Subgrediit : ", subgrediit.creationDate.slice(0, 15));
+  // console.log("Creation Date : ", creationDate);
+  // console.log("Date : ", currdate);
   // console.log("Difference : ", Math.ceil(Math.abs(subgrediit.creationDate - date)/1000*60*60*24));
 
   return (
