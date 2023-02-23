@@ -26,7 +26,7 @@ import { useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
 import CreateSubgrediit from "./CreateSubgrediit";
 
-const Navbar = ({ getAllSubgrediits }) => {
+const Navbar = ({ getAllSubgrediits, setDisplaySubgrediits, subgrediits }) => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -60,7 +60,6 @@ const Navbar = ({ getAllSubgrediits }) => {
             timeout: 500,
           },
         }}
-        
       >
         <Fade in={openCreateSubgrediit}>
           <Box
@@ -146,6 +145,7 @@ const Navbar = ({ getAllSubgrediits }) => {
               padding="0.1rem 1.5rem"
             >
               <InputBase placeholder="Search..." />
+              
               <IconButton>
                 <Search />
               </IconButton>
