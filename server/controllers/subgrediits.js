@@ -1,6 +1,8 @@
 import Subgreddit from "../models/Subgreddit.js";
 import Post from "../models/Post.js";
 import User from "../models/User.js";
+import mongoose from "mongoose";
+import fetch from "node-fetch";
 
 export const getSubgrediit = async (req, res) => {
   try {
@@ -52,6 +54,7 @@ export const createSubgrediit = async (req, res) => {
     const { moderator, followers } = req.body;
 
     const user = await User.find({ _id: moderator });
+    // console.log("user : ", user);
 
     let tagsArray = [];
     if (tags) {
@@ -61,13 +64,6 @@ export const createSubgrediit = async (req, res) => {
     if (bannedKeywords) {
       bannedKeywordsArray = bannedKeywords.split(",");
     }
-    // console.log("> name from the request : ", name);
-    // console.log("> description from the request : ", description);
-    // console.log("> picturePath from the request : ", subgrediitPicture);
-    // console.log("> tags from the request : ", tagsArray);
-    // console.log("> banndedKeywords from the request : ", bannedKeywordsArray);
-    // console.log("> moderator from the request : ", moderator);
-    // console.log("> followers from the request : ", followers);
 
     const newSubgreddit = new Subgreddit({
       name,
@@ -76,13 +72,15 @@ export const createSubgrediit = async (req, res) => {
       tags: tagsArray,
       bannedKeywords: bannedKeywordsArray,
       moderators: [moderator],
-      followers,
+      followers: [moderator],
     });
-    newSub = await newSubgreddit.save();
 
-    user.mySubgrediits.push(newSub._id);
+    const newSub = await newSubgreddit.save();
+    console.log("newSub id : ", newSub._id);
 
-    await user.save();
+    // add newSub to the user's subgrediits
+    user[0].mySubgrediits.push(newSub._id);
+    await user[0].save();
 
     res.status(201).json(newSubgreddit);
   } catch (error) {
@@ -111,69 +109,12 @@ export const editSubgrediit = async (req, res) => {
   }
 };
 
-export const deletePost = async (postId) => {
-  try {
-    const postId = req.params.postId;
-    const post = await Post.findById(postId);
-    // console.log("post : ", post);
-    const subgredditId = post.postedIn;
-    const subgreddit = await Subgreddit.findById(subgredditId);
-    // console.log("subgreddit : ", subgreddit);
-    const userId = post.postedBy;
-    const user = await User.findById(userId);
-    // console.log("user : ", user);
-
-    // check if the post is part of the saved posts, upvoted posts, downvotes posts of all users and remove it
-    const allUsers = await User.find();
-    allUsers.forEach(async (user) => {
-      if (user.savedPosts.includes(postId)) {
-        let index = user.savedPosts.indexOf(postId);
-        user.savedPosts.splice(index, 1);
-        await user.save();
-      }
-      if (user.upvotedPosts.includes(postId)) {
-        let index = user.upvotedPosts.indexOf(postId);
-        user.upvotedPosts.splice(index, 1);
-        await user.save();
-      }
-      if (user.downvotedPosts.includes(postId)) {
-        let index = user.downvotedPosts.indexOf(postId);
-        user.downvotedPosts.splice(index, 1);
-        await user.save();
-      }
-    });
-
-    // remove the post from the subgreddit
-    let index = subgreddit.posts.indexOf(postId);
-    subgreddit.posts.splice(index, 1);
-    await subgreddit.save();
-
-    // remove the post from the user
-    index = user.posts.indexOf(postId);
-    user.posts.splice(index, 1);
-    await user.save();
-
-    // remove the post
-    await post.remove();
-    console.log("Post has been deleted");
-  } catch (error) {
-    console.log(">>> error : ", error);
-  }
-};
 
 export const deleteSubgrediit = async (req, res) => {
   try {
     const subgreddit = await Subgreddit.findById(req.params.id);
     await subgreddit.remove();
-
-    // remove all the posts in the subgreddit also
-    const posts = await Post.find();
-    posts.forEach(async (post) => {
-      if (post.postedIn === req.params.id) {
-        await deletePost(post._id);
-      }
-    });
-
+    
     // remove the subgreddit from all the users' mysubgrediits
     const allUsers = await User.find();
     allUsers.forEach(async (user) => {

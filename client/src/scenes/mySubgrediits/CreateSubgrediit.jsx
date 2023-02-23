@@ -39,7 +39,10 @@ const initialValuesSubgrediit = {
   subgrediitPicture: "",
 };
 
-const CreateSubgrediit = ({getMySubgrediits,handleCloseCreateSubgrediit}) => {
+const CreateSubgrediit = ({
+  getMySubgrediits,
+  handleCloseCreateSubgrediit,
+}) => {
   const { palette } = useTheme();
   // const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width: 600px)");
@@ -64,7 +67,7 @@ const CreateSubgrediit = ({getMySubgrediits,handleCloseCreateSubgrediit}) => {
   //
   // ON SUBMITTING THE FORM, SEND THE DATA TO THE SERVER
   const create = async (values, onSubmitProps) => {
-    console.log("Values from the form : ", values);
+    // console.log("Values from the form : ", values);
     const formData = new FormData();
     for (let value in values) {
       if (value !== "profilePicture") formData.append(value, values[value]);
@@ -76,7 +79,7 @@ const CreateSubgrediit = ({getMySubgrediits,handleCloseCreateSubgrediit}) => {
 
     // values.push({"moderator": user, "followers": user, "posts": []})
 
-    console.log("Form data : ", JSON.stringify(values));
+    // console.log("Form data : ", JSON.stringify(values));
 
     const response = await fetch(
       "http://localhost:3000/subgrediits/createSubgrediit",
@@ -84,8 +87,8 @@ const CreateSubgrediit = ({getMySubgrediits,handleCloseCreateSubgrediit}) => {
         method: "POST",
         body: JSON.stringify({
           values,
-          moderator: user,
-          followers: user,
+          moderator: user._id,
+          followers: user._id,
           posts: [],
         }),
         headers: {
@@ -95,10 +98,10 @@ const CreateSubgrediit = ({getMySubgrediits,handleCloseCreateSubgrediit}) => {
       }
     );
 
-    console.log("Response status : ", response.status);
+    // console.log("Response status : ", response.status);
 
     const savedSubgrediit = await response.json();
-    console.log("Saved Subgrediit : ", savedSubgrediit);
+    // console.log("Saved Subgrediit : ", savedSubgrediit);
 
     onSubmitProps.resetForm(initialValuesSubgrediit);
 
@@ -116,9 +119,6 @@ const CreateSubgrediit = ({getMySubgrediits,handleCloseCreateSubgrediit}) => {
 
     getMySubgrediits();
     handleCloseCreateSubgrediit();
-
-
-
   };
 
   const handleFormSubmit = async (values, onSubmitProps) => {
@@ -188,7 +188,6 @@ const CreateSubgrediit = ({getMySubgrediits,handleCloseCreateSubgrediit}) => {
                 />
                 <TextField
                   label="Comma seperated banned keywords"
-                  
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.bannedKeywords}

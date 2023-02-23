@@ -18,7 +18,7 @@ const router = express.Router();
 
 router.get("/find/:postId", verifyToken, getPost);
 router.get("/allposts", verifyToken, getPosts);
-router.delete("/:postId/delete", verifyToken, deletePost);
+router.delete("/:postId/delete", deletePost);
 router.get("/get/:subgrediitId/", verifyToken, getSubgrediitPosts);
 router.put("/:postId/:id/upvote", verifyToken, upvotePost);
 router.put("/:postId/:id/downvote", verifyToken, downvotePost);
