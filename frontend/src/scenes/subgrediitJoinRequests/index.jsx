@@ -21,8 +21,11 @@ const SubgrediitJoinRequests = () => {
   const [subgrediit, setSubgrediit] = useState(null);
   const token = useSelector((state) => state.token);
   const [allUsers, setAllUsers] = useState([]);
+  const [user, setUser] = useState(null);
   const { subgrediitId } = useParams();
+
   const { id } = useSelector((state) => state.user);
+  
 
   const getSubgrediit = async () => {
     const response = await fetch(
@@ -36,6 +39,17 @@ const SubgrediitJoinRequests = () => {
     setSubgrediit(data);
     // console.log("subgrediit : ", subgrediit);
   };
+
+  const getUser = async () => {
+    const response = await fetch(`http://localhost:3000/users/${id}`, {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = await response.json();
+    setUser(data);
+    // console.log("user : ", user);
+  };
+
 
   const getAllUsers = async () => {
     const response = await fetch(`http://localhost:3000/users/getAllUsers`, {
@@ -76,10 +90,17 @@ const SubgrediitJoinRequests = () => {
   useEffect(() => {
     getSubgrediit();
     getAllUsers();
+    getUser();
+
+
+
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!subgrediit) return null;
   if (!allUsers) return null;
+  if (!user) return null;
+
+  if(!user.mySubgrediits.includes(subgrediitId)) navigate("/");
 
   // console.log("subgrediit : ", subgrediit);
   // console.log("allUsers : ", allUsers);

@@ -27,12 +27,7 @@ const SubgrediitReports = () => {
   const token = useSelector((state) => state.token);
   const { id } = useSelector((state) => state.user);
   const { subgrediitId } = useParams();
-  const [toSend, setToSend] = useState({
-    to_name: "",
-    message: "",
-    reply_to: "",
-    from_name: "",
-  });
+  const [user, setUser] = useState(null);
 
   const getSubgrediit = async () => {
     const response = await fetch(
@@ -47,6 +42,15 @@ const SubgrediitReports = () => {
     // console.log("data : ", data);
   };
 
+  const getUser = async () => {
+    const response = await fetch(`http://localhost:3000/users/${id}`, {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = await response.json();
+    setUser(data);
+    // console.log("user : ", user);
+  };
   const findReports = async () => {
     const response = await fetch(
       `http://localhost:3000/reports/getSubgrediitReports/${subgrediitId}`,
@@ -221,6 +225,7 @@ const SubgrediitReports = () => {
 
   useEffect(() => {
     getSubgrediit();
+    getUser();
     findReports();
     getAllUsers();
     getAllSubgrediits();
@@ -232,6 +237,10 @@ const SubgrediitReports = () => {
   if (!allUsers) return null;
   if (!allSubgrediits) return null;
   if (!allPosts) return null;
+  if (!user) return null;
+
+  if(!user.mySubgrediits.includes(subgrediitId)) navigate("/");
+
 
   // console.log("subgrediit : ", subgrediit);
 

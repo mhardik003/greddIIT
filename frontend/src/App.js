@@ -27,8 +27,6 @@ function App() {
   const isAuth = Boolean(useSelector((state) => state.token));
   const isMod = isAuth && true;
 
-  
-
   return (
     <div className="App">
       <BrowserRouter>
@@ -60,7 +58,7 @@ function App() {
             />
             <Route
               path="/mysubgrediit/:subgrediitId"
-              element={isMod ? <Subgrediit /> : <Navigate to="/" />}
+              element={isMod? <Subgrediit /> : <Navigate to="/" />}
             />
             <Route
               path="/mysubgrediit/:subgrediitId/users"

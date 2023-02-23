@@ -297,6 +297,8 @@ const Posts = () => {
     }
   }
 
+  if(!subgrediit.followers.includes(id)) navigate("/")
+
   // console.log("Subgrediit BannnedKeywords : ", subgrediit.bannedKeywords);
   return (
     <>
