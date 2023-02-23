@@ -25,8 +25,14 @@ import { setMode, setLogout } from "state";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
 import CreateSubgrediit from "./CreateSubgrediit";
+import Fuse from "fuse.js";
 
-const Navbar = ({ getAllSubgrediits, setDisplaySubgrediits, subgrediits }) => {
+const Navbar = ({
+  getAllSubgrediits,
+  setDisplaySubgrediits,
+  subgrediits,
+  joinedAndNotJoinedSubgrediits,
+}) => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -45,6 +51,37 @@ const Navbar = ({ getAllSubgrediits, setDisplaySubgrediits, subgrediits }) => {
   const handleCloseCreateSubgrediit = () => setOpenCreateSubgrediit(false);
 
   const fullName = `${user.firstName} ${user.lastName}`;
+
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const options = {
+    includeScore: true,
+    keys: [
+      {
+        name: "name",
+        weight: 0.7,
+      },
+      {
+        name: "tags",
+        weight: 0.3,
+      },
+    ],
+  };
+
+  const fuse = new Fuse(subgrediits, options);
+
+  const onChangeSearch = (e) => {
+    setSearchTerm(e.target.value);
+    if (e.target.value === "") {
+      joinedAndNotJoinedSubgrediits();
+    } else {
+      const result = fuse.search(e.target.value);
+      console.log("result : ", result);
+      // store only items from result
+      const temp = result.map((subgrediit) => subgrediit.item);
+      setDisplaySubgrediits(temp);
+    }
+  };
 
   return (
     <>
@@ -144,8 +181,11 @@ const Navbar = ({ getAllSubgrediits, setDisplaySubgrediits, subgrediits }) => {
               gap="3rem"
               padding="0.1rem 1.5rem"
             >
-              <InputBase placeholder="Search..." />
-              
+              <InputBase
+                placeholder="Search..."
+                // disabled={disabled}
+                onChange={onChangeSearch}
+              />
               <IconButton>
                 <Search />
               </IconButton>

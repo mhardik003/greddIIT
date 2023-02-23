@@ -22,6 +22,9 @@ const Mysubgrediits = () => {
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const [user, setUser] = useState(null);
   const [subgrediits, setAllSubgrediits] = useState([]);
+  const [joinedSubgrediits, setJoinedSubgrediits] = useState([]);
+  const [notjoinedSubgrediits, setNotJoinedSubgrediits] = useState([]);
+  const [displaySubgrediits, setDisplaySubgrediits] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
   const token = useSelector((state) => state.token);
   const { id } = useSelector((state) => state.user);
@@ -99,22 +102,56 @@ const Mysubgrediits = () => {
     getAllSubgrediits();
   };
 
+  const joinedAndNotJoinedSubgrediits = () => {
+    let joined = [];
+    let notJoined = [];
+    if (subgrediits) {
+      joined = subgrediits.filter((subgrediit) => {
+        return subgrediit.followers.some((user) => user === id);
+      });
+
+      notJoined = subgrediits.filter((subgrediit) => {
+        return !subgrediit.followers.some((user) => user === id);
+      });
+    }
+    setJoinedSubgrediits(joined);
+    setNotJoinedSubgrediits(notJoined);
+    setDisplaySubgrediits(joined.concat(notJoined));
+  };
+
   useEffect(() => {
     getUser();
     getAllUsers();
     getAllSubgrediits();
+    joinedAndNotJoinedSubgrediits();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!user) return null;
   if (!allUsers) return null;
   if (!subgrediits) return null;
+  if (
+    subgrediits.length > 0 &&
+    joinedSubgrediits.length === 0 &&
+    notjoinedSubgrediits.length === 0
+  ) {
+    joinedAndNotJoinedSubgrediits();
+    return null;
+  }
+
+  // console.log("Joined Subgrediits : ", joinedSubgrediits);
+  // console.log("Not Joined Subgrediits : ", notjoinedSubgrediits);
 
   // console.log("All Users : ", allUsers);
 
   return (
     <>
-      <ToastContainer/>
-      <Navbar getAllSubgrediits={getAllSubgrediits} />
+      <ToastContainer />
+      <Navbar
+        getAllSubgrediits={getAllSubgrediits}
+        setDisplaySubgrediits={setDisplaySubgrediits}
+        subgrediits={subgrediits}
+        joinedAndNotJoinedSubgrediits = {joinedAndNotJoinedSubgrediits}
+      />
       <Box>
         <Grid
           spacing={1}
@@ -204,7 +241,7 @@ const Mysubgrediits = () => {
                   You have not created any subgrediits yet
                 </Typography>
               ) : (
-                subgrediits.map((subgrediit) => (
+                displaySubgrediits.map((subgrediit) => (
                   <Box
                     key={subgrediit._id}
                     width={isNonMobileScreens ? "80%" : "83%"}
@@ -263,23 +300,24 @@ const Mysubgrediits = () => {
                               pr: "1rem",
                               pt: "- 0.5rem",
                             }}
+                            onClick={() => {
+                              toast.error(
+                                "Cannot join a Subgrediit once you have left it",
+                                {
+                                  position: "top-right",
+                                  autoClose: 2000,
+                                  hideProgressBar: false,
+                                  closeOnClick: true,
+                                  pauseOnHover: true,
+                                  draggable: true,
+                                  progress: undefined,
+                                  theme: "colored",
+                                }
+                              );
+                            }}
                           >
                             <IconButton>
-                              <ReportProblem
-                                color="warning"
-                                onClick={() => {
-                                  toast.error('Cannot join a Subgrediit once you have left it', {
-                                    position: "top-right",
-                                    autoClose: 2000,
-                                    hideProgressBar: false,
-                                    closeOnClick: true,
-                                    pauseOnHover: true,
-                                    draggable: true,
-                                    progress: undefined,
-                                    theme: "colored",
-                                    });
-                                }}
-                              />
+                              <ReportProblem />
                             </IconButton>
                           </Typography>
                         </>
@@ -409,26 +447,6 @@ const Mysubgrediits = () => {
                     >
                       Followers : {subgrediit.followers.length}
                     </Typography>
-
-                    {/* <Typography
-                    textAlign="left"
-                    fontWeight="500"
-                    variant="body1"
-                    color={theme.palette.neutral.dark}
-                    sx={{ mt: "0.2rem", pl: "1rem" }}
-                  >
-                    Join Requests : {subgrediit.joinRequests.length}
-                  </Typography> */}
-
-                    {/* <Typography
-                    textAlign="left"
-                    fontWeight="500"
-                    variant="body1"
-                    color={theme.palette.neutral.dark}
-                    sx={{ mt: "0.2rem", pl: "1rem" }}
-                  >
-                    Reported Posts : {subgrediit.reportedPosts.length}
-                  </Typography> */}
                   </Box>
                 ))
               )}
