@@ -551,6 +551,8 @@ const Posts = () => {
                             <BookmarkBorderOutlinedIcon />
                           )}
                         </IconButton>
+                        
+                        {post.postedBy !== user._id && (
                         <IconButton
                           variant="contained"
                           color={theme.palette.background.alt}
@@ -568,6 +570,8 @@ const Posts = () => {
                         >
                           <ReportGmailerrorredIcon />
                         </IconButton>
+                        )}
+                      
                       </FlexBetween>
                     </Box>
                   </Box>
