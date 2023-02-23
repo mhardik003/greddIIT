@@ -5,12 +5,10 @@ import {
   Grid,
   useTheme,
   Divider,
-  Button,
   Chip,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import Navbar from "../navbar";
 import { useNavigate, useParams } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
 

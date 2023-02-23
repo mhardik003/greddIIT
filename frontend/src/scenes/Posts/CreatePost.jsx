@@ -1,20 +1,8 @@
 import { useState } from "react";
-import {
-  Box,
-  Button,
-  TextField,
-  Typography,
-  useTheme,
-  useMediaQuery,
-} from "@mui/material";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import { Box, Button, TextField, useTheme } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { toast, ToastContainer } from "react-toastify";
-// import { useNavigate } from "react-router-dom";
-// import { useDispatch } from "react-redux";
-// import { setLogin } from "state";
-import Dropzone from "react-dropzone";
 import FlexBetween from "components/FlexBetween";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -33,7 +21,6 @@ const initialValuesPost = {
 const CreatePost = ({ getSubgrediitPosts }) => {
   const { palette } = useTheme();
   // const navigate = useNavigate();
-  const isNonMobile = useMediaQuery("(min-width: 600px)");
   const { id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const [subgrediit, setSubgrediit] = useState(null);
@@ -121,15 +108,6 @@ const CreatePost = ({ getSubgrediitPosts }) => {
         values.description = description;
       }
     }
-
-    const toBeSent = {
-      title: values.title,
-      description: values.description,
-      subgrediitId: subgrediitId,
-      userId: user._id,
-    };
-
-    // console.log(toBeSent);
 
     const response = await fetch("http://localhost:3000/posts/createPost", {
       method: "POST",

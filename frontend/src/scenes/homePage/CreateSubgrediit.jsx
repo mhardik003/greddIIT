@@ -100,7 +100,7 @@ const CreateSubgrediit = ({
 
     // console.log("Response status : ", response.status);
 
-    const savedSubgrediit = await response.json();
+    await response.json();
     // console.log("Saved Subgrediit : ", savedSubgrediit);
 
     onSubmitProps.resetForm(initialValuesSubgrediit);

@@ -26,3 +26,14 @@ bash ./run.sh
     cd client
     npm install && npm start -y
     ```
+
+* To run the docker file
+
+    ```
+    sudo docker-compose build
+    ```
+
+    ```
+    sudo docker-compose up
+    ```
+    

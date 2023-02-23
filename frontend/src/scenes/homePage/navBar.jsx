@@ -19,7 +19,7 @@ import InputLabel from "@mui/material/InputLabel";
 import { Search, DarkMode, LightMode, Menu, Close } from "@mui/icons-material";
 import QuestionAnswerOutlinedIcon from "@mui/icons-material/QuestionAnswerOutlined";
 import SmartToyOutlinedIcon from "@mui/icons-material/SmartToyOutlined";
-import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
+// import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "state";
 import { useNavigate } from "react-router-dom";
@@ -52,7 +52,7 @@ const Navbar = ({
 
   const fullName = `${user.firstName} ${user.lastName}`;
 
-  const [searchTerm, setSearchTerm] = useState("");
+  // const [searchTerm, setSearchTerm] = useState("");
 
   const options = {
     includeScore: true,
@@ -71,7 +71,8 @@ const Navbar = ({
   const fuse = new Fuse(subgrediits, options);
 
   const onChangeSearch = (e) => {
-    setSearchTerm(e.target.value);
+    // console.log(e.target.value)
+    // setSearchTerm(e.target.value);
     if (e.target.value === "") {
       joinedAndNotJoinedSubgrediits();
     } else {

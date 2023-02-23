@@ -6,13 +6,12 @@ import {
   useTheme,
   Divider,
   Button,
-  Chip,
 } from "@mui/material";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "../navbar";
 import { useNavigate, useParams } from "react-router-dom";
-import FlexBetween from "components/FlexBetween";
+
 import emailjs from "emailjs-com";
 
 const SubgrediitReports = () => {
@@ -112,7 +111,8 @@ const SubgrediitReports = () => {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-    const data = await response.json();
+    // const data = await response.json();
+    await response.json();
     const userEmail = allUsers.find((user) => user._id === reportedUser).email;
     const user_name = allUsers.find(
       (user) => user._id === reportedUser
@@ -157,7 +157,7 @@ const SubgrediitReports = () => {
     );
 
     // console.log("data : ", data);
-    const data = await response.json();
+    await response.json();
     const userEmail = allUsers.find((user) => user._id === reportedUser).email;
     const user_name = allUsers.find(
       (user) => user._id === reportedUser
@@ -197,7 +197,7 @@ const SubgrediitReports = () => {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-    const data = await response.json();
+    await response.json();
     const userEmail = allUsers.find((user) => user._id === reportedUser).email;
     const user_name = allUsers.find(
       (user) => user._id === reportedUser
@@ -233,7 +233,7 @@ const SubgrediitReports = () => {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-    const data = await response.json();
+    await response.json();
     // console.log("data : ", data);
     findReports();
   };

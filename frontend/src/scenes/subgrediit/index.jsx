@@ -1,26 +1,22 @@
 import {
   Box,
-  useMediaQuery,
-  Typography,
+  // useMediaQuery,
   Grid,
-  useTheme,
-  Divider,
-  Button,
-  Chip,
+  // useTheme,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "../navbar";
 import Navbar2 from "./Navbar2";
 import { useNavigate, useParams } from "react-router-dom";
-import FlexBetween from "components/FlexBetween";
+
 import MainContent from "./MainContent";
 import useKeyboardShortcut from 'use-keyboard-shortcut'
 
 const Index = () => {
   const navigate = useNavigate();
-  const theme = useTheme();
-  const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
+  // const theme = useTheme();
+  // const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const [user, setUser] = useState(null);
   const [subgrediit, setSubgrediit] = useState(null);
   const token = useSelector((state) => state.token);

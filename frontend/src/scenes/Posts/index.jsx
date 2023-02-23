@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import Navbar from "../navbar";
 import CreatePost from "./CreatePost";
 import FlexBetween from "components/FlexBetween";
-import notFound from "scenes/notFound";
 import ReportPost from "./ReportPost";
 
 import {
@@ -31,12 +30,10 @@ import {
   Delete as DeleteIcon,
   Comment as CommentIcon,
   PersonAddAlt as PersonAddAltIcon,
-  Report,
 } from "@mui/icons-material";
 import ReportGmailerrorredIcon from "@mui/icons-material/ReportGmailerrorred";
 import Modal from "@mui/material/Modal";
 import { toast } from "react-toastify";
-import emailjs from 'emailjs-com';
 
 const style = {
   position: "absolute",
@@ -255,7 +252,7 @@ const Posts = () => {
         "Content-Type": "application/json",
       }
     );
-    const data = await response.json();
+    await response.json();
     // if (data.error) {
     //   toast.error(data.error, {
     //     position: "top-center",

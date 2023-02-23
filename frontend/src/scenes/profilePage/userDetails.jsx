@@ -19,21 +19,6 @@ import Modal from "@mui/material/Modal";
 import FlexBetween from "components/FlexBetween";
 import Fade from "@mui/material/Fade";
 
-// modal showing the followers of the user
-
-const modalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  color: "#F6F6F6",
-  borderRadius: "10px",
-  // border: "2px solid #000",
-  //   boxShadow: 24,
-  pt: 4,
-  pb: 4,
-};
 
 const UserDetails = ({ userId, userData }) => {
   const token = useSelector((state) => state.token);
@@ -43,7 +28,7 @@ const UserDetails = ({ userId, userData }) => {
   const [followersOpen, setFollowersOpen] = React.useState(false);
   const [followingOpen, setFollowingOpen] = React.useState(false);
   const [followersArray, setFollowersArray] = React.useState([]);
-  const [NotFollowersArray, setNotFollowersArray] = React.useState([]);
+  // const [NotFollowersArray, setNotFollowersArray] = React.useState([]);
   const [followingArray, setFollowingArray] = React.useState([]);
   const [NotFollowingArray, setNotFollowingArray] = React.useState([]);
   const handleFollowersOpen = () => setFollowersOpen(true);
@@ -88,22 +73,22 @@ const UserDetails = ({ userId, userData }) => {
     setFollowersArray(data);
   };
 
-  const getNonFollowers = (allUsers, followersArray) => {
-    // allUSers- followersArray = nonFollowersArray using filter
+  // const getNonFollowers = (allUsers, followersArray) => {
+  //   // allUSers- followersArray = nonFollowersArray using filter
 
-    let temp_notFollowers = allUsers.filter((user) => {
-      return !followersArray.some((follower) => {
-        return follower._id === user._id || user._id === userId;
-      });
-    });
+  //   let temp_notFollowers = allUsers.filter((user) => {
+  //     return !followersArray.some((follower) => {
+  //       return follower._id === user._id || user._id === userId;
+  //     });
+  //   });
 
-    //check and remove if the user itself is in the array
-    temp_notFollowers = temp_notFollowers.filter((user) => {
-      return user._id !== userId;
-    });
+  //   //check and remove if the user itself is in the array
+  //   temp_notFollowers = temp_notFollowers.filter((user) => {
+  //     return user._id !== userId;
+  //   });
 
-    setNotFollowersArray(temp_notFollowers);
-  };
+  //   setNotFollowersArray(temp_notFollowers);
+  // };
 
   const getFollowing = async (following) => {
     const response = await fetch(
@@ -176,9 +161,9 @@ const UserDetails = ({ userId, userData }) => {
     getFollowing();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  React.useEffect(() => {
-    getNonFollowers(allUsers, followersArray);
-  }, [allUsers, followersArray]); // eslint-disable-line react-hooks/exhaustive-deps
+  // React.useEffect(() => {
+  //   getNonFollowers(allUsers, followersArray);
+  // }, [allUsers, followersArray]); // eslint-disable-line react-hooks/exhaustive-deps
 
   React.useEffect(() => {
     getNonFollowing(allUsers, followingArray);
@@ -395,10 +380,7 @@ const UserDetails = ({ userId, userData }) => {
                       removeFollowing(following._id);
                     }}
                   >
-                    <Typography
-                      variant="body2"
-                      sx={{ color: "#F6F6F6" }}
-                    >
+                    <Typography variant="body2" sx={{ color: "#F6F6F6" }}>
                       Remove
                     </Typography>
                   </Button>

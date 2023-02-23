@@ -12,11 +12,11 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 
-import { Formik, FormikConsumer } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
 import { TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import ReactRouterPrompt from "react-router-prompt";
+// import ReactRouterPrompt from "react-router-prompt";
 
 
 const phoneRegExp = /^(\+\d{1,3}[- ]?)?\d{10}$/;
@@ -37,7 +37,7 @@ const Form = ({ userId, userData }) => {
   const isNonMobile = useMediaQuery("(min-width: 600px)");
   const token = useSelector((state) => state.token);
   const [user, setUser] = useState(null);
-  const [isDirty, setIsDirty] = useState(false);
+  // const [isDirty, setIsDirty] = useState(false);
 
   const getUser = async () => {
     setUser(userData);
@@ -64,20 +64,20 @@ const Form = ({ userId, userData }) => {
     });
   };
 
-  const checkDirty = (values) => {
-    if (
-      values.firstName === user.firstName &&
-      values.lastName === user.lastName &&
-      values.userName === user.userName &&
-      values.email === user.email &&
-      values.contactNumber === user.contactNumber &&
-      values.age === user.age
-    ) {
-      setIsDirty(false);
-    } else {
-      setIsDirty(true);
-    }
-  };
+  // const checkDirty = (values) => {
+  //   if (
+  //     values.firstName === user.firstName &&
+  //     values.lastName === user.lastName &&
+  //     values.userName === user.userName &&
+  //     values.email === user.email &&
+  //     values.contactNumber === user.contactNumber &&
+  //     values.age === user.age
+  //   ) {
+  //     setIsDirty(false);
+  //   } else {
+  //     setIsDirty(true);
+  //   }
+  // };
 
   const EditUserData = async (values, onSubmitProps) => {
     // console.log("userId : ", userId);

@@ -1,44 +1,17 @@
-import { useState } from "react";
-import {
-  Box,
-  IconButton,
-  InputBase,
-  Typography,
-  Select,
-  MenuItem,
-  FormControl,
-  useTheme,
-  useMediaQuery,
-  Grid,
-  Divider,
-} from "@mui/material";
-import InputLabel from "@mui/material/InputLabel";
-import { Search, DarkMode, LightMode, Menu, Close } from "@mui/icons-material";
+import { useTheme, Grid } from "@mui/material";
 import ApprovalIcon from "@mui/icons-material/Approval";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import PeopleIcon from "@mui/icons-material/People";
 import ReportIcon from "@mui/icons-material/Report";
-import { useDispatch, useSelector } from "react-redux";
-import { setMode, setLogout } from "state";
 import { useNavigate, useParams } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
 
 const Navbar2 = () => {
-  const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user);
-  const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
-  // console.log("user from navbar : ", user);
   const theme = useTheme();
-  const neutralLight = theme.palette.neutral.light;
-  const dark = theme.palette.neutral.dark;
-  const background = theme.palette.background.default;
   const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.background.alt;
   const { subgrediitId } = useParams();
-
-  const fullName = `${user.firstName} ${user.lastName}`;
 
   return (
     <>
@@ -71,7 +44,9 @@ const Navbar2 = () => {
                 cursor: "pointer",
               },
             }}
-            onClick={() => navigate(`/mysubgrediit/${subgrediitId}/joinrequests`)}
+            onClick={() =>
+              navigate(`/mysubgrediit/${subgrediitId}/joinrequests`)
+            }
           />
 
           <ReportIcon

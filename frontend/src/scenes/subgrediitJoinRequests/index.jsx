@@ -6,7 +6,6 @@ import {
   useTheme,
   Divider,
   Button,
-  Chip,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -69,7 +68,7 @@ const SubgrediitJoinRequests = () => {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-    const data = await response.json();
+    await response.json();
     // console.log("data : ", data);
     getSubgrediit();
   };
@@ -82,7 +81,7 @@ const SubgrediitJoinRequests = () => {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-    const data = await response.json();
+    await response.json();
     // console.log("data : ", data);
     getSubgrediit();
   };
@@ -268,6 +267,7 @@ const SubgrediitJoinRequests = () => {
                               if (user._id === userIds) {
                                 return user.userName;
                               }
+                              return null;
                             })}
                           </Typography>
                         </Box>

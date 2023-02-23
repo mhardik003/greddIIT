@@ -3,15 +3,12 @@ import {
   Box,
   Button,
   TextField,
-  Typography,
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { toast, ToastContainer } from "react-toastify";
-import FlexBetween from "components/FlexBetween";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
@@ -68,7 +65,7 @@ const CreateReport = ({
 
     // console.log("Response status : ", response.status);
 
-    const savedReport = await response.json();
+    await response.json();
 
     onSubmitProps.resetForm(initialValuesReport);
 

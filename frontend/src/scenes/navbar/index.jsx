@@ -11,7 +11,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
-import { Search, DarkMode, LightMode, Menu, Close } from "@mui/icons-material";
+import {  DarkMode, LightMode, Menu, Close } from "@mui/icons-material";
 import QuestionAnswerOutlinedIcon from "@mui/icons-material/QuestionAnswerOutlined";
 import SmartToyOutlinedIcon from "@mui/icons-material/SmartToyOutlined";
 import { useDispatch, useSelector } from "react-redux";

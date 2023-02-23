@@ -71,7 +71,7 @@ const Mysubgrediits = () => {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-    const data = await response.json();
+    await response.json();
     // console.log("Join subgrediit : ", data);
     getAllSubgrediits();
   };
@@ -85,7 +85,7 @@ const Mysubgrediits = () => {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-    const data = await response.json();
+    await response.json();
     getAllSubgrediits();
   };
 
@@ -98,7 +98,7 @@ const Mysubgrediits = () => {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-    const data = await response.json();
+    await response.json();
     getAllSubgrediits();
   };
 
