@@ -8,11 +8,12 @@ import {
   Button,
   Chip,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "../navbar";
 import { useNavigate, useParams } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
+import emailjs from "emailjs-com";
 
 const SubgrediitReports = () => {
   const navigate = useNavigate();
@@ -26,6 +27,12 @@ const SubgrediitReports = () => {
   const token = useSelector((state) => state.token);
   const { id } = useSelector((state) => state.user);
   const { subgrediitId } = useParams();
+  const [toSend, setToSend] = useState({
+    to_name: "",
+    message: "",
+    reply_to: "",
+    from_name: "",
+  });
 
   const getSubgrediit = async () => {
     const response = await fetch(
@@ -50,7 +57,7 @@ const SubgrediitReports = () => {
     );
     const data = await response.json();
     setReports(data);
-    console.log("reports : ", reports);
+    // console.log("reports : ", reports);
   };
 
   const getAllUsers = async () => {
@@ -76,40 +83,6 @@ const SubgrediitReports = () => {
     // console.log("All subgrediits : ", data);
   };
 
-  const blockUser = async (userId, subgrediitId) => {
-    console.log(
-      " Block the user : ",
-      userId,
-      " from subgrediit : ",
-      subgrediitId
-    );
-    const response = await fetch(
-      `http://localhost:3000/subgrediits/blockUser/${userId}/${subgrediitId}`,
-      {
-        method: "PATCH",
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-    const data = await response.json();
-    // console.log("data : ", data);
-    getSubgrediit();
-    findReports();
-  };
-
-  const ignoreReport = async (reportId) => {
-    console.log(" Ignore the report : ", reportId);
-    const response = await fetch(
-      `http://localhost:3000/reports/ignoreReport/${reportId}`,
-      {
-        method: "PATCH",
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-    const data = await response.json();
-    // console.log("data : ", data);
-    findReports();
-  };
-
   const getAllPosts = async () => {
     const response = await fetch(`http://localhost:3000/posts/allposts`, {
       method: "GET",
@@ -120,7 +93,84 @@ const SubgrediitReports = () => {
     // console.log("All posts : ", data);
   };
 
-  const deletePost = async (postId) => {
+  const blockUser = async (reportedById, reportedUser, subgrediitId) => {
+    emailjs.init("JTIK-seqM4cuPVyQW");
+    console.log(
+      " Block the user : ",
+      reportedUser,
+      " from subgrediit : ",
+      subgrediitId
+    );
+    const response = await fetch(
+      `http://localhost:3000/subgrediits/blockUser/${reportedUser}/${subgrediitId}`,
+      {
+        method: "PATCH",
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    const data = await response.json();
+    const userEmail = allUsers.find((user) => user._id === reportedUser).email;
+    const user_name = allUsers.find((user) => user._id === reportedUser).firstName;
+    const reportedByEmail = allUsers.find(
+      (user) => user._id === reportedById
+    ).email;
+    const subgrediitModName = subgrediit.moderators[0];
+
+    emailjs.send("service_jnqy9ji", "template_d1gc4qc", {
+      from_name: subgrediitModName,
+      to_name: user_name,
+      message: `As per your report request we have blocked ${user_name} from the subgrediit ${subgrediit.name}`,
+      to_emailo: reportedByEmail,
+    });
+
+    emailjs.send("service_jnqy9ji", "template_d1gc4qc", {
+      from_name: subgrediitModName,
+      to_name: user_name,
+      message: `You got blocked from the subgrediit ${subgrediit.name}`,
+      to_emailo: userEmail,
+    });
+
+    // console.log("data : ", data);
+    getSubgrediit();
+    findReports();
+  };
+
+  const ignoreReport = async (reportId, reportedBy, reportedUser, reportedSubgrediit) => {
+    console.log(" Ignore the report : ", reportId);
+    const response = await fetch(
+      `http://localhost:3000/reports/ignoreReport/${reportId}`,
+      {
+        method: "PATCH",
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    
+    // console.log("data : ", data);
+    const data = await response.json();
+    const userEmail = allUsers.find((user) => user._id === reportedUser).email;
+    const user_name = allUsers.find((user) => user._id === reportedUser).firstName;
+    const reportedByEmail = allUsers.find(
+      (user) => user._id === reportedBy
+    ).email;
+    const subgrediitModName = subgrediit.moderators[0];
+
+    emailjs.send("service_jnqy9ji", "template_d1gc4qc", {
+      from_name: subgrediitModName,
+      to_name: user_name,
+      message: `Your report request for ${user_name} from the subgrediit ${subgrediit.name}, has been ignored`,
+      to_emailo: reportedByEmail,
+    });
+
+    emailjs.send("service_jnqy9ji", "template_d1gc4qc", {
+      from_name: subgrediitModName,
+      to_name: user_name,
+      message: `There was a report against you in the subgrediit, ${subgrediit.name}. But no need to worry, it has been ignored by the mods`,
+      to_emailo: userEmail,
+    });
+    findReports();
+  };
+
+  const deletePost = async (postId, reportedBy, reportedUser, reportedSubgrediit) => {
     console.log(" Delete the post : ", postId);
     const response = await fetch(
       `http://localhost:3000/posts/${postId}/delete`,
@@ -130,6 +180,27 @@ const SubgrediitReports = () => {
       }
     );
     const data = await response.json();
+    const userEmail = allUsers.find((user) => user._id === reportedUser).email;
+    const user_name = allUsers.find((user) => user._id === reportedUser).firstName;
+    const reportedByEmail = allUsers.find(
+      (user) => user._id === reportedBy
+    ).email;
+    const subgrediitModName = subgrediit.moderators[0];
+
+
+    emailjs.send("service_jnqy9ji", "template_d1gc4qc", {
+      from_name: subgrediitModName,
+      to_name: user_name,
+      message: `As per your report request we have deleted the post from the subgrediit ${subgrediit.name}`,
+      to_emailo: reportedByEmail,
+    });
+
+    emailjs.send("service_jnqy9ji", "template_d1gc4qc", {
+      from_name: subgrediitModName,
+      to_name: user_name,
+      message: `Your post got deleted from the subgrediit ${subgrediit.name}`,
+      to_emailo: userEmail,
+    });
     // console.log("data : ", data);
     findReports();
   };
@@ -162,7 +233,7 @@ const SubgrediitReports = () => {
   if (!allSubgrediits) return null;
   if (!allPosts) return null;
 
-  console.log("subgrediit : ", subgrediit);
+  // console.log("subgrediit : ", subgrediit);
 
   return (
     <>
@@ -282,178 +353,199 @@ const SubgrediitReports = () => {
                     No reports yet
                   </Typography>
                 ) : (
-                  reports.map((report) => (
-                    <Box
-                      key={report._id}
-                      sx={{
-                        width: "100%",
-                        backgroundColor: theme.palette.background.default,
-                        display: "flex",
-                        flexDirection: "row",
-                        gap: "1rem",
-                      }}
-                      borderRadius="1rem"
-                      p="1rem"
-                      mt="1rem"
-                      alignContent="space-between"
-                      alignItems="space-between"
-                      justifyContent="space-between"
-                    >
-                      <Box>
-                        <Box display="flex">
+                  reports.map((report) =>
+                    // check if the report is older than 10 days
+
+                    report.createdAt < Date.now() - 10 * 24 * 60 * 60 * 1000 ? (
+                      deleteReport(report._id)
+                    ) : (
+                      <Box
+                        key={report._id}
+                        sx={{
+                          width: "100%",
+                          backgroundColor: theme.palette.background.default,
+                          display: "flex",
+                          flexDirection: "row",
+                          gap: "1rem",
+                        }}
+                        borderRadius="1rem"
+                        p="1rem"
+                        mt="1rem"
+                        alignContent="space-between"
+                        alignItems="space-between"
+                        justifyContent="space-between"
+                      >
+                        <Box>
+                          <Box display="flex">
+                            <Typography
+                              variant="h5"
+                              textAlign="center"
+                              fontWeight="500"
+                              color={theme.palette.primary.main}
+                              sx={{
+                                // mb: "1rem",
+                                pl: "1rem",
+                                mt: "1rem",
+                              }}
+                              noWrap
+                            >
+                              "{report.concern}"
+                            </Typography>
+                          </Box>
                           <Typography
-                            variant="h5"
-                            textAlign="center"
+                            variant="body2"
+                            textAlign="left"
                             fontWeight="500"
-                            color={theme.palette.primary.main}
+                            color={theme.palette.text.light}
                             sx={{
-                              // mb: "1rem",
                               pl: "1rem",
-                              mt: "1rem",
+                              mt: "0.5rem",
                             }}
                             noWrap
                           >
-                            "{report.concern}"
+                            Associated Post :{" "}
+                            {allPosts
+                              .filter(
+                                (post) => post._id === report.reportedPost
+                              )
+                              .map((post) => post.title)}
+                          </Typography>
+
+                          <Typography
+                            variant="body2"
+                            textAlign="left"
+                            fontWeight="500"
+                            color={theme.palette.text.light}
+                            sx={{
+                              pl: "1rem",
+                            }}
+                            noWrap
+                          >
+                            Reported by : @
+                            {allUsers
+                              .filter((user) => user._id === report.reportedBy)
+                              .map((user) => user.userName)}
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            textAlign="left"
+                            fontWeight="500"
+                            color={theme.palette.text.light}
+                            sx={{
+                              pl: "1rem",
+                            }}
+                            noWrap
+                          >
+                            Reported User : @
+                            {allUsers
+                              .filter(
+                                (user) => user._id === report.reportedUser
+                              )
+                              .map((user) => user.userName)}
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            textAlign="left"
+                            fontWeight="500"
+                            color={theme.palette.text.light}
+                            sx={{
+                              pl: "1rem",
+                            }}
+                            noWrap
+                          >
+                            Reported Subgrediit : {""}
+                            {allSubgrediits
+                              .filter(
+                                (subgrediit) =>
+                                  subgrediit._id === report.reportedSubgrediit
+                              )
+                              .map((subgrediit) => subgrediit.name)}
                           </Typography>
                         </Box>
-                        <Typography
-                          variant="body2"
-                          textAlign="left"
-                          fontWeight="500"
-                          color={theme.palette.text.light}
+                        {/* Three buttons : Delete, Block, Ignore */}
+                        <Box
                           sx={{
-                            pl: "1rem",
-                            mt: "0.5rem",
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "1rem",
                           }}
-                          noWrap
                         >
-                          Associated Post :{" "}
-                          {allPosts
-                            .filter((post) => post._id === report.reportedPost)
-                            .map((post) => post.title)}
-                        </Typography>
+                          <Button
+                            variant="contained"
+                            size="small"
+                            color="error"
+                            sx={{
+                              width: "100%",
+                              backgroundColor: theme.palette.error.main,
+                              color: theme.palette.background.default,
+                            }}
+                            onClick={() => {
+                              deletePost(
+                                report.reportedPost,
+                                report.reportedBy,
+                                report.reportedUser,
+                                report.reportedSubgrediit
+                              );
+                              // deleteReport(report._id);
+                              console.log("Delete post");
+                            }}
+                            disabled={report.ignored}
+                          >
+                            Delete Post
+                          </Button>
+                          <Button
+                            variant="contained"
+                            size="small"
+                            color="warning"
+                            sx={{
+                              width: "100%",
 
-                        <Typography
-                          variant="body2"
-                          textAlign="left"
-                          fontWeight="500"
-                          color={theme.palette.text.light}
-                          sx={{
-                            pl: "1rem",
-                          }}
-                          noWrap
-                        >
-                          Reported by : @
-                          {allUsers
-                            .filter((user) => user._id === report.reportedBy)
-                            .map((user) => user.userName)}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          textAlign="left"
-                          fontWeight="500"
-                          color={theme.palette.text.light}
-                          sx={{
-                            pl: "1rem",
-                          }}
-                          noWrap
-                        >
-                          Reported User : @
-                          {allUsers
-                            .filter((user) => user._id === report.reportedUser)
-                            .map((user) => user.userName)}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          textAlign="left"
-                          fontWeight="500"
-                          color={theme.palette.text.light}
-                          sx={{
-                            pl: "1rem",
-                          }}
-                          noWrap
-                        >
-                          Reported Subgrediit : {""}
-                          {allSubgrediits
-                            .filter(
-                              (subgrediit) =>
-                                subgrediit._id === report.reportedSubgrediit
-                            )
-                            .map((subgrediit) => subgrediit.name)}
-                        </Typography>
+                              color: theme.palette.background.default,
+                            }}
+                            // check if the user is already blocked, if yes then disbale the button
+
+                            disabled={
+                              subgrediit.blockedFollowers.includes(
+                                report.reportedUser
+                              ) || report.ignored
+                            }
+                            onClick={() => {
+                              blockUser(
+                                report.reportedBy,
+                                report.reportedUser,
+                                report.reportedSubgrediit
+                              );
+                              console.log("Block user");
+                            }}
+                          >
+                            Block
+                          </Button>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            size="small"
+                            sx={{
+                              width: "100%",
+
+                              color: theme.palette.background.default,
+                            }}
+                            onClick={() => {
+                              ignoreReport(
+                                report._id,
+                                report.reportedBy,
+                                report.reportedUser,
+                                report.reportedSubgrediit
+                              );
+                              console.log("Ignore report");
+                            }}
+                            disabled={report.ignored}
+                          >
+                            Ignore
+                          </Button>
+                        </Box>
                       </Box>
-                      {/* Three buttons : Delete, Block, Ignore */}
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: "1rem",
-                        }}
-                      >
-                        <Button
-                          variant="contained"
-                          size="small"
-                          color="error"
-                          sx={{
-                            width: "100%",
-                            backgroundColor: theme.palette.error.main,
-                            color: theme.palette.background.default,
-                          }}
-                          onClick={() => {
-                            deletePost(report.reportedPost);
-                            // deleteReport(report._id);
-                            console.log("Delete post");
-                          }}
-                          disabled={report.ignored}
-                        >
-                          Delete Post
-                        </Button>
-                        <Button
-                          variant="contained"
-                          size="small"
-                          color="warning"
-                          sx={{
-                            width: "100%",
-
-                            color: theme.palette.background.default,
-                          }}
-                          // check if the user is already blocked, if yes then disbale the button
-
-                          disabled={
-                            subgrediit.blockedFollowers.includes(
-                              report.reportedUser
-                            ) || report.ignored
-                          }
-                          onClick={() => {
-                            blockUser(
-                              report.reportedUser,
-                              report.reportedSubgrediit
-                            );
-                            console.log("Block user");
-                          }}
-                        >
-                          Block
-                        </Button>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          size="small"
-                          sx={{
-                            width: "100%",
-
-                            color: theme.palette.background.default,
-                          }}
-                          onClick={() => {
-                            ignoreReport(report._id);
-                            console.log("Ignore report");
-                          }}
-                          disabled={report.ignored}
-                        >
-                          Ignore
-                        </Button>
-                      </Box>
-                    </Box>
-                  ))
+                    )
+                  )
                 )}
               </Grid>
             </Grid>

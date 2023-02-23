@@ -17,6 +17,7 @@ import {
   Button,
   IconButton,
   Avatar,
+  TextField,
 } from "@mui/material";
 
 import {
@@ -35,6 +36,7 @@ import {
 import ReportGmailerrorredIcon from "@mui/icons-material/ReportGmailerrorred";
 import Modal from "@mui/material/Modal";
 import { toast } from "react-toastify";
+import emailjs from 'emailjs-com';
 
 const style = {
   position: "absolute",
@@ -66,6 +68,7 @@ const Posts = () => {
   const { subgrediitId } = useParams();
   const token = useSelector((state) => state.token);
   const { id } = useSelector((state) => state.user);
+  const [showComments, setShowComments] = useState(false);
 
   const getUser = async () => {
     const response = await fetch(`http://localhost:3000/users/${id}`, {
@@ -351,7 +354,7 @@ const Posts = () => {
                 textAlign="center"
                 fontWeight="500"
                 variant="h2"
-                color={theme.palette.text.primary }
+                color={theme.palette.text.primary}
                 sx={{ mt: "1.5rem" }}
               >
                 {subgrediit.name}
@@ -360,8 +363,8 @@ const Posts = () => {
                 textAlign="center"
                 fontWeight="500"
                 variant="body2"
-                color={theme.palette.text.primary }
-                sx={{ mt:"0.5rem",mb: "1.5rem" }}
+                color={theme.palette.text.primary}
+                sx={{ mt: "0.5rem", mb: "1.5rem" }}
               >
                 {subgrediit.description}
               </Typography>
@@ -519,6 +522,7 @@ const Posts = () => {
                           // sx={{ mr: "1rem" }}
                           onClick={() => {
                             console.log("Comments");
+                            setShowComments(!showComments);
                           }}
                         >
                           <CommentIcon />( {post.comments.length} )
@@ -593,6 +597,70 @@ const Posts = () => {
                           </IconButton>
                         )}
                       </FlexBetween>
+
+                      {showComments && (
+                        <Box>
+                          <Box
+                            width={isNonMobileScreens ? "100%" : "83%"}
+                            p="1rem 0.5rem 1rem 0.5rem"
+                            m="1rem auto"
+                            borderRadius="1.5rem"
+                            backgroundColor={theme.palette.background.alt}
+                          >
+                            <FlexBetween>
+                            <TextField
+                              fullWidth
+                              id="standard-basic"
+                              label=" Add Comment"
+                              variant="standard"
+                              size="small"
+                              width="50%"
+                              sx={{
+                                ml: "1rem",
+
+                              }}
+                              // value={comment}
+                              // onChange={(e) => setComment(e.target.value)}
+                            />
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              sx={{
+                                ml: "3rem",
+                              }}
+                              size="small"
+                              onClick={() => {
+                                console.log("Add");
+                                // addComment(post._id);
+                              }}
+                            >
+                              Add 
+                            </Button>
+                            </FlexBetween>
+                          {post.comments.map((comment) => (
+                            <Box
+                              width={isNonMobileScreens ? "100%" : "83%"}
+                              p="1rem 0.5rem 1rem 0.5rem"
+                              // m="1rem auto"
+                              borderRadius="1.5rem"
+                              backgroundColor={theme.palette.background.alt}
+                            >
+                              <Typography
+                                textAlign="left"
+                                fontWeight="500"
+                                variant="body1"
+                                color="paper"
+                                p="0.5rem"
+                                ml="1rem"
+                              >
+                                * {comment}
+                              </Typography>
+                            </Box>
+                          ))}
+                        </Box>
+                      </Box>
+
+                      )}
                     </Box>
                   </Box>
                 ))}

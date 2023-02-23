@@ -73,6 +73,7 @@ export const createSubgrediit = async (req, res) => {
       bannedKeywords: bannedKeywordsArray,
       moderators: [moderator],
       followers: [moderator],
+      creationDate: new Date(),
     });
 
     const newSub = await newSubgreddit.save();

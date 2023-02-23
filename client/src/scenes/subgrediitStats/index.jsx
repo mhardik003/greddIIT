@@ -20,6 +20,8 @@ import {
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
     const [subgrediit, setSubgrediit] = useState(null);
     const token = useSelector((state) => state.token);
+    const [currdate, setCurrDate] = useState(new Date());
+     const  [creationDate, setCreationDate] = useState(new Date());
     const { subgrediitId } = useParams();
   
     const getSubgrediit = async () => {
@@ -34,12 +36,29 @@ import {
       setSubgrediit(data);
       // console.log("subgrediit : ", subgrediit);
     };
+
+    const setCurrentDate = () => {
+      setCurrDate(new Date());
+      if(subgrediit)
+      setCreationDate(new Date(subgrediit.creationDate.slice(0,10)+" GMT"));
+    };
+
+
+
   
     useEffect(() => {
       getSubgrediit();
+      const interval = setInterval(() => {
+        setCurrentDate();
+      }, 40000);
+
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
   
     if (!subgrediit) return null;
+    console.log("Subgrediit : ", subgrediit.creationDate.slice(0,15))
+    console.log("Creation Date : ", creationDate);
+    console.log("Date : " , currdate);
+    // console.log("Difference : ", Math.ceil(Math.abs(subgrediit.creationDate - date)/1000*60*60*24));
   
     return (
       <>
@@ -127,6 +146,21 @@ import {
                 >
                   Stats
                 </Typography>
+                <Box>
+                  <Typography
+                    variant="h5"
+                    textAlign="center"
+                    fontWeight="500"
+                    color={theme.palette.text.primary}
+                    sx={{
+                      mb: "1rem",
+                      //   pl: "1rem",
+                    }}
+                  >
+                    Subscribers : {subgrediit.followers.length}
+
+                  </Typography>
+                </Box>
               </Box>
             </Grid>
           </Grid>
