@@ -6,7 +6,7 @@ import fetch from "node-fetch";
 
 export const getSubgrediit = async (req, res) => {
   try {
-    console.log("> req.params.id : ", req.params.id);
+    // console.log("> req.params.id : ", req.params.id);
     const subgreddit = await Subgreddit.find({ _id: req.params.id });
     res.status(200).json(subgreddit[0]);
   } catch (error) {
@@ -16,13 +16,13 @@ export const getSubgrediit = async (req, res) => {
 
 export const getMySubgrediits = async (req, res) => {
   try {
-    console.log("req.params.id : ", req.params.id);
+    // console.log("req.params.id : ", req.params.id);
     let mySubgrediits = [];
     const allSubgrediits = await Subgreddit.find();
     allSubgrediits.forEach((subgreddit) => {
       if (subgreddit.moderators[0] === req.params.id) {
         mySubgrediits.push(subgreddit);
-        console.log("> subgreddit : ", subgreddit.name);
+        // console.log("> subgreddit : ", subgreddit.name);
       }
     });
     res.status(200).json(mySubgrediits);
@@ -33,15 +33,14 @@ export const getMySubgrediits = async (req, res) => {
 
 export const getAllSubgrediits = async (req, res) => {
   try {
-    console.log("getAllSubgrediits");
+    // console.log("getAllSubgrediits");
     const subgreddits = await Subgreddit.find();
     // console.log("subgreddits : ", subgreddits);
     // only send the _id of the subgreddits
-    console.log("subgreddits sent : ", subgreddits.length);
+    // console.log("subgreddits sent : ", subgreddits.length);
 
     res.status(200).json(subgreddits);
   } catch (error) {
-    console.log("BANDARR");
     res.status(404).json({ error: error.message, message: "BANDAR" });
   }
 };
@@ -77,7 +76,7 @@ export const createSubgrediit = async (req, res) => {
     });
 
     const newSub = await newSubgreddit.save();
-    console.log("newSub id : ", newSub._id);
+    // console.log("newSub id : ", newSub._id);
 
     // add newSub to the user's subgrediits
     user[0].mySubgrediits.push(newSub._id);
@@ -204,11 +203,11 @@ export const getSubgrediitPosts = async (req, res) => {
 
 export const joinSubgrediit = async (req, res) => {
   try {
-    console.log(">>> req.params.id : ", req.params.id);
+    // console.log(">>> req.params.id : ", req.params.id);
     const subgreddit = await Subgreddit.find({ _id: req.params.id });
-    console.log("FOUND THE SUBGREDDIT : ", subgreddit);
+    // console.log("FOUND THE SUBGREDDIT : ", subgreddit);
     const userId = req.params.userId;
-    console.log("userId : ", userId);
+    // console.log("userId : ", userId);
 
     if (subgreddit[0].joinRequests.includes(userId)) {
       res
@@ -229,7 +228,7 @@ export const joinSubgrediit = async (req, res) => {
 
 export const leaveSubgrediit = async (req, res) => {
   try {
-    console.log(">>  A user is trying to leave the subgrediit");
+    // console.log(">>  A user is trying to leave the subgrediit");
     const subgreddit = await Subgreddit.find({ _id: req.params.id });
     // console.log("FOUND THE SUBGREDDIT : ", subgreddit);
     const userId = req.params.userId;
@@ -242,7 +241,7 @@ export const leaveSubgrediit = async (req, res) => {
     }
 
     await subgreddit[0].save();
-    console.log("Subgreddit has been updated");
+    // console.log("Subgreddit has been updated");
     console.log(">>  A user has left the subgrediit ");
     res.status(200).json("Subgreddit has been updated");
   } catch (error) {
@@ -261,7 +260,7 @@ export const addPostToSubgreddit = async (req, res) => {
     // console.log("post from the request : ", post);
     subgreddit[0].posts.push(post);
     await subgreddit[0].save();
-    console.log("Subgreddit has been updated");
+    // console.log("Subgreddit has been updated");
     res.status(200).json("Subgreddit has been updated");
   } catch (error) {
     res.status(404).json({ error: error.message });
@@ -276,10 +275,10 @@ export const removePostFromSubgreddit = async (req, res) => {
     const subgreddit = await Subgreddit.find({ _id: req.params.id });
     // console.log("FOUND THE SUBGREDDIT : ", subgreddit);
     const { post } = req.body;
-    console.log("post from the request : ", post);
+    // console.log("post from the request : ", post);
     subgreddit[0].posts.pull(post);
     await subgreddit[0].save();
-    console.log("Subgreddit has been updated");
+    // console.log("Subgreddit has been updated");
     res.status(200).json("Subgreddit has been updated");
   } catch (error) {
     res.status(404).json({ error: error.message });
@@ -293,7 +292,7 @@ export const acceptJoinRequest = async (req, res) => {
     subgreddit[0].followers.push(userId);
     subgreddit[0].joinRequests.pull(userId);
     await subgreddit[0].save();
-    console.log("Subgreddit has been updated");
+    // console.log("Subgreddit has been updated");
     res.status(200).json("Subgreddit has been updated");
   } catch (error) {
     res.status(404).json({ error: error.message });
@@ -306,7 +305,7 @@ export const rejectJoinRequest = async (req, res) => {
     const userId = req.params.userId;
     subgreddit[0].joinRequests.pull(userId);
     await subgreddit[0].save();
-    console.log("Subgreddit has been updated");
+    // console.log("Subgreddit has been updated");
     res.status(200).json("Subgreddit has been updated");
   } catch (error) {
     res.status(404).json({ error: error.message });
@@ -327,10 +326,10 @@ export const blockUser = async (req, res) => {
     if (subgreddit[0].joinRequests.includes(userId)) {
       subgreddit[0].joinRequests.pull(userId);
     }
-    console.log(
-      " > > > subgreddit[0].blockedFollowers : ",
-      subgreddit[0].blockedFollowers
-    );
+    // console.log(
+    //   " > > > subgreddit[0].blockedFollowers : ",
+    //   subgreddit[0].blockedFollowers
+    // );
     if (subgreddit[0].blockedFollowers.includes(userId)) {
       res.status(200).json("User is already blocked");
       return;
@@ -338,7 +337,7 @@ export const blockUser = async (req, res) => {
 
     subgreddit[0].blockedFollowers.push(userId);
     await subgreddit[0].save();
-    console.log("Subgreddit has been updated");
+    // console.log("Subgreddit has been updated");
     res.status(200).json("Subgreddit has been updated");
   } catch (error) {
     res.status(404).json({ error: error.message });

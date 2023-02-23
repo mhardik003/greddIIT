@@ -50,7 +50,7 @@ const CreateReport = ({
 
   // ON SUBMITTING THE FORM, SEND THE DATA TO THE SERVER
   const create = async (values, onSubmitProps) => {
-    console.log("Values : ", values.concern);
+    // console.log("Values : ", values.concern);
     const response = await fetch("http://localhost:3000/reports/createReport", {
       method: "POST",
       body: JSON.stringify({
@@ -66,7 +66,7 @@ const CreateReport = ({
       },
     });
 
-    console.log("Response status : ", response.status);
+    // console.log("Response status : ", response.status);
 
     const savedReport = await response.json();
 
@@ -98,8 +98,8 @@ const CreateReport = ({
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!user) return null;
-  console.log(reportedPost);
-  console.log("User id : ", id);
+  // console.log(reportedPost);
+  // console.log("User id : ", id);
 
   return (
     <>

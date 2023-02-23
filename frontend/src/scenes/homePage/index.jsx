@@ -327,7 +327,7 @@ const Mysubgrediits = () => {
                           color="warning"
                           sx={{ mr: "1rem" }}
                           onClick={() => {
-                            console.log("clicked on leave");
+                            console.log("Clicked on leave");
                             leaveSubgrediit(subgrediit._id);
                           }}
                         >
@@ -342,7 +342,7 @@ const Mysubgrediits = () => {
                             color: theme.palette.background.default,
                           }}
                           onClick={() => {
-                            console.log("clicked on remove join request");
+                            console.log("Clicked on remove join request");
                             joinSubgrediit(subgrediit._id);
                           }}
                         >
@@ -354,7 +354,7 @@ const Mysubgrediits = () => {
                           color="primary"
                           sx={{ mr: "1rem" }}
                           onClick={() => {
-                            console.log("clicked on join");
+                            console.log("Blocked User");
                             // joinSubgrediit(subgrediit._id);
                           }}
                           disabled
@@ -367,7 +367,7 @@ const Mysubgrediits = () => {
                           color="primary"
                           sx={{ mr: "1rem" }}
                           onClick={() => {
-                            console.log("clicked on join");
+                            console.log("Clicked on join");
                             joinSubgrediit(subgrediit._id);
                           }}
                         >

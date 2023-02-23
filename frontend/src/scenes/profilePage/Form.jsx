@@ -139,7 +139,7 @@ const Form = ({ userId, userData }) => {
       window.location.reload(false);
     }, 3000);
     // alert("User info edited successfully");
-    console.log("VS code git is awesome");
+    // console.log("VS code git is awesome");
     navigate(`/profile/${userId}`);
   };
 

@@ -76,7 +76,7 @@ const Navbar = ({
       joinedAndNotJoinedSubgrediits();
     } else {
       const result = fuse.search(e.target.value);
-      console.log("result : ", result);
+      // console.log("result : ", result);
       // store only items from result
       const temp = result.map((subgrediit) => subgrediit.item);
       setDisplaySubgrediits(temp);

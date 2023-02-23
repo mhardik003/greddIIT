@@ -118,16 +118,16 @@ export const deletePost = async (req, res) => {
       }
     });
 
-    console.log(">>> Removing the reports related to that post");
-    console.log("postId : ", postId); 
+    // console.log(">>> Removing the reports related to that post");
+    // console.log("postId : ", postId); 
     const allReports = await Report.find();
     allReports.forEach(async (report) => {
-      console.log("report.reportedPost : ", report.reportedPost);
+      // console.log("report.reportedPost : ", report.reportedPost);
       if (report.reportedPost.equals(postId)) {
-        console.log(
-          ">>> Removing the report associated with the post : ",
-          report
-        );
+        // console.log(
+        //   ">>> Removing the report associated with the post : ",
+        //   report
+        // );
         await report.remove();
       }
     });
@@ -155,7 +155,7 @@ export const upvotePost = async (req, res) => {
     const post = await Post.findById(req.params.postId);
     const userId = req.params.id;
     const user = await User.findById(userId);
-    console.log("post : ", post);
+    // console.log("post : ", post);
 
     // check if the user has already upvoted the post
     if (post.upvotes.includes(userId)) {
@@ -192,7 +192,7 @@ export const downvotePost = async (req, res) => {
     const userId = req.params.id;
     const user = await User.findById(userId);
 
-    console.log("post : ", post);
+    // console.log("post : ", post);
 
     // check if the user has already downvoted the post
     if (post.downvotes.includes(userId)) {
@@ -263,16 +263,16 @@ export const savePost = async (req, res) => {
 
 export const getSavedPosts = async (req, res) => {
   try {
-    console.log("> req.params : ", req.params);
+    // console.log("> req.params : ", req.params);
 
     const user = await User.findById(req.params.userId);
 
-    console.log("> user : ", user);
+    // console.log("> user : ", user);
 
     const savedPosts = user.savedPosts;
     const posts = await Post.find({ _id: savedPosts });
 
-    console.log("> posts : ", posts);
+    // console.log("> posts : ", posts);
 
     res.status(200).json(posts);
   } catch (error) {

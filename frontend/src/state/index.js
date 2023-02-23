@@ -28,7 +28,7 @@ export const authSlice = createSlice({
             state.user.followers = action.payload.followers;
         }
         else{
-            console.log('user followers not found');
+            console.log('User followers not found');
         }
     },
     setFollowing: (state, action) => {
@@ -36,7 +36,7 @@ export const authSlice = createSlice({
             state.user.following = action.payload.following;
         }
         else{
-            console.log('user following not found');
+            console.log('User following not found');
         }
     },
     setPosts: (state, action) => {

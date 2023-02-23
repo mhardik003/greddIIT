@@ -112,17 +112,17 @@ export const AddremoveFollower = async (req, res) => {
 
 export const AddremoveFollowing = async (req, res) => {
   try {
-    console.log(
-      "> TRYING TO REMOVE FOLLOWING : ",
-      req.params.id,
-      req.params.followingId
-    );
+    // console.log(
+    //   "> TRYING TO REMOVE FOLLOWING : ",
+    //   req.params.id,
+    //   req.params.followingId
+    // );
 
     const user = await User.find({ _id: req.params.id });
     const following = await User.find({ _id: req.params.followingId });
 
-    console.log("> user : ", user);
-    console.log("> following : ", following);
+    // console.log("> user : ", user);
+    // console.log("> following : ", following);
 
     if (user[0].following.includes(following[0]._id)) {
       console.log("> User is already following");

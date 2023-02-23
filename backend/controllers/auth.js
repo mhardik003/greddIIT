@@ -93,7 +93,6 @@ export const login = async (req, res) => {
     }); //send token and user to client
   } catch (error) {
     res.status(500).json({ error: error.message });
-    // console.log("hiiii");
     console.log(error);
   }
 };

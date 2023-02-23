@@ -99,12 +99,12 @@ const SubgrediitReports = () => {
 
   const blockUser = async (reportedById, reportedUser, subgrediitId) => {
     emailjs.init("JTIK-seqM4cuPVyQW");
-    console.log(
-      " Block the user : ",
-      reportedUser,
-      " from subgrediit : ",
-      subgrediitId
-    );
+    // console.log(
+    //   " Block the user : ",
+    //   reportedUser,
+    //   " from subgrediit : ",
+    //   subgrediitId
+    // );
     const response = await fetch(
       `http://localhost:3000/subgrediits/blockUser/${reportedUser}/${subgrediitId}`,
       {
@@ -114,7 +114,9 @@ const SubgrediitReports = () => {
     );
     const data = await response.json();
     const userEmail = allUsers.find((user) => user._id === reportedUser).email;
-    const user_name = allUsers.find((user) => user._id === reportedUser).firstName;
+    const user_name = allUsers.find(
+      (user) => user._id === reportedUser
+    ).firstName;
     const reportedByEmail = allUsers.find(
       (user) => user._id === reportedById
     ).email;
@@ -139,7 +141,12 @@ const SubgrediitReports = () => {
     findReports();
   };
 
-  const ignoreReport = async (reportId, reportedBy, reportedUser, reportedSubgrediit) => {
+  const ignoreReport = async (
+    reportId,
+    reportedBy,
+    reportedUser,
+    reportedSubgrediit
+  ) => {
     console.log(" Ignore the report : ", reportId);
     const response = await fetch(
       `http://localhost:3000/reports/ignoreReport/${reportId}`,
@@ -148,11 +155,13 @@ const SubgrediitReports = () => {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-    
+
     // console.log("data : ", data);
     const data = await response.json();
     const userEmail = allUsers.find((user) => user._id === reportedUser).email;
-    const user_name = allUsers.find((user) => user._id === reportedUser).firstName;
+    const user_name = allUsers.find(
+      (user) => user._id === reportedUser
+    ).firstName;
     const reportedByEmail = allUsers.find(
       (user) => user._id === reportedBy
     ).email;
@@ -174,7 +183,12 @@ const SubgrediitReports = () => {
     findReports();
   };
 
-  const deletePost = async (postId, reportedBy, reportedUser, reportedSubgrediit) => {
+  const deletePost = async (
+    postId,
+    reportedBy,
+    reportedUser,
+    reportedSubgrediit
+  ) => {
     console.log(" Delete the post : ", postId);
     const response = await fetch(
       `http://localhost:3000/posts/${postId}/delete`,
@@ -185,12 +199,13 @@ const SubgrediitReports = () => {
     );
     const data = await response.json();
     const userEmail = allUsers.find((user) => user._id === reportedUser).email;
-    const user_name = allUsers.find((user) => user._id === reportedUser).firstName;
+    const user_name = allUsers.find(
+      (user) => user._id === reportedUser
+    ).firstName;
     const reportedByEmail = allUsers.find(
       (user) => user._id === reportedBy
     ).email;
     const subgrediitModName = subgrediit.moderators[0];
-
 
     emailjs.send("service_jnqy9ji", "template_d1gc4qc", {
       from_name: subgrediitModName,
@@ -239,8 +254,7 @@ const SubgrediitReports = () => {
   if (!allPosts) return null;
   if (!user) return null;
 
-  if(!user.mySubgrediits.includes(subgrediitId)) navigate("/");
-
+  if (!user.mySubgrediits.includes(subgrediitId)) navigate("/");
 
   // console.log("subgrediit : ", subgrediit);
 

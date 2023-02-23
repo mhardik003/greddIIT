@@ -47,7 +47,7 @@ const Mysubgrediits = () => {
   };
 
   const deleteSubgrediit = async (subgrediitId) => {
-    console.log("subgrediitId : ", subgrediitId);
+    // console.log("subgrediitId : ", subgrediitId);
     const response = await fetch(
       `http://localhost:3000/subgrediits/deleteSubgrediit/${subgrediitId}`,
       {
@@ -139,7 +139,7 @@ const Mysubgrediits = () => {
                         },
                       }}
                       onClick={() => {
-                        console.log("clicked on subgrediit");
+                        console.log("Clicked on subgrediit");
                         navigate(`/mysubgrediit/${subgrediit._id}`);
                       }}
                     >
@@ -150,7 +150,7 @@ const Mysubgrediits = () => {
                     <Button
                       variant="contained"
                       onClick={() => {
-                        console.log("delete the subgrediit", subgrediit.name);
+                        console.log("Delete the subgrediit", subgrediit.name);
                         deleteSubgrediit(subgrediit._id);
                       }}
                       color="error"
