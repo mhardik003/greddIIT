@@ -21,6 +21,7 @@ const SubgrediitReports = () => {
   const [subgrediit, setSubgrediit] = useState(null);
   const [allSubgrediits, setAllSubgrediits] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
+  const [allPosts, setAllPosts] = useState([]);
   const [reports, setReports] = useState([]);
   const token = useSelector((state) => state.token);
   const { id } = useSelector((state) => state.user);
@@ -109,6 +110,16 @@ const SubgrediitReports = () => {
     findReports();
   };
 
+  const getAllPosts = async () => {
+    const response = await fetch(`http://localhost:3000/posts/allposts`, {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = await response.json();
+    setAllPosts(data);
+    // console.log("All posts : ", data);
+  };
+
   const deletePost = async (postId) => {
     console.log(" Delete the post : ", postId);
     const response = await fetch(
@@ -142,12 +153,14 @@ const SubgrediitReports = () => {
     findReports();
     getAllUsers();
     getAllSubgrediits();
+    getAllPosts();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!subgrediit) return null;
   if (!reports) return null;
   if (!allUsers) return null;
   if (!allSubgrediits) return null;
+  if (!allPosts) return null;
 
   console.log("subgrediit : ", subgrediit);
 
@@ -303,7 +316,6 @@ const SubgrediitReports = () => {
                             "{report.concern}"
                           </Typography>
                         </Box>
-
                         <Typography
                           variant="body2"
                           textAlign="left"
@@ -312,6 +324,22 @@ const SubgrediitReports = () => {
                           sx={{
                             pl: "1rem",
                             mt: "0.5rem",
+                          }}
+                          noWrap
+                        >
+                          Associated Post :{" "}
+                          {allPosts
+                            .filter((post) => post._id === report.reportedPost)
+                            .map((post) => post.title)}
+                        </Typography>
+
+                        <Typography
+                          variant="body2"
+                          textAlign="left"
+                          fontWeight="500"
+                          color={theme.palette.text.light}
+                          sx={{
+                            pl: "1rem",
                           }}
                           noWrap
                         >

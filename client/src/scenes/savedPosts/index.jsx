@@ -340,7 +340,7 @@ const SavedPosts = () => {
                       color="#666666"
                       sx={{ mb: "0rem", pl: "0.5rem" }}
                     >
-                      Created By :{" "}
+                      Created By : @{""}
                       {
                         allUsers.find((user) => user._id === post.postedBy)
                           .userName

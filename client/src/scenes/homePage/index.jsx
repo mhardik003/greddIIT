@@ -310,7 +310,7 @@ const Mysubgrediits = () => {
                       color="#666666"
                       sx={{ mt: "0.2rem", mb: "0.5rem", pl: "1rem" }}
                     >
-                      Created By :{" "}
+                      Created By : @{""}
                       {allUsers
                         .filter((user) => user._id === subgrediit.moderators[0])
                         .map((user) => user.userName)}
