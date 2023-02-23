@@ -7,6 +7,11 @@ import {
   Divider,
   Button,
   IconButton,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Select,
+  InputBase,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +19,7 @@ import { useSelector } from "react-redux";
 import Navbar from "./navBar";
 import FlexBetween from "components/FlexBetween";
 import { ReportProblem } from "@mui/icons-material";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 const Mysubgrediits = () => {
   const navigate = useNavigate();
@@ -26,6 +31,7 @@ const Mysubgrediits = () => {
   const [notjoinedSubgrediits, setNotJoinedSubgrediits] = useState([]);
   const [displaySubgrediits, setDisplaySubgrediits] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
+  const [sortValue, setSortValue] = useState("none");
   const token = useSelector((state) => state.token);
   const { id } = useSelector((state) => state.user);
 
@@ -49,7 +55,6 @@ const Mysubgrediits = () => {
     );
     const data = await response.json();
     setAllSubgrediits(data);
-    // console.log("All subgrediits : ", data);
   };
 
   const getAllUsers = async () => {
@@ -62,6 +67,12 @@ const Mysubgrediits = () => {
     // console.log("All users : ", data);
   };
 
+  const makeDisplaySubgrediits = () => {
+    if (subgrediits) {
+      sortSubgrediits(sortValue);
+    }
+  };
+
   const joinSubgrediit = async (subgrediitId) => {
     // console.log("Join subgrediit : ", subgrediitId);
     const response = await fetch(
@@ -72,7 +83,6 @@ const Mysubgrediits = () => {
       }
     );
     await response.json();
-    // console.log("Join subgrediit : ", data);
     getAllSubgrediits();
   };
 
@@ -119,11 +129,53 @@ const Mysubgrediits = () => {
     setDisplaySubgrediits(joined.concat(notJoined));
   };
 
+  const sortSubgrediits = (value) => {
+    setSortValue(value);
+    if (value === "none") {
+      joinedAndNotJoinedSubgrediits();
+    }
+    if (value === "new") {
+      const sortedSubgrediits = displaySubgrediits.sort(
+        (a, b) => new Date(b.creationDate) - new Date(a.creationDate)
+      );
+      setDisplaySubgrediits(sortedSubgrediits);
+    } else if (value === "old") {
+      const sortedSubgrediits = displaySubgrediits.sort(
+        (a, b) => new Date(a.creationDate) - new Date(b.creationDate)
+      );
+      setDisplaySubgrediits(sortedSubgrediits);
+    } else if (value === "popular") {
+      const sortedSubgrediits = displaySubgrediits.sort(
+        (a, b) => b.followers.length - a.followers.length
+      );
+      setDisplaySubgrediits(sortedSubgrediits);
+    } else if (value === "unpopular") {
+      const sortedSubgrediits = displaySubgrediits.sort(
+        (a, b) => a.followers.length - b.followers.length
+      );
+      setDisplaySubgrediits(sortedSubgrediits);
+    } else if (value === "a-z") {
+      const sortedSubgrediits = displaySubgrediits.sort((a, b) => {
+        if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+        if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+        return 0;
+      });
+      setDisplaySubgrediits(sortedSubgrediits);
+    } else if (value === "z-a") {
+      const sortedSubgrediits = displaySubgrediits.sort((a, b) => {
+        if (a.name.toLowerCase() > b.name.toLowerCase()) return -1;
+        if (a.name.toLowerCase() < b.name.toLowerCase()) return 1;
+        return 0;
+      });
+      setDisplaySubgrediits(sortedSubgrediits);
+    }
+  };
+
   useEffect(() => {
     getUser();
     getAllUsers();
     getAllSubgrediits();
-    joinedAndNotJoinedSubgrediits();
+    makeDisplaySubgrediits();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!user) return null;
@@ -145,12 +197,11 @@ const Mysubgrediits = () => {
 
   return (
     <>
-      <ToastContainer />
       <Navbar
         getAllSubgrediits={getAllSubgrediits}
         setDisplaySubgrediits={setDisplaySubgrediits}
         subgrediits={subgrediits}
-        joinedAndNotJoinedSubgrediits = {joinedAndNotJoinedSubgrediits}
+        joinedAndNotJoinedSubgrediits={joinedAndNotJoinedSubgrediits}
       />
       <Box>
         <Grid
@@ -217,17 +268,68 @@ const Mysubgrediits = () => {
                   mb: "3rem",
                 }}
               >
-                <Typography
-                  textAlign="left"
-                  fontWeight="500"
-                  variant="h5"
-                  color="primary"
-                  sx={{ mb: "1.5rem" }}
-                >
-                  Sort by
-                </Typography>
-
-                {/* dropdown menu*/}
+                <Box>
+                  <Typography
+                    textAlign="left"
+                    fontWeight="500"
+                    variant="h5"
+                    color="primary"
+                    sx={{ mb: "1.5rem" }}
+                    noWrap
+                  >
+                    Sort by : {"\u00A0"}
+                    {/* dropdown menu*/}
+                    <FormControl variant="standard" value="Name">
+                      <InputLabel id="select-label">Sort By</InputLabel>
+                      <Select
+                        id="select-label"
+                        label="Sort By"
+                        value={sortValue}
+                        placeholder="Sort By"
+                        sx={{
+                          backgroundColor: theme.palette.background.default,
+                          width: "150px",
+                          borderRadius: "0.25rem",
+                          p: "0.25rem 1rem",
+                          "& .MuiSvgIcon-root": {
+                            pr: "0.25rem",
+                            width: "3rem",
+                          },
+                          "& .MuiSelect-select:focus": {
+                            backgroundColor: theme.palette.background.default,
+                          },
+                        }}
+                        onChange={(e) => {
+                          setSortValue(e.target.value);
+                          sortSubgrediits(e.target.value);
+                        }}
+                        input={<InputBase />}
+                      >
+                        <MenuItem value="none">
+                          <Typography>None</Typography>
+                        </MenuItem>
+                        <MenuItem value="a-z">
+                          <Typography>Name Ascending</Typography>
+                        </MenuItem>
+                        <MenuItem value="z-a">
+                          <Typography>Name Descending</Typography>
+                        </MenuItem>
+                        <MenuItem value="new">
+                          <Typography>Newest to Oldest</Typography>
+                        </MenuItem>
+                        <MenuItem value="old">
+                          <Typography>Oldest to Newest</Typography>
+                        </MenuItem>
+                        <MenuItem value="popular">
+                          <Typography>Popular to Unpopular</Typography>
+                        </MenuItem>
+                        <MenuItem value="unpopular">
+                          <Typography>Unpopular to Popular</Typography>
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Typography>
+                </Box>
               </Box>
               {/* check if the number of subgrediits is 0 */}
               {subgrediits.length === 0 ? (
