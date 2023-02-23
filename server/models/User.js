@@ -66,6 +66,11 @@ const UserSchema = new mongoose.Schema({
         default:[],
         ref: "Post"
     },
+    mySubgrediits:{
+        type: Array,
+        default:[],
+        ref: "Subgrediit"
+    },
 }, 
     {timeStamps: true}
 );

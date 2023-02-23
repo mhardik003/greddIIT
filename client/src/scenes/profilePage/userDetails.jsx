@@ -27,7 +27,6 @@ const modalStyle = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: "#1A1A1A",
   color: "#F6F6F6",
   borderRadius: "10px",
   // border: "2px solid #000",
@@ -175,7 +174,7 @@ const UserDetails = ({ userId, userData }) => {
     getAllUsers();
     getFollowers();
     getFollowing();
-  },[]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   React.useEffect(() => {
     getNonFollowers(allUsers, followersArray);
@@ -199,20 +198,37 @@ const UserDetails = ({ userId, userData }) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
+        slots={{ backdrop: Backdrop }}
+        slotProps={{
+          backdrop: {
+            timeout: 500,
+          },
         }}
       >
         <Fade in={followersOpen}>
-          <Box sx={modalStyle}>
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: 400,
+              color: theme.palette.text.primary,
+              borderRadius: "10px",
+              // border: "2px solid #000",
+              //   boxShadow: 24,
+              pt: 4,
+              pb: 4,
+              backgroundColor: theme.palette.background.alt,
+            }}
+          >
             <Typography
               id="modal-modal-title"
               variant="h3"
               align="center"
               component="h1"
               sx={{
-                color: "#F6F6F6",
+                color: theme.palette.text.primary,
                 mb: 1,
               }}
             >
@@ -222,7 +238,7 @@ const UserDetails = ({ userId, userData }) => {
             <Box
               direction="row"
               justifyContent="space-between"
-              backgroundColor="#111111"
+              backgroundColor={theme.palette.background.default}
               alignItems="center"
               // borderRadius="1rem"
               sx={{
@@ -243,8 +259,11 @@ const UserDetails = ({ userId, userData }) => {
                   }}
                   key={follower._id}
                 >
-                  <Typography variant="body1" sx={{ color: "#F6F6F6" }}>
-                    {follower.firstName}
+                  <Typography
+                    variant="body1"
+                    sx={{ color: theme.palette.text.primary }}
+                  >
+                    @{follower.userName}
                   </Typography>
                   <Button
                     variant="contained"
@@ -307,14 +326,30 @@ const UserDetails = ({ userId, userData }) => {
         }}
       >
         <Fade in={followingOpen}>
-          <Box sx={modalStyle}>
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: 400,
+              color: theme.palette.text.primary,
+              borderRadius: "10px",
+              // border: "2px solid #000",
+              //   boxShadow: 24,
+              pt: 4,
+              pb: 4,
+              backgroundColor: theme.palette.background.alt,
+            }}
+          >
             <Typography
               id="modal-modal-title"
               variant="h3"
               align="center"
               component="h1"
               sx={{
-                color: "#F6F6F6",
+                color: theme.palette.text.primary,
+
                 mb: 1,
               }}
             >
@@ -324,7 +359,7 @@ const UserDetails = ({ userId, userData }) => {
             <Box
               direction="row"
               justifyContent="space-between"
-              backgroundColor="#111111"
+              backgroundColor={theme.palette.background.default}
               alignItems="center"
               // borderRadius="1rem"
               sx={{
@@ -345,8 +380,11 @@ const UserDetails = ({ userId, userData }) => {
                   }}
                   key={following._id}
                 >
-                  <Typography variant="body1" sx={{ color: "#F6F6F6" }}>
-                    {following.firstName}
+                  <Typography
+                    variant="body1"
+                    sx={{ color: theme.palette.text.primary }}
+                  >
+                    @{following.userName}
                   </Typography>
                   <Button
                     variant="contained"
@@ -357,7 +395,10 @@ const UserDetails = ({ userId, userData }) => {
                       removeFollowing(following._id);
                     }}
                   >
-                    <Typography variant="body2" sx={{ color: "#F6F6F6" }}>
+                    <Typography
+                      variant="body2"
+                      sx={{ color: "#F6F6F6" }}
+                    >
                       Remove
                     </Typography>
                   </Button>

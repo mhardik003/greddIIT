@@ -33,8 +33,6 @@ const Mysubgrediits = () => {
     setUser(data);
   };
 
-
-
   const getMySubgrediits = async () => {
     const response = await fetch(
       `http://localhost:3000/subgrediits/getMySubgrediits/${id}`,
@@ -77,7 +75,7 @@ const Mysubgrediits = () => {
       <Navbar getMySubgrediits={getMySubgrediits} />
       <Box>
         <Grid spacing={1} container justifyContent="center" direction="row">
-        <Grid
+          <Grid
             item
             xs={0}
             sm={0}

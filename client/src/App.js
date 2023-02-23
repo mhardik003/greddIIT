@@ -62,19 +62,19 @@ function App() {
             />
             <Route
               path="/mysubgrediit/:subgrediitId/users"
-              element={isMod ? <SubgrediitUsers /> : <Navigate to="/login" />}
+              element={isMod ? <SubgrediitUsers /> : <Navigate to="/" />}
             />
             <Route
               path="/mysubgrediit/:subgrediitId/joinrequests"
-              element={isMod ? <SubgrediitJoinRequests /> : <Navigate to="/login" />}
+              element={isMod ? <SubgrediitJoinRequests /> : <Navigate to="/" />}
             />
             <Route
               path="/mysubgrediit/:subgrediitId/stats"
-              element={isMod ? <SubgrediitStats /> : <Navigate to="/login" />}
+              element={isMod ? <SubgrediitStats /> : <Navigate to="/" />}
             />
             <Route
               path="/mysubgrediit/:subgrediitId/reports"
-              element={isMod ? <SubgrediitReports /> : <Navigate to="/login" />}
+              element={isMod ? <SubgrediitReports /> : <Navigate to="/" />}
             />
             ``
             <Route

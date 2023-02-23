@@ -83,6 +83,19 @@ const Mysubgrediits = () => {
     getAllSubgrediits();
   };
 
+  const deleteSubgrediit = async (subgrediitId) => {
+    // console.log("Delete subgrediit : ", subgrediitId);
+    const response = await fetch(
+      `http://localhost:3000/subgrediits/deleteSubgrediit/${subgrediitId}`,
+      {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    const data = await response.json();
+    getAllSubgrediits();
+  };
+
   useEffect(() => {
     getUser();
     getAllUsers();
@@ -158,11 +171,10 @@ const Mysubgrediits = () => {
             >
               {/* dropdown menu for sorting subgrediits */}
               <Box
-              sx={{
-                
-                pl: "5rem",
-                mb: "3rem",
-              }}
+                sx={{
+                  pl: "5rem",
+                  mb: "3rem",
+                }}
               >
                 <Typography
                   textAlign="left"
@@ -175,9 +187,6 @@ const Mysubgrediits = () => {
                 </Typography>
 
                 {/* dropdown menu*/}
-                
-
-
               </Box>
               {/* check if the number of subgrediits is 0 */}
               {subgrediits.length === 0 ? (
@@ -216,7 +225,10 @@ const Mysubgrediits = () => {
                         }}
                         onClick={() => {
                           // allow only followers to view the subgrediit
-                          if (subgrediit.followers.includes(id) || subgrediit.moderators[0] === id) {
+                          if (
+                            subgrediit.followers.includes(id) ||
+                            subgrediit.moderators[0] === id
+                          ) {
                             navigate(`/subgrediit/${subgrediit._id}`);
                           }
                         }}
@@ -233,9 +245,9 @@ const Mysubgrediits = () => {
                             color: theme.palette.background.default,
                           }}
                           onClick={() => {
-                            console.log("clicked on join");
-
-                            // joinSubgrediit(subgrediit._id);
+                            console.log("Deleting subgrediit");
+                            deleteSubgrediit(subgrediit._id);
+                            
                           }}
                         >
                           Delete

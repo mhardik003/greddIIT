@@ -50,6 +50,9 @@ export const createSubgrediit = async (req, res) => {
     const { name, description, tags, bannedKeywords, subgrediitPicture } =
       req.body.values;
     const { moderator, followers } = req.body;
+
+    const user = await User.find({ _id: moderator });
+
     let tagsArray = [];
     if (tags) {
       tagsArray = tags.split(",");
@@ -75,7 +78,12 @@ export const createSubgrediit = async (req, res) => {
       moderators: [moderator],
       followers,
     });
-    await newSubgreddit.save();
+    newSub = await newSubgreddit.save();
+
+    user.mySubgrediits.push(newSub._id);
+
+    await user.save();
+
     res.status(201).json(newSubgreddit);
   } catch (error) {
     res.status(409).json({ error: error.message });
@@ -159,9 +167,22 @@ export const deleteSubgrediit = async (req, res) => {
     await subgreddit.remove();
 
     // remove all the posts in the subgreddit also
-    const posts = await Post.find({ postedIn: req.params.id });
+    const posts = await Post.find();
     posts.forEach(async (post) => {
-      await deletePost(post._id);
+      if (post.postedIn === req.params.id) {
+        await deletePost(post._id);
+      }
+    });
+
+    // remove the subgreddit from all the users' mysubgrediits
+    const allUsers = await User.find();
+    allUsers.forEach(async (user) => {
+      if (user.mySubgrediits.includes(req.params.id)) {
+        let index = user.mySubgrediits.indexOf(req.params.id);
+        user.mySubgrediits.splice(index, 1);
+
+        await user.save();
+      }
     });
 
     res.status(200).json("Subgreddit has been deleted");
@@ -267,8 +288,7 @@ export const joinSubgrediit = async (req, res) => {
 
 export const leaveSubgrediit = async (req, res) => {
   try {
-
-    console.log(">>  A user is trying to leave the subgrediit")
+    console.log(">>  A user is trying to leave the subgrediit");
     const subgreddit = await Subgreddit.find({ _id: req.params.id });
     // console.log("FOUND THE SUBGREDDIT : ", subgreddit);
     const userId = req.params.userId;
@@ -278,7 +298,7 @@ export const leaveSubgrediit = async (req, res) => {
     }
     await subgreddit[0].save();
     console.log("Subgreddit has been updated");
-    console.log(">>  A user has left the subgrediit ")
+    console.log(">>  A user has left the subgrediit ");
     res.status(200).json("Subgreddit has been updated");
   } catch (error) {
     res.status(404).json({ error: error.message });
