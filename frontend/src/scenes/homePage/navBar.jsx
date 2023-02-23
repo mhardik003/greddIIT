@@ -214,7 +214,16 @@ const Navbar = ({
             </Button>
 
             {/* <SmartToyOutlinedIcon sx={{ fontSize: "25px" }} /> */}
-            <QuestionAnswerOutlinedIcon sx={{ fontSize: "25px" }} />
+            <QuestionAnswerOutlinedIcon
+              sx={{
+                fontSize: "25px",
+                "&:hover": {
+                  color: primaryLight,
+                  cursor: "pointer",
+                },
+              }}
+              onClick={() => navigate("/chat")}
+            />
             <IconButton onClick={() => dispatch(setMode())}>
               {theme.palette.mode === "dark" ? (
                 <DarkMode sx={{ fontSize: "25px" }} />
@@ -327,7 +336,16 @@ const Navbar = ({
                 />
               </Button>
               {/* <SmartToyOutlinedIcon sx={{ fontSize: "25px" }} /> */}
-              <QuestionAnswerOutlinedIcon sx={{ fontSize: "25px" }} />
+              <QuestionAnswerOutlinedIcon
+                sx={{
+                  fontSize: "25px",
+                  "&:hover": {
+                    color: primaryLight,
+                    cursor: "pointer",
+                  },
+                }}
+                onClick={() => navigate("/chat")}
+              />
               <IconButton
                 onClick={() => dispatch(setMode())}
                 sx={{ fontSize: "25px" }}

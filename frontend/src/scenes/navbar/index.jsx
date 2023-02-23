@@ -11,7 +11,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
-import {  DarkMode, LightMode, Menu, Close } from "@mui/icons-material";
+import { DarkMode, LightMode, Menu, Close } from "@mui/icons-material";
 import QuestionAnswerOutlinedIcon from "@mui/icons-material/QuestionAnswerOutlined";
 import SmartToyOutlinedIcon from "@mui/icons-material/SmartToyOutlined";
 import { useDispatch, useSelector } from "react-redux";
@@ -36,10 +36,11 @@ const Navbar = () => {
   const fullName = `${user.firstName} ${user.lastName}`;
 
   return (
-    <FlexBetween padding="1rem 6%" backgroundColor={alt}
-    borderBottom="1px solid #e6e6e6">
-    
-    
+    <FlexBetween
+      padding="1rem 6%"
+      backgroundColor={alt}
+      borderBottom="1px solid #e6e6e6"
+    >
       <FlexBetween gap="1.75rem">
         <Typography
           fontWeight="bold"
@@ -56,7 +57,6 @@ const Navbar = () => {
           {/* <HomeOutlinedIcon sx={{ fontSize: "25px" }} /> */}
           GredIIT
         </Typography>
-
       </FlexBetween>
 
       {/* DESKTOP NAV */}
@@ -72,7 +72,16 @@ const Navbar = () => {
             }}
             onClick={() => navigate("/")}
           />
-          <QuestionAnswerOutlinedIcon sx={{ fontSize: "25px" }} />
+          <QuestionAnswerOutlinedIcon
+            sx={{
+              fontSize: "25px",
+              "&:hover": {
+                color: primaryLight,
+                cursor: "pointer",
+              },
+            }}
+            onClick={() => navigate("/chat")}
+          />
           <IconButton onClick={() => dispatch(setMode())}>
             {theme.palette.mode === "dark" ? (
               <DarkMode sx={{ fontSize: "25px" }} />
@@ -177,7 +186,16 @@ const Navbar = () => {
               }}
               onClick={() => navigate("/")}
             />
-            <QuestionAnswerOutlinedIcon sx={{ fontSize: "25px" }} />
+            <QuestionAnswerOutlinedIcon
+              sx={{
+                fontSize: "25px",
+                "&:hover": {
+                  color: primaryLight,
+                  cursor: "pointer",
+                },
+              }}
+              onClick={() => navigate("/chat")}
+            />
             <IconButton
               onClick={() => dispatch(setMode())}
               sx={{ fontSize: "25px" }}

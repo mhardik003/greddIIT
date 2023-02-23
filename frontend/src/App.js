@@ -20,13 +20,13 @@ import SubgrediitUsers from "scenes/subgrediitUsers";
 import SubgrediitJoinRequests from "scenes/subgrediitJoinRequests";
 import SubgrediitReports from "scenes/subgrediitReports";
 import SubgrediitStats from "scenes/subgrediitStats";
+import Chat from "scenes/chat";
 
 function App() {
   const mode = useSelector((state) => state.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
   const isAuth = Boolean(useSelector((state) => state.token));
   const isMod = isAuth && true;
-  
 
   return (
     <div className="App">
@@ -54,12 +54,16 @@ function App() {
               element={isAuth ? <ProfilePage /> : <Navigate to="/login" />}
             />
             <Route
+              path="/chat"
+              element={isAuth ? <Chat /> : <Navigate to="/login" />}
+            />
+            <Route
               path="/mysubgrediits"
               element={isAuth ? <Mysubgrediits /> : <Navigate to="/login" />}
             />
             <Route
               path="/mysubgrediit/:subgrediitId"
-              element={isMod? <Subgrediit /> : <Navigate to="/" />}
+              element={isMod ? <Subgrediit /> : <Navigate to="/" />}
             />
             <Route
               path="/mysubgrediit/:subgrediitId/users"
@@ -98,5 +102,3 @@ function App() {
 }
 
 export default App;
-
-  

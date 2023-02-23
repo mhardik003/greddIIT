@@ -16,7 +16,7 @@ import {
   Fade,
 } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
-import {DarkMode, LightMode, Menu, Close } from "@mui/icons-material";
+import { DarkMode, LightMode, Menu, Close } from "@mui/icons-material";
 import QuestionAnswerOutlinedIcon from "@mui/icons-material/QuestionAnswerOutlined";
 import SmartToyOutlinedIcon from "@mui/icons-material/SmartToyOutlined";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
@@ -26,7 +26,7 @@ import { useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
 import CreateSubgrediit from "./CreateSubgrediit";
 
-const Navbar = ({getMySubgrediits}) => {
+const Navbar = ({ getMySubgrediits }) => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -62,61 +62,65 @@ const Navbar = ({getMySubgrediits}) => {
         }}
       >
         <Fade in={openCreateSubgrediit}>
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            color: "#F6F6F6",
-            boxShadow: 24,
-            p: 4,
-            borderRadius: 2,
-            pt: 2,
-            px: 4,
-            pb: 3,
-            bgcolor: alt,
-          }}
-        >
-          <Box>
-            <Typography
-              id="modal-modal-title"
-              variant="h3"
-              component="h2"
-              textAlign="center"
-              fontWeight="bold"
-              sx={{
-                color: theme.palette.primary.main,
-              }}
-            >
-              Create Subgrediit
-            </Typography>
-          </Box>
-          <Divider sx={{ mt: 2 }} />
           <Box
-            id="modal-modal-description"
             sx={{
-              alignItems: "center",
-              mt: 2,
-              justifyContent: "center",
-              p: 2,
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              color: "#F6F6F6",
+              boxShadow: 24,
+              p: 4,
               borderRadius: 2,
               pt: 2,
               px: 4,
               pb: 3,
-              m: 2,
+              bgcolor: alt,
             }}
           >
-            <CreateSubgrediit getMySubgrediits={getMySubgrediits} handleCloseCreateSubgrediit={handleCloseCreateSubgrediit}/>
+            <Box>
+              <Typography
+                id="modal-modal-title"
+                variant="h3"
+                component="h2"
+                textAlign="center"
+                fontWeight="bold"
+                sx={{
+                  color: theme.palette.primary.main,
+                }}
+              >
+                Create Subgrediit
+              </Typography>
+            </Box>
+            <Divider sx={{ mt: 2 }} />
+            <Box
+              id="modal-modal-description"
+              sx={{
+                alignItems: "center",
+                mt: 2,
+                justifyContent: "center",
+                p: 2,
+                borderRadius: 2,
+                pt: 2,
+                px: 4,
+                pb: 3,
+                m: 2,
+              }}
+            >
+              <CreateSubgrediit
+                getMySubgrediits={getMySubgrediits}
+                handleCloseCreateSubgrediit={handleCloseCreateSubgrediit}
+              />
+            </Box>
           </Box>
-        </Box>
         </Fade>
       </Modal>
 
-      <FlexBetween padding="1rem 6%" backgroundColor={alt}
-        borderBottom="1px solid #e6e6e6">
-      
-      
+      <FlexBetween
+        padding="1rem 6%"
+        backgroundColor={alt}
+        borderBottom="1px solid #e6e6e6"
+      >
         <FlexBetween gap="1.75rem">
           <Typography
             fontWeight="bold"
@@ -158,7 +162,16 @@ const Navbar = ({getMySubgrediits}) => {
               }}
               onClick={() => navigate("/")}
             />
-            <QuestionAnswerOutlinedIcon sx={{ fontSize: "25px" }} />
+            <QuestionAnswerOutlinedIcon
+              sx={{
+                fontSize: "25px",
+                "&:hover": {
+                  color: primaryLight,
+                  cursor: "pointer",
+                },
+              }}
+              onClick={() => navigate("/chat")}
+            />
             <IconButton onClick={() => dispatch(setMode())}>
               {theme.palette.mode === "dark" ? (
                 <DarkMode sx={{ fontSize: "25px" }} />
@@ -274,7 +287,16 @@ const Navbar = ({getMySubgrediits}) => {
                   },
                 }}
               />
-              <QuestionAnswerOutlinedIcon sx={{ fontSize: "25px" }} />
+              <QuestionAnswerOutlinedIcon
+                sx={{
+                  fontSize: "25px",
+                  "&:hover": {
+                    color: primaryLight,
+                    cursor: "pointer",
+                  },
+                }}
+                onClick={() => navigate("/chat")}
+              />
               <IconButton
                 onClick={() => dispatch(setMode())}
                 sx={{ fontSize: "25px" }}
@@ -323,11 +345,11 @@ const Navbar = ({getMySubgrediits}) => {
                     <Typography>My SubGreddits</Typography>
                   </MenuItem>
                   <MenuItem
-                  value="Saved Posts"
-                  onClick={() => navigate(`/savedposts`)}
-                >
-                  <Typography>Saved Posts</Typography>
-                </MenuItem>
+                    value="Saved Posts"
+                    onClick={() => navigate(`/savedposts`)}
+                  >
+                    <Typography>Saved Posts</Typography>
+                  </MenuItem>
                   <MenuItem onClick={() => dispatch(setLogout())}>
                     Log Out
                   </MenuItem>
