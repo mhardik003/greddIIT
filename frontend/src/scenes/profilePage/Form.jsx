@@ -18,7 +18,6 @@ import { TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 // import ReactRouterPrompt from "react-router-prompt";
 
-
 const phoneRegExp = /^(\+\d{1,3}[- ]?)?\d{10}$/;
 
 const profileSchema = Yup.object().shape({
@@ -26,7 +25,9 @@ const profileSchema = Yup.object().shape({
   lastName: Yup.string().required("Last name is required"),
   userName: Yup.string().required("Username is required"),
   email: Yup.string().email("Invalid email").required("Email is required"),
-  contactNumber: Yup.string().matches(phoneRegExp,"Phone number is not valid").required("Contact number is required"),
+  contactNumber: Yup.string()
+    .matches(phoneRegExp, "Phone number is not valid")
+    .required("Contact number is required"),
   age: Yup.number().required("Age is required"),
 });
 
@@ -276,6 +277,22 @@ const Form = ({ userId, userData }) => {
                     color: palette.primary.main,
                   },
                 }}
+                disabled={
+                  !(
+                    values.firstName &&
+                    values.lastName &&
+                    values.userName &&
+                    values.email &&
+                    values.contactNumber &&
+                    values.age &&
+                    !errors.firstName &&
+                    !errors.lastName &&
+                    !errors.userName &&
+                    !errors.email &&
+                    !errors.contactNumber &&
+                    !errors.age
+                  )
+                }
               >
                 Edit Details
               </Button>

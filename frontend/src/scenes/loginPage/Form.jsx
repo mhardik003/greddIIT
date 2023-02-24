@@ -422,6 +422,33 @@ const Form = () => {
                     color: palette.primary.main,
                   },
                 }}
+                disabled={
+                  isLogin
+                    ? !(
+                        values.email &&
+                        values.password &&
+                        !errors.email &&
+                        !errors.password
+                      )
+                    : !(
+                        !errors.firstName &&
+                        !errors.lastName &&
+                        !errors.userName &&
+                        !errors.email &&
+                        !errors.age &&
+                        !errors.contactNumber &&
+                        !errors.password &&
+                        !errors.confirmPassword &&
+                        values.firstName &&
+                        values.lastName &&
+                        values.userName &&
+                        values.email &&
+                        values.age &&
+                        values.contactNumber &&
+                        values.password &&
+                        values.confirmPassword
+                      )
+                }
               >
                 {isLogin ? "LOGIN" : "REGISTER"}
               </Button>

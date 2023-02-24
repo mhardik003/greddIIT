@@ -181,7 +181,7 @@ const Mysubgrediits = () => {
                     color={theme.palette.neutral.dark}
                     sx={{ mt: "1rem", mb: "0.2rem", pl: "1rem" }}
                   >
-                    DESCRIPTION : {subgrediit.description}
+                    Description : {subgrediit.description}
                   </Typography>
 
                   <Typography
@@ -192,7 +192,7 @@ const Mysubgrediits = () => {
                     display="inline"
                     sx={{ mb: "0", pl: "1rem" }}
                   >
-                    TAGS : {subgrediit.tags.join(", ")}
+                    Tags : {subgrediit.tags.join(", ")}
                   </Typography>
 
                   <Typography
@@ -202,7 +202,7 @@ const Mysubgrediits = () => {
                     color={theme.palette.neutral.dark}
                     sx={{ mt: "0.2rem", pl: "1rem" }}
                   >
-                    BANNED KEYWORDS : {subgrediit.bannedKeywords.join(", ")}
+                    Banned Keywords : {subgrediit.bannedKeywords.join(", ")}
                   </Typography>
 
                   <Typography

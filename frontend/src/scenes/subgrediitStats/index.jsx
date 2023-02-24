@@ -1,10 +1,4 @@
-import {
-  Box,
-  useMediaQuery,
-  Typography,
-  Grid,
-  useTheme,
-} from "@mui/material";
+import { Box, useMediaQuery, Typography, Grid, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "../navbar";
@@ -94,7 +88,7 @@ const SubgrediitStats = () => {
               style={{
                 backgroundColor: theme.palette.background.alt,
                 padding: "1rem",
-                marginTop: "-5rem",
+                marginTop: "4rem",
               }}
               borderRadius="1.5rem"
             >
@@ -129,14 +123,20 @@ const SubgrediitStats = () => {
                 {subgrediit.description}
               </Typography>
             </Box>
-            <Box
-              width={isNonMobileScreens ? "80%" : "80%"}
+            <Box>
+            <Grid
+              container
+              width={isNonMobileScreens ? "100%" : "100%"}
               style={{
                 backgroundColor: theme.palette.background.alt,
-                padding: "1rem",
+                padding: "1.5rem",
                 marginTop: "3rem",
               }}
               borderRadius="1.5rem"
+              alignContent="center"
+              alignItems="center"
+              justifyContent="center"
+              // display="flex"
             >
               <Typography
                 variant="h3"
@@ -146,16 +146,21 @@ const SubgrediitStats = () => {
                 sx={{
                   textTransform: "capitalize",
                   mb: "1rem",
-                  "&:hover": {
-                    cursor: "pointer",
-                    color: theme.palette.primary.light,
-                  },
                 }}
-                onClick={() => navigate(`/subgrediit/${subgrediit._id}`)}
               >
                 Stats
               </Typography>
-              <Box>
+              <Box
+                width={isNonMobileScreens ? "80%" : "80%"}
+                alignContent="center"
+                alignItems="center"
+                justifyContent="center"
+                borderRadius="1.5rem"
+                sx={{
+                  padding: "1rem",
+                }}
+                backgroundColor={theme.palette.background.default}
+              >
                 <Typography
                   variant="h5"
                   textAlign="center"
@@ -168,7 +173,67 @@ const SubgrediitStats = () => {
                 >
                   Subscribers : {subgrediit.followers.length}
                 </Typography>
+                <Typography
+                  variant="h5"
+                  textAlign="center"
+                  fontWeight="500"
+                  color={theme.palette.text.primary}
+                  sx={{
+                    mb: "1rem",
+                  }}
+                >
+                  Posts : {subgrediit.posts.length}
+                </Typography>
+                <Typography
+                  variant="h5"
+                  textAlign="center"
+                  fontWeight="500"
+                  color={theme.palette.text.primary}
+                  sx={{
+                    mb: "1rem",
+                    //   pl: "1rem",
+                  }}
+                >
+                  Reports : {subgrediit.reportedPosts.length}
+                </Typography>
+                <Typography
+                  variant="h5"
+                  textAlign="center"
+                  fontWeight="500"
+                  color={theme.palette.text.primary}
+                  sx={{
+                    mb: "1rem",
+                    //   pl: "1rem",
+                  }}
+                >
+                  Creation Date : {subgrediit.creationDate.slice(0, 10)}
+                </Typography>
+                <Typography
+                  variant="h5"
+                  textAlign="center"
+                  fontWeight="500"
+                  color={theme.palette.text.primary}
+                  sx={{
+                    mb: "1rem",
+                    //   pl: "1rem",
+                  }}
+                >
+                  Blocked Users : {subgrediit.blockedFollowers.length}
+                </Typography>
+                <Typography
+                  variant="h5"
+                  textAlign="center"
+                  fontWeight="500"
+                  color={theme.palette.text.primary}
+                  sx={{
+                    mb: "1rem",
+                    //   pl: "1rem",
+                  }}
+                >
+                  Join Requests : {subgrediit.joinRequests.length}
+                </Typography>
               </Box>
+            </Grid>
             </Box>
           </Grid>
         </Grid>

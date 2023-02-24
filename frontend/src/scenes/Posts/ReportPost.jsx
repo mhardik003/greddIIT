@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-  Box,
-  Button,
-  TextField,
-  useTheme,
-  useMediaQuery,
-} from "@mui/material";
+import { Box, Button, TextField, useTheme, useMediaQuery } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { toast, ToastContainer } from "react-toastify";
@@ -163,6 +157,7 @@ const CreateReport = ({
                     color: palette.primary.main,
                   },
                 }}
+                disabled={!values.concern}
               >
                 Report Post
               </Button>

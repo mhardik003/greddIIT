@@ -24,7 +24,7 @@ import { useEffect } from "react";
 const subgrediitSchema = yup.object().shape({
   name: yup.string().required("Subgrediit name is required"),
   description: yup.string().required("Description is required"),
-  tags: yup.string().required("Tags are required"),
+  tags: yup.string(),
   bannedKeywords: yup.string(),
   subgrediitPicture: yup.string(),
 });
@@ -258,6 +258,14 @@ const CreateSubgrediit = ({
                     color: palette.primary.main,
                   },
                 }}
+                disabled={
+                  !(
+                    !errors.name &&
+                    !errors.description &&
+                    values.name &&
+                    values.description
+                  )
+                }
               >
                 Create Subgrediit
               </Button>

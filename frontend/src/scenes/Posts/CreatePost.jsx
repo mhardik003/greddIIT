@@ -244,6 +244,14 @@ const CreatePost = ({ getSubgrediitPosts }) => {
                     }}
                     border="1px solid black"
                     borderradius="50%"
+                    disabled={
+                      !(
+                        !errors.title &&
+                        !errors.description &&
+                        values.title &&
+                        values.description
+                      )
+                    }
                   >
                     Create
                   </Button>
