@@ -1,4 +1,4 @@
-version: '3.3'
+version: "3.3"
 
 services:
   backend:
@@ -16,17 +16,17 @@ services:
       context: ./frontend
     restart: unless-stopped
     ports:
-      - "3001:3001" 
+      - "3001:3001"
   # nginx:
-  #       depends_on:
-  #         - backend
-  #         - frontend
-  #       restart: always
-  #       build:
-  #           context: ./nginx
-  #       ports:
-  #           - "8080:8080"
-volumes: 
+  #   depends_on:
+  #     - backend
+  #     - frontend
+  #   restart: always
+  #   build:
+  #     context: ./nginx
+  #   ports:
+  #     - "8080:8080"
+volumes:
   db:
 
 networks:

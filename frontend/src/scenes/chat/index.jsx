@@ -140,6 +140,7 @@ const ProfilePage = () => {
                             </Link>
                           );
                         }
+                        else return null;
                       })}
                     </Box>
                   );
