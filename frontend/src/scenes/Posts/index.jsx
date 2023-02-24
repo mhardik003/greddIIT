@@ -334,7 +334,7 @@ const Posts = () => {
               width={isNonMobileScreens ? "80%" : "83%"}
               p="2rem"
               m="2rem auto"
-              mt="-20rem"
+              // mt="2rem"
               // mb="1rem"
               borderRadius="1.5rem"
               backgroundColor={theme.palette.background.alt}
