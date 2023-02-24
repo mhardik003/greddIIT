@@ -53,7 +53,7 @@ Some features of the application are listed below
     <center>
     <img src="./READMEassets/loginpage_dark.png"style="border-radius:10px"  >
     
-    <br>
+    --<br>--
 
     <img src="./READMEassets/loginpage_light.png" style="border-radius:10px" >
     </center>
