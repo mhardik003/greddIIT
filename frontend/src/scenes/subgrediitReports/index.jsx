@@ -120,11 +120,17 @@ const SubgrediitReports = () => {
     const reportedByEmail = allUsers.find(
       (user) => user._id === reportedById
     ).email;
-    const subgrediitModName = subgrediit.moderators[0];
+    const reportedByName = allUsers.find(
+      (user) => user._id === reportedById
+    ).firstName;
+    let subgrediitModName = subgrediit.moderators[0];
+    subgrediitModName = allUsers.find(
+      (user) => user._id === subgrediitModName
+    ).firstName;
 
     emailjs.send("service_jnqy9ji", "template_d1gc4qc", {
       from_name: subgrediitModName,
-      to_name: user_name,
+      to_name: reportedByName,
       message: `As per your report request we have blocked ${user_name} from the subgrediit ${subgrediit.name}`,
       to_emailo: reportedByEmail,
     });
@@ -165,11 +171,17 @@ const SubgrediitReports = () => {
     const reportedByEmail = allUsers.find(
       (user) => user._id === reportedBy
     ).email;
-    const subgrediitModName = subgrediit.moderators[0];
+    const reportedByName = allUsers.find(
+      (user) => user._id === reportedBy
+    ).firstName;
+    let subgrediitModName = subgrediit.moderators[0];
+    subgrediitModName = allUsers.find(
+      (user) => user._id === subgrediitModName
+    ).firstName;
 
     emailjs.send("service_jnqy9ji", "template_d1gc4qc", {
       from_name: subgrediitModName,
-      to_name: user_name,
+      to_name: reportedByName,
       message: `Your report request for ${user_name} from the subgrediit ${subgrediit.name}, has been ignored`,
       to_emailo: reportedByEmail,
     });
@@ -205,11 +217,17 @@ const SubgrediitReports = () => {
     const reportedByEmail = allUsers.find(
       (user) => user._id === reportedBy
     ).email;
-    const subgrediitModName = subgrediit.moderators[0];
+    const reportedByName = allUsers.find(
+      (user) => user._id === reportedBy
+    ).firstName;
+    let subgrediitModName = subgrediit.moderators[0];
+    subgrediitModName = allUsers.find(
+      (user) => user._id === subgrediitModName
+    ).firstName;
 
     emailjs.send("service_jnqy9ji", "template_d1gc4qc", {
       from_name: subgrediitModName,
-      to_name: user_name,
+      to_name: reportedByName,
       message: `As per your report request we have deleted the post from the subgrediit ${subgrediit.name}`,
       to_emailo: reportedByEmail,
     });
