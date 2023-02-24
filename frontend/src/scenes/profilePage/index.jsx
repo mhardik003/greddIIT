@@ -1,10 +1,4 @@
-import {
-  Box,
-  useMediaQuery,
-  Typography,
-  Grid,
-  useTheme,
-} from "@mui/material";
+import { Box, useMediaQuery, Typography, Grid, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "scenes/navbar";
@@ -23,7 +17,6 @@ const ProfilePage = () => {
   const { id } = useSelector((state) => state.user);
   // const primaryLight = theme.palette.primary.light;
 
-
   const getUser = async () => {
     const response = await fetch(`http://localhost:3000/users/${id}`, {
       method: "GET",
@@ -38,7 +31,7 @@ const ProfilePage = () => {
 
   if (!user) return null;
 
-    // console.log("user : ", user);
+  // console.log("user : ", user);
   // const {
   //   firstName,
   //   lastName,
@@ -50,7 +43,6 @@ const ProfilePage = () => {
   //   followers,
   //   posts,
   // } = user;
-
 
   // console.log("user : ", user);
   // const { id, picturePath } = useSelector((state) => state.user);
@@ -86,7 +78,6 @@ const ProfilePage = () => {
               fontWeight="500"
               variant="h5"
               color="primary"
-
               sx={{ mb: "1.5rem" }}
             >
               Edit Profile
