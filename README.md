@@ -53,7 +53,7 @@ Some features of the application are listed below
     <center>
     <img src="./READMEassets/loginpage_dark.png"style="border-radius:10px"  >
     
-    --<br>--
+    <br>--
 
     <img src="./READMEassets/loginpage_light.png" style="border-radius:10px" >
     </center>
@@ -95,7 +95,7 @@ Some features of the application are listed below
         <center>
         <img src="./READMEassets/homepage.png" style="border-radius:10px"  >
         
-        <br>
+        <br>-
         
         <img src="./READMEassets/homepage_light.png" style="border-radius:10px"  >
         </center>
@@ -115,19 +115,13 @@ Some features of the application are listed below
     - Saving of the posts for later ( can be accessed from the `Saved Posts ` menu in the dropdown)
     - Reporting of the posts
 
-              <br>
-
+    <br>
       <center>
       <img src="./READMEassets/posts.png" style="border-radius:10px"  >
-
-      <br>
-
+      <br>-
       <img src="./READMEassets/posts1.png" style="border-radius:10px" >
-      
       </center>
-
     <br>
-
 <br>
 
 - **Chats** : Only the basic UI has been implemented. They do not work as of now.
@@ -145,16 +139,11 @@ Some features of the application are listed below
   - Gives a form to change the details of the user (except the email id and the password of the user)
 
     <br>
-
     <center>
     <img src="./READMEassets/profile_page.png" style="border-radius:10px"  >
-
-    <br>
-
+    <br>-
     <img src="./READMEassets/profilePageFollowing.png" style="border-radius:10px"  >
-
     </center>
-
 <br>
 
 - **My Subgrediits** : Shows the subgrediits created by you. You can see the basic details about that subgrediit along with the option of deleting the subgrediit
@@ -162,7 +151,6 @@ Some features of the application are listed below
     <br>
     <center>
     <img src="./READMEassets/mysubgrediits.png" style="border-radius:10px" >
-
     </center>
     <br>
     
@@ -175,11 +163,11 @@ Some features of the application are listed below
     <br>
     <center>
     <img src="./READMEassets/mysubgrediit.png"  style="border-radius:10px" >
-
     </center>
     <br>
 
 - **Saved Posts** : Shows the posts saved by the user
+
     <br>
     <center>
     <img src="./READMEassets/savedPosts.png"  style="border-radius:10px" >
@@ -190,6 +178,7 @@ Some features of the application are listed below
 
 
 ---
+
 <br>
 
 > Refer to **`details.pdf`** for further details (the highlighted features are the ones that have been implemented) and feel free to commit for any bugs
