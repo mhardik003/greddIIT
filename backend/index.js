@@ -26,11 +26,7 @@ const __dirname = path.dirname(__filename);
 dotenv.config(); // to use .env file
 
 const app = express(); // to use express
-const io = 
-
-
-
-app.use(express.json()); // to use json
+const io = app.use(express.json()); // to use json
 app.use(helmet()); // to use helmet
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" })); // to use helmet
 app.use(morgan("common")); // to use morgan
@@ -53,15 +49,15 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // ROUTE with files
-app.post("/auth/register", upload.single("picture"), registerUser);
+app.post("/api/auth/register", upload.single("picture"), registerUser);
 // app.put("/users/edit/:id", editUser)
 
 // ROUTES
-app.use("/auth", authRoutes);
-app.use("/users", userRoutes);
-app.use("/subgrediits", subgredditRoutes);
-app.use("/posts", postRoutes);
-app.use("/reports", reportRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/subgrediits", subgredditRoutes);
+app.use("/api/posts", postRoutes);
+app.use("/api/reports", reportRoutes);
 
 // MONGOOSE CONNECTION
 const PORT = process.env.PORT || 6001; // to use the port from .env file (if not, use 6001 as backup)

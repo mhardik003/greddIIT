@@ -1,34 +1,44 @@
-version: "3.3"
+version: "3.8"
 
 services:
   backend:
-    # depends_on:
-    build: ./backend
-    restart: unless-stopped
-    # env_file: ./.env
-    ports:
-      - "3000:3000"
-
-  frontend:
-    depends_on:
-      - backend
     build:
-      context: ./frontend
-    restart: unless-stopped
+      dockerfile: Dockerfile
+      context: "./backend"
+    volumes:
+      - /app/node_modules
+      - ./backend:/app
     ports:
       - "3001:3001"
-  # nginx:
-  #   depends_on:
-  #     - backend
-  #     - frontend
-  #   restart: always
-  #   build:
-  #     context: ./nginx
-  #   ports:
-  #     - "8080:8080"
-volumes:
-  db:
+    expose:
+      - "3001"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
 
-networks:
-  backend:
   frontend:
+    stdin_open: true
+    build:
+      dockerfile: Dockerfile
+      context: ./frontend
+    volumes:
+      - /app/node_modules
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
+    expose:
+      - "3000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+
+  nginx:
+    depends_on:
+      - backend
+      - frontend
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - "3050:80"
+    expose:
+      - "3050"
