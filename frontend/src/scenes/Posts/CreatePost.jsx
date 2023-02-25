@@ -28,7 +28,7 @@ const CreatePost = ({ getSubgrediitPosts }) => {
   const { subgrediitId } = useParams();
 
   const getUser = async () => {
-    const response = await fetch(`http://localhost:3000/users/${id}`, {
+    const response = await fetch(`/api/users/${id}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -38,7 +38,7 @@ const CreatePost = ({ getSubgrediitPosts }) => {
 
   const getSubgrediit = async () => {
     const response = await fetch(
-      `http://localhost:3000/subgrediits/find/${subgrediitId}`,
+      `/api/subgrediits/find/${subgrediitId}`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
@@ -109,7 +109,7 @@ const CreatePost = ({ getSubgrediitPosts }) => {
       }
     }
 
-    const response = await fetch("http://localhost:3000/posts/createPost", {
+    const response = await fetch("/api/posts/createPost", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

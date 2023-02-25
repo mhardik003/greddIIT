@@ -49,15 +49,15 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // ROUTE with files
-app.post("/api/auth/register", upload.single("picture"), registerUser);
+app.post("/auth/register", upload.single("picture"), registerUser);
 // app.put("/users/edit/:id", editUser)
 
 // ROUTES
-app.use("/api/auth", authRoutes);
-app.use("/api/users", userRoutes);
-app.use("/api/subgrediits", subgredditRoutes);
-app.use("/api/posts", postRoutes);
-app.use("/api/reports", reportRoutes);
+app.use("/auth", authRoutes);
+app.use("/users", userRoutes);
+app.use("/subgrediits", subgredditRoutes);
+app.use("/posts", postRoutes);
+app.use("/reports", reportRoutes);
 
 // MONGOOSE CONNECTION
 const PORT = process.env.PORT || 6001; // to use the port from .env file (if not, use 6001 as backup)

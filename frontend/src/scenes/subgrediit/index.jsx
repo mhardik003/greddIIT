@@ -62,7 +62,7 @@ const Index = () => {
   );
 
   const getUser = async () => {
-    const response = await fetch(`http://localhost:3000/users/${id}`, {
+    const response = await fetch(`/api/users/${id}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -72,7 +72,7 @@ const Index = () => {
 
   const getSubgrediit = async () => {
     const response = await fetch(
-      `http://localhost:3000/subgrediits/find/${subgrediitId}`,
+      `/api/subgrediits/find/${subgrediitId}`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },

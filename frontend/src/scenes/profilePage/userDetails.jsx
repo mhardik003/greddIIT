@@ -53,7 +53,7 @@ const UserDetails = ({ userId, userData }) => {
     userData;
 
   const getAllUsers = async () => {
-    const response = await fetch("http://localhost:3000/users/getAllUsers", {
+    const response = await fetch("/api/users/getAllUsers", {
       method: "GET",
     });
     const data = await response.json();
@@ -62,7 +62,7 @@ const UserDetails = ({ userId, userData }) => {
 
   const getFollowers = async (followers) => {
     const response = await fetch(
-      `http://localhost:3000/users/${id}/followers`,
+      `/api/users/${id}/followers`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
@@ -92,7 +92,7 @@ const UserDetails = ({ userId, userData }) => {
 
   const getFollowing = async (following) => {
     const response = await fetch(
-      `http://localhost:3000/users/${id}/following`,
+      `/api/users/${id}/following`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
@@ -120,7 +120,7 @@ const UserDetails = ({ userId, userData }) => {
   const removeFollower = async (id) => {
     // console.log("id : ", id);
     const response = await fetch(
-      `http://localhost:3000/users/AddRemoveFollower/${userId}/${id}`,
+      `/api/users/AddRemoveFollower/${userId}/${id}`,
       {
         method: "PATCH",
         headers: {
@@ -139,7 +139,7 @@ const UserDetails = ({ userId, userData }) => {
   const removeFollowing = async (id) => {
     // console.log("id : ", id);
     const response = await fetch(
-      `http://localhost:3000/users/AddRemoveFollowing/${userId}/${id}`,
+      `/api/users/AddRemoveFollowing/${userId}/${id}`,
       {
         method: "PATCH",
         headers: {

@@ -22,7 +22,7 @@ const MainContent = () => {
 
   const getSubgrediit = async () => {
     const response = await fetch(
-      `http://localhost:3000/subgrediits/find/${subgrediitId}`,
+      `/api/subgrediits/find/${subgrediitId}`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },

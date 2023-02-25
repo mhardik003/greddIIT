@@ -51,7 +51,7 @@ const CreateSubgrediit = ({
   const [user, setUser] = useState(null);
 
   const getUser = async () => {
-    const response = await fetch(`http://localhost:3000/users/${id}`, {
+    const response = await fetch(`/api/users/${id}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -82,7 +82,7 @@ const CreateSubgrediit = ({
     // console.log("Form data : ", JSON.stringify(values));
 
     const response = await fetch(
-      "http://localhost:3000/subgrediits/createSubgrediit",
+      "/api/subgrediits/createSubgrediit",
       {
         method: "POST",
         body: JSON.stringify({

@@ -30,7 +30,7 @@ const SubgrediitReports = () => {
 
   const getSubgrediit = async () => {
     const response = await fetch(
-      `http://localhost:3000/subgrediits/find/${subgrediitId}`,
+      `/api/subgrediits/find/${subgrediitId}`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
@@ -42,7 +42,7 @@ const SubgrediitReports = () => {
   };
 
   const getUser = async () => {
-    const response = await fetch(`http://localhost:3000/users/${id}`, {
+    const response = await fetch(`/api/users/${id}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -52,7 +52,7 @@ const SubgrediitReports = () => {
   };
   const findReports = async () => {
     const response = await fetch(
-      `http://localhost:3000/reports/getSubgrediitReports/${subgrediitId}`,
+      `/api/reports/getSubgrediitReports/${subgrediitId}`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
@@ -64,7 +64,7 @@ const SubgrediitReports = () => {
   };
 
   const getAllUsers = async () => {
-    const response = await fetch(`http://localhost:3000/users/getAllUsers`, {
+    const response = await fetch(`/api/users/getAllUsers`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -75,7 +75,7 @@ const SubgrediitReports = () => {
 
   const getAllSubgrediits = async () => {
     const response = await fetch(
-      `http://localhost:3000/subgrediits/getAllSubgrediits/${id}`,
+      `/api/subgrediits/getAllSubgrediits/${id}`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
@@ -87,7 +87,7 @@ const SubgrediitReports = () => {
   };
 
   const getAllPosts = async () => {
-    const response = await fetch(`http://localhost:3000/posts/allposts`, {
+    const response = await fetch(`/api/posts/allposts`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -105,7 +105,7 @@ const SubgrediitReports = () => {
     //   subgrediitId
     // );
     const response = await fetch(
-      `http://localhost:3000/subgrediits/blockUser/${reportedUser}/${subgrediitId}`,
+      `/api/subgrediits/blockUser/${reportedUser}/${subgrediitId}`,
       {
         method: "PATCH",
         headers: { Authorization: `Bearer ${token}` },
@@ -155,7 +155,7 @@ const SubgrediitReports = () => {
   ) => {
     console.log(" Ignore the report : ", reportId);
     const response = await fetch(
-      `http://localhost:3000/reports/ignoreReport/${reportId}`,
+      `/api/reports/ignoreReport/${reportId}`,
       {
         method: "PATCH",
         headers: { Authorization: `Bearer ${token}` },
@@ -203,7 +203,7 @@ const SubgrediitReports = () => {
   ) => {
     console.log(" Delete the post : ", postId);
     const response = await fetch(
-      `http://localhost:3000/posts/${postId}/delete`,
+      `/api/posts/${postId}/delete`,
       {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
@@ -245,7 +245,7 @@ const SubgrediitReports = () => {
   const deleteReport = async (reportId) => {
     console.log(" Delete the report : ", reportId);
     const response = await fetch(
-      `http://localhost:3000/reports/deleteReport/${reportId}`,
+      `/api/reports/deleteReport/${reportId}`,
       {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },

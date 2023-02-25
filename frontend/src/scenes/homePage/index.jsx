@@ -36,7 +36,7 @@ const Mysubgrediits = () => {
   const { id } = useSelector((state) => state.user);
 
   const getUser = async () => {
-    const response = await fetch(`http://localhost:3000/users/${id}`, {
+    const response = await fetch(`/api/users/${id}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -47,7 +47,7 @@ const Mysubgrediits = () => {
 
   const getAllSubgrediits = async () => {
     const response = await fetch(
-      `http://localhost:3000/subgrediits/getAllSubgrediits/${id}`,
+      `/api/subgrediits/getAllSubgrediits/${id}`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
@@ -58,7 +58,7 @@ const Mysubgrediits = () => {
   };
 
   const getAllUsers = async () => {
-    const response = await fetch(`http://localhost:3000/users/getAllUsers`, {
+    const response = await fetch(`/api/users/getAllUsers`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -76,7 +76,7 @@ const Mysubgrediits = () => {
   const joinSubgrediit = async (subgrediitId) => {
     // console.log("Join subgrediit : ", subgrediitId);
     const response = await fetch(
-      `http://localhost:3000/subgrediits/joinSubgrediit/${id}/${subgrediitId}`,
+      `/api/subgrediits/joinSubgrediit/${id}/${subgrediitId}`,
       {
         method: "PUT",
         headers: { Authorization: `Bearer ${token}` },
@@ -89,7 +89,7 @@ const Mysubgrediits = () => {
   const leaveSubgrediit = async (subgrediitId) => {
     // console.log("Leave subgrediit : ", subgrediitId);
     const response = await fetch(
-      `http://localhost:3000/subgrediits/leaveSubgrediit/${id}/${subgrediitId}`,
+      `/api/subgrediits/leaveSubgrediit/${id}/${subgrediitId}`,
       {
         method: "PUT",
         headers: { Authorization: `Bearer ${token}` },
@@ -102,7 +102,7 @@ const Mysubgrediits = () => {
   const deleteSubgrediit = async (subgrediitId) => {
     // console.log("Delete subgrediit : ", subgrediitId);
     const response = await fetch(
-      `http://localhost:3000/subgrediits/deleteSubgrediit/${subgrediitId}`,
+      `/api/subgrediits/deleteSubgrediit/${subgrediitId}`,
       {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },

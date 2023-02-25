@@ -25,7 +25,7 @@ const Mysubgrediits = () => {
   const { id } = useSelector((state) => state.user);
 
   const getUser = async () => {
-    const response = await fetch(`http://localhost:3000/users/${id}`, {
+    const response = await fetch(`/api/users/${id}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -35,7 +35,7 @@ const Mysubgrediits = () => {
 
   const getMySubgrediits = async () => {
     const response = await fetch(
-      `http://localhost:3000/subgrediits/getMySubgrediits/${id}`,
+      `/api/subgrediits/getMySubgrediits/${id}`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
@@ -49,7 +49,7 @@ const Mysubgrediits = () => {
   const deleteSubgrediit = async (subgrediitId) => {
     // console.log("subgrediitId : ", subgrediitId);
     const response = await fetch(
-      `http://localhost:3000/subgrediits/deleteSubgrediit/${subgrediitId}`,
+      `/api/subgrediits/deleteSubgrediit/${subgrediitId}`,
       {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },

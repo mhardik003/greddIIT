@@ -68,7 +68,7 @@ const Posts = () => {
   const [showComments, setShowComments] = useState(false);
 
   const getUser = async () => {
-    const response = await fetch(`http://localhost:3000/users/${id}`, {
+    const response = await fetch(`/api/users/${id}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -77,7 +77,7 @@ const Posts = () => {
   };
 
   const getAllUsers = async () => {
-    const response = await fetch(`http://localhost:3000/users/getAllUsers`, {
+    const response = await fetch(`/api/users/getAllUsers`, {
       method: "GET",
     });
     const data = await response.json();
@@ -86,7 +86,7 @@ const Posts = () => {
 
   const getAllSubgrediits = async () => {
     const response = await fetch(
-      `http://localhost:3000/subgrediits/getAllSubgrediits/${id}`,
+      `/api/subgrediits/getAllSubgrediits/${id}`,
       {
         method: "GET",
       }
@@ -97,7 +97,7 @@ const Posts = () => {
 
   const getSubgrediit = async () => {
     const response = await fetch(
-      `http://localhost:3000/subgrediits/find/${subgrediitId}`,
+      `/api/subgrediits/find/${subgrediitId}`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
@@ -110,7 +110,7 @@ const Posts = () => {
 
   const getSubgrediitPosts = async () => {
     const response = await fetch(
-      `http://localhost:3000/posts/get/${subgrediitId}`,
+      `/api/posts/get/${subgrediitId}`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
@@ -123,7 +123,7 @@ const Posts = () => {
 
   const deletePost = async (postId) => {
     const response = await fetch(
-      `http://localhost:3000/posts/${postId}/delete`,
+      `/api/posts/${postId}/delete`,
       {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
@@ -158,7 +158,7 @@ const Posts = () => {
 
   const upvotePost = async (postId) => {
     const response = await fetch(
-      `http://localhost:3000/posts/${postId}/${id}/upvote`,
+      `/api/posts/${postId}/${id}/upvote`,
       {
         body: JSON.stringify({ userId: id }),
         method: "PUT",
@@ -187,7 +187,7 @@ const Posts = () => {
   const downvotePost = async (postId) => {
     // console.log("downvotePost : ", postId);
     const response = await fetch(
-      `http://localhost:3000/posts/${postId}/${id}/downvote`,
+      `/api/posts/${postId}/${id}/downvote`,
       {
         body: JSON.stringify({ userId: id }),
         method: "PUT",
@@ -216,7 +216,7 @@ const Posts = () => {
   const savePost = async (postId) => {
     // console.log("savePost : ", postId);
     const response = await fetch(
-      `http://localhost:3000/posts/${postId}/${id}/save`,
+      `/api/posts/${postId}/${id}/save`,
       {
         body: JSON.stringify({ userId: id }),
         method: "PUT",
@@ -245,7 +245,7 @@ const Posts = () => {
 
   const followUser = async (userId) => {
     const response = await fetch(
-      `http://localhost:3000/users/AddRemoveFollowing/${id}/${userId}`,
+      `/api/users/AddRemoveFollowing/${id}/${userId}`,
       {
         method: "PATCH",
         headers: { Authorization: `Bearer ${token}` },

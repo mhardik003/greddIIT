@@ -28,7 +28,7 @@ const SubgrediitJoinRequests = () => {
 
   const getSubgrediit = async () => {
     const response = await fetch(
-      `http://localhost:3000/subgrediits/find/${subgrediitId}`,
+      `/api/subgrediits/find/${subgrediitId}`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
@@ -40,7 +40,7 @@ const SubgrediitJoinRequests = () => {
   };
 
   const getUser = async () => {
-    const response = await fetch(`http://localhost:3000/users/${id}`, {
+    const response = await fetch(`/api/users/${id}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -51,7 +51,7 @@ const SubgrediitJoinRequests = () => {
 
 
   const getAllUsers = async () => {
-    const response = await fetch(`http://localhost:3000/users/getAllUsers`, {
+    const response = await fetch(`/api/users/getAllUsers`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -62,7 +62,7 @@ const SubgrediitJoinRequests = () => {
 
   const acceptJoinRequest = async (userId) => {
     const response = await fetch(
-      `http://localhost:3000/subgrediits/acceptJoinRequest/${userId}/${subgrediitId}`,
+      `/api/subgrediits/acceptJoinRequest/${userId}/${subgrediitId}`,
       {
         method: "PATCH",
         headers: { Authorization: `Bearer ${token}` },
@@ -75,7 +75,7 @@ const SubgrediitJoinRequests = () => {
 
   const rejectJoinRequest = async (userId) => {
     const response = await fetch(
-      `http://localhost:3000/subgrediits/rejectJoinRequest/${userId}/${subgrediitId}`,
+      `/api/subgrediits/rejectJoinRequest/${userId}/${subgrediitId}`,
       {
         method: "PATCH",
         headers: { Authorization: `Bearer ${token}` },

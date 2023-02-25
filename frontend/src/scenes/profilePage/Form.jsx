@@ -90,7 +90,7 @@ const Form = ({ userId, userData }) => {
 
     // console.log("JSON format : ", JSON.stringify(values));
     // console.log("Form data : ", formData);
-    const response = await fetch(`http://localhost:3000/users/edit/${userId}`, {
+    const response = await fetch(`/api/users/edit/${userId}`, {
       method: "POST",
       body: JSON.stringify(values),
       headers: {

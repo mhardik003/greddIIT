@@ -18,7 +18,7 @@ const ProfilePage = () => {
   // const primaryLight = theme.palette.primary.light;
 
   const getUser = async () => {
-    const response = await fetch(`http://localhost:3000/users/${id}`, {
+    const response = await fetch(`/api/users/${id}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
