@@ -34,6 +34,9 @@ Clone the github repository onto your local machine, either by using `git clone`
 
     sudo docker-compose build
     sudo docker-compose up
+    
+    If you are using the docker command to run the website then to see the website, search "localhost:3050" on the browser and not the frontend port (3000) unlike npm run
+    
 
 <br>
 
